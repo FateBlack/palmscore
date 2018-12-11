@@ -113,6 +113,7 @@
     </div>
     <div class="tpl-content-wrapper">
         <div class="tpl-content-scope">
+            <h2 style="color:#686868;margin-left:10px;">1，创建活动及规则</h2>
             <div class="note note-info">
                 <div class="am-g tpl-amazeui-form">
                     <div class="am-u-sm-12 am-u-md-9">
@@ -148,10 +149,10 @@
                             </div>
                             <div class="am-form-group">
                                 <label for="" class="am-u-sm-3 am-form-label"
-                                       style="margin-right: 15px;">上传比赛材料截至时间</label>
+                                       style="margin-right: 15px;" >上传比赛材料截至时间</label>
                                 <div class="am-input-group am-datepicker-date" style="width:220px;"
                                      data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                    <input type="text" class="am-form-field" placeholder="2018-12-10" readonly>
+                                    <input type="text" id="activityEndTime" class="am-form-field" placeholder="2018-12-10" readonly>
                                     <span class="am-input-group-btn am-datepicker-add-on">
                                         <button class="am-btn am-btn-default" type="button"><span
                                                 class="am-icon-calendar"></span> </button>
@@ -250,7 +251,7 @@
                                                                             <label for="judge-name"
                                                                                    class="am-u-sm-3 am-form-label">占比</label>
                                                                             <div class="am-u-sm-9">
-                                                                                <input type="text" id="rejudge-name" placeholder="">
+                                                                                <input type="text" id="rejudge-name" placeholder="输入1%~100%的数">
                                                                             </div>
                                                                         </div>
                                                                         <div class="am-form-group">
@@ -280,7 +281,7 @@
                                     </table>
                                 </div>
                                 <div class="am-form-group">
-                                    <label for="" class="am-u-sm-3 am-form-label">打分规则</label>
+                                    <label  for="" class="am-u-sm-3 am-form-label">打分规则</label>
                                     <div class="am-u-sm-9">
                                         <label class=" am-form-label" style="color:red">总分 =
                                             <span> 教案1 </span>X<span> 0.5 </span> +
@@ -297,10 +298,8 @@
 
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3" style="text-align: center">
-                                        <button type="button" class="am-btn am-btn-primary" style="margin-top:20px;margin-right:20px;">
-                                            <a style="color:white" href="myActivity.html">上一步</a></button>
-                                        <button type="button" class="am-btn am-btn-primary" style="margin-top:20px;">
-                                            <a style="color:white" href="judge.html">下一步</a></button>
+                                            <a style="color:white;margin-right: 20px;" class="am-btn am-btn-primary" href="myActivity.html">上一步</a>
+                                            <a style="color:white" class="am-btn am-btn-primary" href="judge.html">下一步</a>
                                     </div>
                                 </div>
                             </div>
@@ -353,6 +352,12 @@
     function recloseM() {
         $('#doc-modal-2').modal('close')
     };
+
+    function text(){
+        var $date1=$('#activityEndTime').val();
+        console.log($date1)
+    }
+
 </script>
 </body>
 
