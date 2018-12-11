@@ -7,7 +7,7 @@ import javax.persistence.Id;
 public class Admin {
 
   @Id
-  private long id;
+  private Integer id;
   private String account;
   private String password;
 
@@ -16,7 +16,7 @@ public class Admin {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

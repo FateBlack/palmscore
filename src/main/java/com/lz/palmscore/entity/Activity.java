@@ -14,7 +14,6 @@ public class Activity {
   private String uploadTime;
   private String scoreRule;
 
-
   public long getId() {
     return id;
   }

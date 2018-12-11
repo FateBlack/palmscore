@@ -6,7 +6,7 @@ import javax.persistence.Id;
 public class ScoreItem {
 
   @Id
-  private long id;
+  private Integer id;
   private long activityId;
   private String name;
   private double rate;
@@ -17,7 +17,7 @@ public class ScoreItem {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

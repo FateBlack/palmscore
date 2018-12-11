@@ -7,7 +7,7 @@ import javax.persistence.Id;
 public class Rater {
 
   @Id
-  private long id;
+  private Integer id;
   private String rId;
   private String name;
   private String job;
@@ -19,7 +19,7 @@ public class Rater {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
