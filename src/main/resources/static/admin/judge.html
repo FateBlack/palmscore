@@ -1,0 +1,272 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>教务评分后台管理系统</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/echarts.min.js"></script>
+</head>
+
+<body data-type="index">
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-topbar-brand">
+        <div class="am-topbar-brand">
+            <a href="javascript:;" class="tpl-logo">
+                <img style="width:60px;height:60px;" src="assets/images/xiaohui.png" alt="">
+            </a>
+            <label style="color: rgb(50, 197, 210);">教务评分后台管理系统</label>
+        </div>
+    </div>
+    <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
+
+    </div>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
+            <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen" class="tpl-header-list-link"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+            <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                    你好,<span>超级管理员</span>
+                </a>
+            </li>
+            <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                    退出登录
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</header>
+<div class="tpl-page-container tpl-page-header-fixed">
+    <div class="tpl-left-nav tpl-left-nav-hover">
+        <div class="tpl-left-nav-title">
+            功能列表
+        </div>
+        <div class="tpl-left-nav-list">
+            <ul class="tpl-left-nav-menu">
+                <li class="tpl-left-nav-item">
+                    <a href="index.html" class="nav-link ">
+                        <i class="am-icon-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <!--<li class="tpl-left-nav-item">-->
+                    <!--<a href="javascript:;" class="nav-link tpl-left-nav-link-list">-->
+                        <!--<i class="am-icon-table"></i>-->
+                        <!--<span>我的活动</span>-->
+                        <!--<i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>-->
+                    <!--</a>-->
+                    <!--<ul class="tpl-left-nav-sub-menu">-->
+                        <!--<li>-->
+                            <!--<a href="activity.html">-->
+                                <!--<i class="am-icon-angle-right"></i>-->
+                                <!--<span>活动规则设置</span>-->
+                                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
+                            <!--</a>-->
+                            <!--<a href="judge.html">-->
+                                <!--<i class="am-icon-angle-right"></i>-->
+                                <!--<span>活动评委设置</span>-->
+                                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
+                            <!--</a>-->
+                            <!--<a href="competitor.html">-->
+                                <!--<i class="am-icon-angle-right"></i>-->
+                                <!--<span>活动选手设置</span>-->
+                                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <li class="tpl-left-nav-item">
+                    <a href="competitor.html" class="nav-link active">
+                        <i class="am-icon-calendar-minus-o"></i>
+                        <span>我的活动</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="repassword.html" class="nav-link tpl-left-nav-link-list">
+                        <i class="am-icon-key"></i>
+                        <span>修改密码</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="tpl-content-wrapper">
+        <div class="tpl-content-scope">
+            <div class="note note-info">
+                <div class="am-g tpl-amazeui-form">
+                    <div class="am-u-sm-12 am-u-md-9">
+                        <div style="margin-bottom:20px;">
+                            <button type="button" class="am-btn am-btn-success"  id="doc-confirm-toggle" style="margin-right: 20px;font-weight: bold" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 500, height: 330}">
+                                <span class="am-icon-plus"></span>
+                                手动添加</button>
+                            <div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+                                <div class="am-modal-dialog" id="am-modal-dialog">
+                                    <div class="am-modal-hd">添加评委
+                                        <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+                                    </div>
+                                    <div class="am-modal-bd">
+                                        <form class="am-form am-form-horizontal">
+                                            <div class="am-form-group">
+                                                <label for="judge-num" class="am-u-sm-3 am-form-label">教工号</label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" id="judge-num" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="judge-name" class="am-u-sm-3 am-form-label">姓名</label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" id="judge-name" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="judge-duty" class="am-u-sm-3 am-form-label">职务</label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" id="judge-duty" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group">
+                                                <label for="judge-home" class="am-u-sm-3 am-form-label">单位</label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" id="judge-home" placeholder="">
+                                                </div>
+                                            </div>
+                                            <button type="button" id="closemodal" onclick="closeM()" class="am-btn am-btn-secondary js-modal-close">确定</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <input style="display: inline-block;margin-bottom: 0;padding: .5em 1em;vertical-align: middle;font-size: 1.6rem;font-weight: 400;line-height: 1.2;text-align: center;white-space: nowrap;background-image: none;border: 1px solid transparent;" id="doc-form-file" type="file" multiple>
+
+                        </div>
+
+                        <form class="am-form am-form-horizontal">
+                            <table class="am-table am-table-bordered am-table-striped am-table-compact" >
+                                <thead>
+                                <tr>
+                                    <th>教工号</th>
+                                    <th>姓名</th>
+                                    <th>职务</th>
+                                    <th>单位</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>123456</td>
+                                    <td>张三</td>
+                                    <td></td>
+                                    <td>软件教研室</td>
+                                    <td>
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs" >
+                                                <button type="button" class="am-btn am-btn-default"
+                                                        style="background-color: white;color: #dd514c"
+                                                        data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 500, height: 350}">
+                                                    <span class="am-icon-plus"></span>
+                                                    编辑
+                                                </button>
+                                                <div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-2">
+                                                    <div class="am-modal-dialog" id="ream-modal-dialog">
+                                                        <div class="am-modal-hd">添加评分内容
+                                                            <a href="" class="am-close am-close-spin" >&times;</a>
+                                                        </div>
+                                                        <div class="am-modal-bd">
+                                                            <form class="am-form am-form-horizontal">
+                                                                <div class="am-form-group">
+                                                                    <label for="judge-num"
+                                                                           class="am-u-sm-3 am-form-label">教工号</label>
+                                                                    <div class="am-u-sm-9">
+                                                                        <input type="text" id="rejudge-num" placeholder="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="am-form-group">
+                                                                    <label for="judge-name"
+                                                                           class="am-u-sm-3 am-form-label">姓名</label>
+                                                                    <div class="am-u-sm-9">
+                                                                        <input type="text" id="rejudge-name" placeholder="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="am-form-group">
+                                                                    <label for="judge-home"
+                                                                           class="am-u-sm-3 am-form-label">职务</label>
+                                                                    <div class="am-u-sm-9">
+                                                                        <input type="text" id="rejudge-duty" placeholder="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="am-form-group">
+                                                                    <label for="judge-home"
+                                                                           class="am-u-sm-3 am-form-label">单位</label>
+                                                                    <div class="am-u-sm-9">
+                                                                        <input type="text" id="rejudge-home" placeholder="">
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button" id="reclosemodal"  onclick="recloseM()"
+                                                                        class="am-btn am-btn-secondary js-modal-close">确定
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" style="background-color: #fff"><span class="am-icon-trash-o"></span> 删除</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </form>
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3" style="text-align: center;">
+                                <button type="button" class="am-btn am-btn-primary" style="margin-top:20px;margin-right: 20px;"><a style="color:white" href="activity.html">上一步</a></button>
+
+                                <button type="button" class="am-btn am-btn-primary" style="margin-top:20px;"><a style="color:white" href="competitor.html">下一步</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/iscroll.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+    $(function() {
+        $('#doc-form-file').on('change', function() {
+            var fileNames = '';
+            $.each(this.files, function() {
+                fileNames += '<span class="am-badge">' + this.name + '</span> ';
+            });
+            $('#file-list').html(fileNames);
+        });
+    });
+    function closeM() {
+        $('#doc-modal-1').modal('close')
+    };
+
+    function recloseM() {
+        $('#doc-modal-2').modal('close')
+    };
+</script>
+</body>
+</html>
