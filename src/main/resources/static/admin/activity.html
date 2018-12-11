@@ -124,19 +124,26 @@
                                 </div>
                             </div>
                             <div class="am-form-group">
-                                <div class="am-alert am-alert-danger" id="my-alert" style="display: none">
-                                    <p>开始日期应小于结束日期！</p>
-                                </div>
-                                <label for="" class="am-u-sm-3 am-form-label">活动时间</label>
-                                <div class="am-u-sm-9 " style="float:left">
-                                    <button type="button" class="am-btn am-btn-default am-margin-right" id="my-start">
-                                        开始日期
-                                    </button>
-                                    <span id="my-startDate">2014-12-20</span>
-                                    <button type="button" class="am-btn am-btn-default am-margin-right" id="my-end"
-                                            style="margin-left:50px">结束日期
-                                    </button>
-                                    <span id="my-endDate">2014-12-25</span>
+                                <label for="" class="am-u-sm-3 am-form-label"
+                                       style="margin-right: 15px;">活动时间</label>
+                                <div style="display: flex;flex-direction: row;">
+                                    <div class="am-input-group am-datepicker-date" style="width:220px;"
+                                         data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                                        <input type="text" class="am-form-field" placeholder="2018-12-10" readonly>
+                                        <span class="am-input-group-btn am-datepicker-add-on">
+                                        <button class="am-btn am-btn-default" type="button"><span
+                                                class="am-icon-calendar"></span> </button>
+                                      </span>
+                                    </div>
+                                    <div style="margin:0 20px;padding-top: 10px;">至</div>
+                                    <div class="am-input-group am-datepicker-date" style="width:220px;"
+                                         data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                                        <input type="text" class="am-form-field" placeholder="2018-12-10" readonly>
+                                        <span class="am-input-group-btn am-datepicker-add-on">
+                                        <button class="am-btn am-btn-default" type="button"><span
+                                                class="am-icon-calendar"></span> </button>
+                                      </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="am-form-group">
@@ -144,7 +151,7 @@
                                        style="margin-right: 15px;">上传比赛材料截至时间</label>
                                 <div class="am-input-group am-datepicker-date" style="width:220px;"
                                      data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                    <input type="text" class="am-form-field" placeholder="2018-20-10" readonly>
+                                    <input type="text" class="am-form-field" placeholder="2018-12-10" readonly>
                                     <span class="am-input-group-btn am-datepicker-add-on">
                                         <button class="am-btn am-btn-default" type="button"><span
                                                 class="am-icon-calendar"></span> </button>
@@ -312,11 +319,12 @@
 <script src="assets/js/iscroll.js"></script>
 <script src="assets/js/app.js"></script>
 <script>
-    $(function () {
+    $(function() {
         var startDate = new Date(2014, 11, 20);
         var endDate = new Date(2014, 11, 25);
         var $alert = $('#my-alert');
-        $('#my-start').datepicker().on('changeDate.datepicker.amui', function (event) {
+        $('#my-start').datepicker().
+        on('changeDate.datepicker.amui', function(event) {
             if (event.date.valueOf() > endDate.valueOf()) {
                 $alert.find('p').text('开始日期应小于结束日期！').end().show();
             } else {
@@ -327,7 +335,8 @@
             $(this).datepicker('close');
         });
 
-        $('#my-end').datepicker().on('changeDate.datepicker.amui', function (event) {
+        $('#my-end').datepicker().
+        on('changeDate.datepicker.amui', function(event) {
             if (event.date.valueOf() < startDate.valueOf()) {
                 $alert.find('p').text('结束日期应大于开始日期！').end().show();
             } else {
