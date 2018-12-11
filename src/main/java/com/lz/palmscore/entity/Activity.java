@@ -8,11 +8,11 @@ public class Activity {
 
   @Id
   private long id;
-  private String name;
-  private String startTime;
-  private String endTime;
-  private String uploadTime;
-  private String scoreRule;
+  private String name;//活动名
+  private String startTime;//开始日期
+  private String endTime;//结束日期
+  private String uploadTime;//提交截止时间
+  private String scoreRule;//评分细则
 
 
   public long getId() {

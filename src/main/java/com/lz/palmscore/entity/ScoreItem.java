@@ -7,12 +7,10 @@ public class ScoreItem {
 
   @Id
   private long id;
-  private long activityId;
-  private String name;
-  private double rate;
-  private String note;
-
-
+  private long activityId;//活动id
+  private String name;//评分项
+  private double rate;//占比
+  private String note;//备注
   public long getId() {
     return id;
   }

@@ -5,17 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+//选手
 public class Player {
 
   @Id
   private long id;
-  private String pId;
-  private String name;
-  private String job;
-  private String course;
-  private long order;
-  private String note;
-  private double totalScore;
+  private String pId;//选手教工号
+  private String name;//选手姓名
+  private String job;//职务
+  private String course;//课程
+  private long order;//出场顺序
+  private String note;//备注
+  private double totalScore;//总分
 
 
   public long getId() {

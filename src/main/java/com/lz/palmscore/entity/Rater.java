@@ -8,11 +8,11 @@ public class Rater {
 
   @Id
   private long id;
-  private String rId;
-  private String name;
-  private String job;
-  private String workplace;
-  private long activityId;
+  private String rId;//评委教工号
+  private String name;//评委姓名
+  private String job;//职务
+  private String workplace;//工作单位
+  private long activityId;//所属活动id
 
 
   public long getId() {

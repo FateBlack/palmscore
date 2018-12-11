@@ -8,8 +8,8 @@ public class Admin {
 
   @Id
   private long id;
-  private String account;
-  private String password;
+  private String account;//账户
+  private String password;//密码
 
 
   public long getId() {
