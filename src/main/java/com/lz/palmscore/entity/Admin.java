@@ -15,7 +15,7 @@ public class Admin {
   private String password;//密码
 
 
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 

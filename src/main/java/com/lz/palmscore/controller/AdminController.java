@@ -5,6 +5,7 @@ import com.lz.palmscore.enums.AdminEnum;
 import com.lz.palmscore.exception.AdminException;
 import com.lz.palmscore.form.LoginForm;
 import com.lz.palmscore.service.AdminService;
+
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +56,6 @@ public class AdminController {
                           BindingResult bindingResult,
                           HttpServletRequest request){
 
-
         if (bindingResult.hasErrors()) {
             log.error("[登陆]格式错误");
             throw new AdminException(AdminEnum.PARAM_ERROR.getCode(),
@@ -91,8 +91,10 @@ public class AdminController {
         if (admin == null){
             log.error("[管理员主页]请先登陆");
         }
-        map.put("admin_name",admin.getAccount());
+        map.put("admin",admin);
         return new ModelAndView("/admin/index");
     }
+
+
 
 }
