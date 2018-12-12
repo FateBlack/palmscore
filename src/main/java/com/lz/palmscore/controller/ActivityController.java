@@ -4,6 +4,7 @@ import com.lz.palmscore.enums.ActivityEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.form.ActivityForm;
 import com.lz.palmscore.form.LoginForm;
+import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -29,21 +30,6 @@ import java.util.Map;
 @Slf4j
 public class ActivityController  {
 
-    @GetMapping({"/login","/"})
-    public ModelAndView login(){
-        return new ModelAndView("/admin/login");
-    }
 
-    @PostMapping("activity_add")
-    public ResultVO ActivityAdd(@Valid ActivityForm activityForm,
-                                BindingResult bindingResult){
-
-        if (bindingResult.hasErrors()) {
-            log.error("[添加活动]格式错误");
-            throw new AcitvityException(ActivityEnum.ACTIVITY_ERROR.getCode(),
-                    bindingResult.getFieldError().getDefaultMessage());
-        }
-        return null;
-    }
 
 }
