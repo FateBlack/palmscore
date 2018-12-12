@@ -13,9 +13,9 @@ public class AdminException extends RuntimeException {
         return code;
     }
 
-    public AdminException(AdminEnum AdminEnum) {
-        super(AdminEnum.getMessage());
-        this.code =AdminEnum.getCode();
+    public AdminException(AdminEnum adminEnum) {
+        super(adminEnum.getMessage());
+        this.code =adminEnum.getCode();
     }
 
     public AdminException(Integer code,String msg){
