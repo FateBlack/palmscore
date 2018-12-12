@@ -36,12 +36,12 @@
 			<form class="am-form">
 				<fieldset>
 					<div class="am-form-group">
-						<input type="email" class="" id="doc-ipt-email-1" placeholder="输入电子邮件">
+						<input type="text" class="" id="account" placeholder="账号">
 					</div>
 					<div class="am-form-group">
-						<input type="password" class="" id="doc-ipt-pwd-1" placeholder="设置个密码吧">
+						<input type="password" class="" id="password" placeholder="密码">
 					</div>
-					<p><button type="submit" class="am-btn am-btn-default"><a href="index.html">登录</a></button></p>
+					<p><button type="submit" id="postBtn" class="am-btn am-btn-default"><a href="index.html">登录</a></button></p>
 				</fieldset>
 			</form>
 		</div>
@@ -51,5 +51,29 @@
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/amazeui.min.js"></script>
   <script src="assets/js/app.js"></script>
+
+<script>
+    $("#postBtn").click(function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../admin/admin_login",
+            data:{
+                account:$("#account").val(),
+                password:$("#password").val()
+            },
+
+            success:function(data){
+                alert("登陆成功! 欢迎你");
+                window.location.href="/admin/index";
+            },
+            error:function(){
+//            $("#test").html("发生错误:"+jqXHR.status);
+                alert("密码或账号不正确");
+            }
+        });
+    })
+</script>
 </body>
 </html>

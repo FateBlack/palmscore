@@ -1,13 +1,16 @@
 package com.lz.palmscore.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Rater {
 
   @Id
-  private long id;
+  @GeneratedValue(strategy= GenerationType.IDENTITY)
+  private Integer id;
   private String rId;//评委教工号
   private String name;//评委姓名
   private String job;//职务

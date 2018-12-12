@@ -2,12 +2,15 @@ package com.lz.palmscore.entity;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Player {
 
   @Id
+  @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Integer id;
   private String pId;//选手教工号
   private String name;//选手姓名

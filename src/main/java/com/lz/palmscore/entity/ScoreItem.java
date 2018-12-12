@@ -1,11 +1,14 @@
 package com.lz.palmscore.entity;
 
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 public class ScoreItem {
 
   @Id
+  @GeneratedValue(strategy= GenerationType.IDENTITY)
   private Integer id;
   private long activityId;//活动id
   private String name;//评分项
