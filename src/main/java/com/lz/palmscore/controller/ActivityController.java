@@ -1,9 +1,11 @@
 package com.lz.palmscore.controller;
 
+import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.enums.ActivityEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.form.ActivityForm;
 import com.lz.palmscore.form.LoginForm;
+import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,8 @@ import java.util.Map;
 @RequestMapping("/activity")
 @Slf4j
 public class ActivityController  {
-
+    @Autowired
+    ActivityService activityService;
     @GetMapping({"/login","/"})
     public ModelAndView login(){
         return new ModelAndView("/admin/login");
@@ -43,7 +46,19 @@ public class ActivityController  {
             throw new AcitvityException(ActivityEnum.ACTIVITY_ERROR.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
-        return null;
+        Activity ac=new Activity();
+        ac.setName(activityForm.getName());
+        ac.setStartTime(activityForm.getStartTime());
+        ac.setEndTime(activityForm.getEndTime());
+        ac.setUploadTime(activityForm.getUploadTime());
+        ac.setScoreRule(activityForm.getScoreRule());
+        Activity activity=activityService.add(ac);
+
+        if (activity==null){
+            log.error("[活动]创建失败");
+            throw new AcitvityException(ActivityEnum.ACTIVITY_ERROR);
+        }
+        return ResultVOUtil.success();
     }
 
 }
