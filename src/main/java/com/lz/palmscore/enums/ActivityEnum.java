@@ -7,11 +7,8 @@ public enum ActivityEnum {
     ACTIVITY_ERROR(201,"活动创建失败")
 
     ;
-
-
     private Integer code;
     private String message;
-
 
     ActivityEnum(Integer code, String message) {
         this.code = code;

@@ -10,18 +10,18 @@ public class Activity {
 
   @Id
   @GeneratedValue(strategy= GenerationType.IDENTITY)
-  private long id;
+  private Integer id;
   private String name;//活动名
   private String startTime;//开始日期
   private String endTime;//结束日期
   private String uploadTime;//提交截止时间
   private String scoreRule;//评分细则
 
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

@@ -14,7 +14,7 @@ public class ScoreItem {
   private String name;//评分项
   private double rate;//占比
   private String note;//备注
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 

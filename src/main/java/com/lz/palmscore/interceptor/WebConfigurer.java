@@ -18,9 +18,13 @@ public class WebConfigurer  implements WebMvcConfigurer {
     @Autowired
     AdminInterceptor addInterceptor;
 
+    /**
+     *  开发中 注释拦截器
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //拦截所有 前缀 admin 的请求，除了 login 和 register
-        registry.addInterceptor(addInterceptor).addPathPatterns("/admin/**").excludePathPatterns("/admin/login", "/admin/register");
+        //registry.addInterceptor(addInterceptor).addPathPatterns("/admin/**").excludePathPatterns("/admin/login", "/admin/register");
     }
 }

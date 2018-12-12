@@ -21,7 +21,7 @@ public class Player {
   private double totalScore;//总分
 
 
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 

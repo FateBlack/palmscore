@@ -18,7 +18,7 @@ public class Rater {
   private long activityId;//所属活动id
 
 
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
