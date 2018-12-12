@@ -1,11 +1,9 @@
 package com.lz.palmscore.controller;
 
-import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.enums.ActivityEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.form.ActivityForm;
 import com.lz.palmscore.form.LoginForm;
-import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
