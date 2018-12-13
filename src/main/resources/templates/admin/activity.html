@@ -69,33 +69,6 @@
                         <span>首页</span>
                     </a>
                 </li>
-                <!--<li class="tpl-left-nav-item">-->
-                <!--<a href="javascript:;" class="nav-link tpl-left-nav-link-list">-->
-                <!--<i class="am-icon-table"></i>-->
-                <!--<span>我的活动</span>-->
-                <!--<i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>-->
-                <!--</a>-->
-                <!--<ul class="tpl-left-nav-sub-menu">-->
-                <!--<li>-->
-                <!--<a href="activity.html">-->
-                <!--<i class="am-icon-angle-right"></i>-->
-                <!--<span>活动规则设置</span>-->
-                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
-                <!--</a>-->
-
-                <!--<a href="judge.html">-->
-                <!--<i class="am-icon-angle-right"></i>-->
-                <!--<span>活动评委设置</span>-->
-                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
-                <!--</a>-->
-                <!--<a href="competitor.html">-->
-                <!--<i class="am-icon-angle-right"></i>-->
-                <!--<span>活动选手设置</span>-->
-                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
-                <!--</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
                 <li class="tpl-left-nav-item">
                     <a href="competitor.html" class="nav-link active">
                         <i class="am-icon-calendar-minus-o"></i>
@@ -166,7 +139,7 @@
                                     <!--<button type="button" class="am-btn am-btn-secondary" style="margin-bottom:20px;"><span class="am-icon-plus"></span> 新增</button>-->
                                     <button type="button" class="am-btn am-btn-secondary" id="doc-confirm-toggle"
                                             style="margin-right: 20px;margin-bottom:20px;font-weight: bold"
-                                            data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 500, height: 280}">
+                                            data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 520, height: 320}">
                                         <span class="am-icon-plus"></span>
                                         新增
                                     </button>
@@ -199,6 +172,23 @@
                                                             <input type="text" id="judge-home" placeholder="">
                                                         </div>
                                                     </div>
+                                                    <div class="am-form-group">
+                                                        <label for="user-intro" class="am-u-sm-3 am-form-label">是否参赛者上传</label>
+                                                        <div class="am-u-sm-9" style="display: flex;flex-direction: row">
+                                                            <div class="am-radio" style="display: flex;flex-direction: row;margin-right:50px;">
+                                                                <label>
+                                                                    <input type="radio" name="doc-radio-1" value="option1" checked>
+                                                                    是
+                                                                </label>
+                                                            </div>
+                                                            <div class="am-radio" style="display: flex;flex-direction: row">
+                                                                <label>
+                                                                    <input type="radio" name="doc-radio-1" value="option2">
+                                                                    否
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <button type="button" id="closemodal" onclick="closeM()"
                                                             class="am-btn am-btn-secondary js-modal-close">确定
                                                     </button>
@@ -212,6 +202,7 @@
                                             <th>评分项</th>
                                             <th>占比</th>
                                             <th>备注</th>
+                                            <th>是否参赛者上传</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
@@ -220,6 +211,7 @@
                                             <td>教案</td>
                                             <td>50%</td>
                                             <td>2012-10-01</td>
+                                            <td>是</td>
                                             <td>
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
@@ -229,7 +221,7 @@
                                                         <!--</button>-->
                                                         <button type="button" class="am-btn am-btn-default"
                                                                 style="background-color: white;color: #dd514c"
-                                                                data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 500, height: 280}">
+                                                                data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 500, height: 350}">
                                                             <span class="am-icon-plus"></span>
                                                             编辑
                                                         </button>
@@ -252,6 +244,25 @@
                                                                                    class="am-u-sm-3 am-form-label">占比</label>
                                                                             <div class="am-u-sm-9">
                                                                                 <input type="text" id="rejudge-name" placeholder="输入1%~100%的数">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="am-form-group">
+                                                                            <div class="am-form-group">
+                                                                                <label for="user-intro" class="am-u-sm-3 am-form-label">是否参赛者上传</label>
+                                                                                <div class="am-u-sm-9" style="display: flex;flex-direction: row">
+                                                                                    <div class="am-radio" style="display: flex;flex-direction: row;margin-right:50px;">
+                                                                                        <label>
+                                                                                            <input type="radio" name="doc-radio-1" value="option1" checked>
+                                                                                            是
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <div class="am-radio" style="display: flex;flex-direction: row">
+                                                                                        <label>
+                                                                                            <input type="radio" name="doc-radio-1" value="option2">
+                                                                                            否
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="am-form-group">
