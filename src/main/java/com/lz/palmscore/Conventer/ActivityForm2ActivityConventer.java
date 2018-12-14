@@ -22,6 +22,7 @@ public class ActivityForm2ActivityConventer {
 
         activity.setScoreRule(activityForm.getScoreRule());
         activity.setUploadTime(activityForm.getUploadTime());
+        activity.setFileUpload(activityForm.getFileUpload());
         return activity;
     }
 

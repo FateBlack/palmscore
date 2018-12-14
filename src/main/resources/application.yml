@@ -5,8 +5,10 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
     username: root
-    password: kira
-    url: jdbc:mysql://127.0.0.1/score?characterEncoding=utf-8&useSSL=false
+#    password: kira
+#   url: jdbc:mysql://127.0.0.1/score?characterEncoding=utf-8&useSSL=false
+    password: 123456
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
 
@@ -21,4 +23,4 @@ spring:
     static-path-pattern: /**
 
   resources:
-    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/#,classpath:/static/admin/#
+    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/#,classpath:/templates/admin/#
