@@ -1,5 +1,7 @@
 package com.lz.palmscore.form;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -12,6 +14,9 @@ public class ScoreItemForm {
     private double rate;
     /** 备注**/
     private String note;
+    /**是否上传**/
+    @Value("1")
+    private Integer fileUpload;
 
     public String getName() {
         return name;
@@ -35,5 +40,13 @@ public class ScoreItemForm {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Integer getFileUpload() {
+        return fileUpload;
+    }
+
+    public void setFileUpload(Integer fileUpload) {
+        this.fileUpload = fileUpload;
     }
 }
