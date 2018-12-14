@@ -13,9 +13,10 @@ public class Rater {
   private Integer id;
   private String rId;//评委教工号
   private String name;//评委姓名
-  private String job;//职务
   private String workplace;//工作单位
+  private String job;//职务
   private long activityId;//所属活动id
+
 
 
   public Integer getId() {
@@ -71,4 +72,15 @@ public class Rater {
     this.activityId = activityId;
   }
 
+  @Override
+  public String toString() {
+    return "Rater{" +
+            "id=" + id +
+            ", rId='" + rId + '\'' +
+            ", name='" + name + '\'' +
+            ", job='" + job + '\'' +
+            ", workplace='" + workplace + '\'' +
+            ", activityId=" + activityId +
+            '}';
+  }
 }
