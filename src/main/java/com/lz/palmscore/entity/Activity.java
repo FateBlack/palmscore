@@ -16,7 +16,7 @@ public class Activity {
   private String endTime;//结束日期
   private String uploadTime;//提交截止时间
   private String scoreRule;//评分细则
-
+  private Integer fileUpload;//选手是否上传文件
   public Integer getId() {
     return id;
   }
@@ -25,6 +25,13 @@ public class Activity {
     this.id = id;
   }
 
+  public Integer getFileUpload() {
+    return fileUpload;
+  }
+
+  public void setFileUpload(Integer fileUpload) {
+    this.fileUpload = fileUpload;
+  }
 
   public String getName() {
     return name;

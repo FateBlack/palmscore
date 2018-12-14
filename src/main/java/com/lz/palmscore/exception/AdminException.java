@@ -7,7 +7,7 @@ import com.lz.palmscore.enums.AdminEnum;
  */
 public class AdminException extends RuntimeException {
 
-    private Integer code;
+       private Integer code;
 
     public Integer getCode() {
         return code;

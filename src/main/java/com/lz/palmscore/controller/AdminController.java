@@ -94,5 +94,4 @@ public class AdminController {
         map.put("admin",admin);
         return new ModelAndView("/admin/index");
     }
-
 }

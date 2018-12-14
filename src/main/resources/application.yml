@@ -23,4 +23,4 @@ spring:
     static-path-pattern: /**
 
   resources:
-    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/#,classpath:/static/admin/#
+    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/#,classpath:/templates/admin/#
