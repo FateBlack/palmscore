@@ -14,11 +14,13 @@ public class Player {
   private Integer id;
   private String pId;//选手教工号
   private String name;//选手姓名
-  private String job;//职务
+  private String workplace;//单位
   private String course;//课程
   private long order;//出场顺序
   private String note;//备注
   private double totalScore;//总分
+  private String password;//选手密码
+  private Integer activityId;// 活动 id
 
 
   public Integer getId() {
@@ -47,15 +49,13 @@ public class Player {
     this.name = name;
   }
 
-
-  public String getJob() {
-    return job;
+  public String getWorkplace() {
+    return workplace;
   }
 
-  public void setJob(String job) {
-    this.job = job;
+  public void setWorkplace(String workplace) {
+    this.workplace = workplace;
   }
-
 
   public String getCourse() {
     return course;
@@ -91,5 +91,38 @@ public class Player {
   public void setTotalScore(double totalScore) {
     this.totalScore = totalScore;
   }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+
+  public Integer getActivityId() {
+    return activityId;
+  }
+
+  public void setActivityId(Integer activityId) {
+    this.activityId = activityId;
+  }
+
+  @Override
+  public String toString() {
+    return "Player{" +
+            "id=" + id +
+            ", pId='" + pId + '\'' +
+            ", name='" + name + '\'' +
+            ", workplace='" + workplace + '\'' +
+            ", course='" + course + '\'' +
+            ", order=" + order +
+            ", note='" + note + '\'' +
+            ", totalScore=" + totalScore +
+            ", password='" + password + '\'' +
+            '}';
+  }
+
 
 }

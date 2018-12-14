@@ -17,7 +17,9 @@
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/echarts.min.js"></script>
+    <script src="assets/js/template-web.js"></script>
 </head>
+
 
 <body data-type="index">
 <header class="am-topbar am-topbar-inverse admin-header">
@@ -139,7 +141,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <input style="display: inline-block;margin-bottom: 0;padding: .5em 1em;vertical-align: middle;font-size: 1.6rem;font-weight: 400;line-height: 1.2;text-align: center;white-space: nowrap;background-image: none;border: 1px solid transparent;" id="doc-form-file" type="file" multiple>
+
+
+                            <input style="display: inline-block;margin-bottom: 0;padding: .5em 1em;vertical-align: middle;font-size: 1.6rem;font-weight: 400;line-height: 1.2;text-align: center;white-space: nowrap;background-image: none;border: 1px solid transparent;"
+                                   name="pppfile" id="upfile" type="file" />
+                            <button id="upload_button" onclick="importExp()">上传</button>
                         </div>
                         <form class="am-form am-form-horizontal">
                             <table class="am-table am-table-bordered am-table-striped am-table-compact" >
@@ -155,14 +161,17 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>123456</td>
-                                    <td>张三</td>
-                                    <td>软件教研室</td>
-                                    <td>C语言</td>
-                                    <td>1</td>
-                                    <td></td>
+                                <tbody id="main">
+                                <script type="text/template" id="temp1">
+                                {{each datalist}}
+
+                                <tr >
+                                    <td>{{$value.pId}}</td>
+                                    <td>{{$value.name}}</td>
+                                    <td>{{$value.workplace}}</td>
+                                    <td>{{$value.course}}</td>
+                                    <td>{{$value.order}}</td>
+                                    <td>{{$value.note}}</td>
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs" >
@@ -226,6 +235,8 @@
                                         </div>
                                     </td>
                                 </tr>
+                                {{/each}}
+                                </script>
 
                                 </tbody>
                             </table>
@@ -258,22 +269,49 @@
 <script src="assets/js/iscroll.js"></script>
 <script src="assets/js/app.js"></script>
 <script>
-    $(function() {
-        $('#doc-form-file').on('change', function() {
-            var fileNames = '';
-            $.each(this.files, function() {
-                fileNames += '<span class="am-badge">' + this.name + '</span> ';
-            });
-            $('#file-list').html(fileNames);
-        });
-    });
-    function closeM() {
-        $('#doc-modal-1').modal('close')
-    };
 
-    function recloseM() {
-        $('#doc-modal-2').modal('close')
-    };
+    /**
+     *  上传excel,返回 选手数据
+     */
+    function importExp() {
+        var datalist=[]
+
+        var formData = new FormData();
+
+        formData.append("file",$("#upfile")[0].files[0]);
+        formData.append("type","playerFile");
+        $.ajax({
+            url : '../people/batch_input',
+            type : 'POST',
+            async : false,
+            data : formData,
+            // 不序列化处理发送的数据
+            processData : false,
+            // 不设置Content-Type请求头
+            contentType : false,
+            beforeSend:function(){
+                console.log("正在进行，请稍候");
+            },
+            success : function(res) {
+                var code = res.code;
+                if(code==0){
+                    // console.log(res.data);
+                    datalist = res.data;
+                    var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1', data);
+                    document.getElementById('main').innerHTML = html;
+                    // console.log(datalist);
+                }else{
+                    alert("导入失败");
+                }
+            }
+        });
+    }
+
+
+
 </script>
 </body>
 </html>

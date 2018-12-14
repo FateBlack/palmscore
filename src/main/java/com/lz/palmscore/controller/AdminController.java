@@ -52,7 +52,7 @@ public class AdminController {
      * @return
      */
     @PostMapping("/admin_login")
-    public ResultVO AdminLogin(@Valid LoginForm loginForm,
+    public ResultVO adminLogin(@Valid LoginForm loginForm,
                           BindingResult bindingResult,
                           HttpServletRequest request){
 

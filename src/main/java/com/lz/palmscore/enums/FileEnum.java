@@ -1,17 +1,20 @@
 package com.lz.palmscore.enums;
 
 /**
- * Created by 白 on 2018/12/12.
+ * Created by 白 on 2018/12/13.
  */
-public enum ActivityEnum {
-    ACTIVITY_ERROR(201,"活动创建失败"),
+public enum FileEnum {
 
-    ACTIVITY_ID_NOF_FOUND(207,"活动id未取得")
+    EXCEL_UPLOAD_FAIL(301,"excel文件上传失败"),
+    ROW_EMPTY(302,"excel该行为空"),
+    File_FORMATES_ERROR(303,"文件格式错误")
     ;
+
     private Integer code;
     private String message;
 
-    ActivityEnum(Integer code, String message) {
+
+    FileEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
