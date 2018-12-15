@@ -18,7 +18,6 @@ public class Rater {
   private long activityId;//所属活动id
 
 
-
   public Integer getId() {
     return id;
   }
@@ -82,5 +81,15 @@ public class Rater {
             ", workplace='" + workplace + '\'' +
             ", activityId=" + activityId +
             '}';
+  }
+
+  public Rater(String rId, String name, String workplace, String job) {
+    this.rId = rId;
+    this.name = name;
+    this.workplace = workplace;
+    this.job = job;
+  }
+
+  public Rater() {
   }
 }
