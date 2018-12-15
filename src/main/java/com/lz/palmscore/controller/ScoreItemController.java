@@ -10,9 +10,7 @@ import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -39,7 +37,7 @@ public class ScoreItemController {
                                  HttpSession  session) {
 
 
-        List<ScoreItem> list = (List<ScoreItem>) session.getAttribute("score_list");
+        List<ScoreItem> list = (List<ScoreItem>) session.getAttribute("list");
 
         if(list == null){
             list = new ArrayList<>();
@@ -50,18 +48,15 @@ public class ScoreItemController {
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
-
         ScoreItem scoreItem = new ScoreItem();
         scoreItem.setName(scoreItemForm.getName());
         scoreItem.setRate(scoreItemForm.getRate());
-        if (scoreItemForm.getNote() == null) {
-            scoreItem.setNote("无");
-        }else{
-            scoreItem.setNote(scoreItem.getNote());
-        }
+        scoreItem.setNote(scoreItem.getNote());
+        System.out.println(scoreItem.getNote());
+        scoreItem.setFileUpload(scoreItemForm.getFileUpload());
+        System.out.println(scoreItem.getFileUpload());
         int id= (int) session.getAttribute("activityId");
         scoreItem.setActivityId(id);
-
         if (scoreItem==null){
             log.error("[登陆]账号密码错误");
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR);
@@ -69,5 +64,21 @@ public class ScoreItemController {
         list.add(scoreItem);
         session.setAttribute("list",list);
         return ResultVOUtil.success(list);
+    }
+
+   @PostMapping("score_item_delete")
+    public ResultVO ScoreItemDelete(@RequestParam int index,
+                                    HttpSession  session){
+        List<ScoreItem> list = (List<ScoreItem>) session.getAttribute("list");
+        ScoreItem scoreItem=list.get(index);
+   /*    for(int h=0;h<list.size();h++){
+           if(scoreItem.equals(list.get(index))){
+               list.remove(h);
+           }
+       }*/
+       list.remove(index);
+       System.out.println(list.size());
+        session.setAttribute("list",list);
+        return  ResultVOUtil.success();
     }
 }
