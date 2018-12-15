@@ -49,36 +49,29 @@ public class ActivityController  {
 
         Activity activity = ActivityForm2ActivityConventer.conventer(activityForm);
 
-        int id= (int) session.getAttribute("activityId");
-        System.out.println(id);
-        activity.setId(id);
-        Activity activityResult = activityService.add(activity);
-
-        if (activityResult == null) {
+        if (activity == null) {
             log.error("[活动]创建失败");
             throw new AcitvityException(ActivityEnum.ACTIVITY_ERROR);
         }
+        session.setAttribute("activity",activity);
         return ResultVOUtil.success();
     }
 
     /**点击创建活动时创建id**/
     @GetMapping("createId")
     public ModelAndView createId(HttpSession session) {
-       Activity activity=new Activity();
-       activity.setName("1");
-       activity.setUploadTime("1");
-       activity.setStartTime("1");
-       activity.setScoreRule("1");
-       activity.setEndTime("1");
-       activity.setFileUpload(1);
-       Activity activityNew=activityService.add(activity);
-       if (activityNew==null){
+        Activity activity=new Activity();
+        activity.setName("1");
+        activity.setUploadTime("1");
+        activity.setStartTime("1");
+        activity.setScoreRule("1");
+        activity.setEndTime("1");
+        Activity activityNew=activityService.add(activity);
+        if (activityNew==null){
             System.out.println("嗯哼？错了");
-       }
-       session.setAttribute("activityId",activityNew.getId());
-        int id= (int) session.getAttribute("activityId");
-        System.out.println(id);
-       return  new ModelAndView("/admin/activity");
+        }
+        session.setAttribute("activityId",activityNew.getId());
+        return  new ModelAndView("/admin/activity");
 
     }
 }

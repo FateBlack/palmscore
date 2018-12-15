@@ -16,7 +16,8 @@ public class ScoreItem {
   private String name;//评分项
   private double rate;//占比
   private String note;//备注
-  public Integer getId() {
+    private Integer fileUpload;//是否需要上传文件
+    public Integer getId() {
     return id;
   }
 
@@ -60,4 +61,11 @@ public class ScoreItem {
     this.note = note;
   }
 
+    public Integer getFileUpload() {
+        return fileUpload;
+    }
+
+    public void setFileUpload(Integer fileUpload) {
+        this.fileUpload = fileUpload;
+    }
 }

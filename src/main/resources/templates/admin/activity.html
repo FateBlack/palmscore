@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/echarts.min.js"></script>
+
+    <script src="assets/js/template-web.js"></script>
 </head>
 
 <body data-type="index">
@@ -155,14 +157,14 @@
                                                         <label for="judge-num"
                                                                class="am-u-sm-3 am-form-label">评分项</label>
                                                         <div class="am-u-sm-9">
-                                                            <input type="text" id="judge-num" placeholder="">
+                                                            <input type="text" id="judge-name" placeholder="">
                                                         </div>
                                                     </div>
                                                     <div class="am-form-group">
                                                         <label for="judge-name"
                                                                class="am-u-sm-3 am-form-label">占比</label>
                                                         <div class="am-u-sm-9">
-                                                            <input type="text" id="judge-name" placeholder="">
+                                                            <input type="text" id="judge-num" placeholder="">
                                                         </div>
                                                     </div>
                                                     <div class="am-form-group">
@@ -206,12 +208,14 @@
                                             <th>操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="main">
+                                        <script type="text/template" id="temp1">
+                                            {{each datalist}}
                                         <tr>
-                                            <td>教案</td>
-                                            <td>50%</td>
-                                            <td>2012-10-01</td>
-                                            <td>是</td>
+                                            <td>{{$value.name}}</td>
+                                            <td>{{$value.rate}}</td>
+                                            <td>{{$value.note}}</td>
+                                            <td>{{$value.fileUpload}}</td>
                                             <td>
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
@@ -287,7 +291,8 @@
                                                 </div>
                                             </td>
                                         </tr>
-
+                                            {{/each}}
+                                        </script>
                                         </tbody>
                                     </table>
                                 </div>
@@ -323,7 +328,7 @@
     </div>
 </div>
 </div>
-<script src="/templates/admin/assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/iscroll.js"></script>
@@ -357,11 +362,44 @@
             $(this).datepicker('close');
         });
     });
-    function closeM() {
-        $('#doc-modal-1').modal('close')
+    function closeM(e) {
+        // $("#reclosemodal").click(function(e){
+        var datalist=[];
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../score_item/score_item_add",
+            data:{
+                name:$("#judge-name").val(),
+                rate:$("#judge-num").val(),
+                note:$("#judge-home").val(),
+                fileUpload:$("#doc-radio-1").val(),
+            },
+            success:function(res){
+                alert("添加成功");
+                if(res.code=="0"){
+                    console.log(res);
+                    datalist=res.data;
+                    var data={
+                        datalist:datalist
+                    };
+                   var html = template('temp1',data);
+                   document.getElementById('main').innerHTML = html;
+                }else{ alert("用户信息不合法，或邮箱已被占用");
+                }
+            },
+            error:function(){
+//            $("#test").html("发生错误:"+jqXHR.status);
+                alert("添加失败");
+            }
+        });
+
+
+
+    $('#doc-modal-1').modal('close')
     };
 
-    function recloseM() {
+    function recloseM(e) {
 
        // $("#reclosemodal").click(function(e){
         e.preventDefault();
@@ -393,7 +431,6 @@
 </script>
 <script>
     $("#next").click(function(e){
-        e.preventDefault();
         $.ajax({
             type:'POST',
             dataType: "json",
@@ -404,7 +441,6 @@
                 endTime:$("#endTime").val(),
                 uploadTime:$("#activityEndTime").val(),
                 scoreRule:$("#user-intro").val(),
-                fileUpload:1,
                 //      fileUpload:$("#password").val(),
             },
 

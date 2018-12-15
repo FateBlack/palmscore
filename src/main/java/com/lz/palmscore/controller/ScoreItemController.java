@@ -50,18 +50,17 @@ public class ScoreItemController {
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
+
         ScoreItem scoreItem = new ScoreItem();
         scoreItem.setName(scoreItemForm.getName());
         scoreItem.setRate(scoreItemForm.getRate());
         if (scoreItemForm.getNote() == null) {
-            scoreItem.setNote("");
+            scoreItem.setNote("无");
+        }else{
+            scoreItem.setNote(scoreItem.getNote());
         }
-        scoreItem.setNote(scoreItem.getNote());
         int id= (int) session.getAttribute("activityId");
         scoreItem.setActivityId(id);
-        ScoreItem scoreItem1=scoreItemService.add(scoreItem);
-
-        System.out.println(scoreItem);
 
         if (scoreItem==null){
             log.error("[登陆]账号密码错误");
@@ -69,6 +68,6 @@ public class ScoreItemController {
         }
         list.add(scoreItem);
         session.setAttribute("list",list);
-        return ResultVOUtil.success();
+        return ResultVOUtil.success(list);
     }
 }

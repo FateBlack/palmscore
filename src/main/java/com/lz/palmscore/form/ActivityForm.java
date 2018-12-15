@@ -24,16 +24,6 @@ public class ActivityForm {
     @NotEmpty(message = "评分细则必填")
     private String scoreRule;//评分细则
 
-    @Value("1")
-    private Integer fileUpload;
-
-    public Integer getFileUpload() {
-        return fileUpload;
-    }
-
-    public void setFileUpload(Integer fileUpload) {
-        this.fileUpload = fileUpload;
-    }
 
     public String getName() {
         return name;
