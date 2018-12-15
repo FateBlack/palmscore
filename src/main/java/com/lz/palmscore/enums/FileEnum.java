@@ -7,7 +7,8 @@ public enum FileEnum {
 
     EXCEL_UPLOAD_FAIL(301,"excel文件上传失败"),
     ROW_EMPTY(302,"excel该行为空"),
-    File_FORMATES_ERROR(303,"文件格式错误")
+    FILE_FORMATES_ERROR(303,"excel格式错误"),
+    FILE_UPLOAD_ERROR(304,"文件格式错误,或excel为空")
     ;
 
     private Integer code;

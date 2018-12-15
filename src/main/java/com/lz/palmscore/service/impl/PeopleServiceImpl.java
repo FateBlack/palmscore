@@ -35,9 +35,6 @@ public class PeopleServiceImpl implements PeopleService {
         List<Rater> raterList = new ArrayList<Rater>();
 
 
-        if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
-            throw new FileException(FileEnum.File_FORMATES_ERROR);
-        }
         boolean isExcel2003 = true;
 
         InputStream is = file.getInputStream();
@@ -80,10 +77,6 @@ public class PeopleServiceImpl implements PeopleService {
         boolean notNull = false;
         List<Player> playerList = new ArrayList<>();
 
-
-        if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
-            throw new FileException(FileEnum.File_FORMATES_ERROR);
-        }
         boolean isExcel2003 = true;
 
         InputStream is = file.getInputStream();

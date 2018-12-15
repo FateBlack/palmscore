@@ -147,7 +147,7 @@
                                    name="pppfile" id="upfile" type="file" />
                             <button id="upload_button" onclick="importExp()">上传</button>
                         </div>
-                        <form class="am-form am-form-horizontal">
+
                             <table class="am-table am-table-bordered am-table-striped am-table-compact" >
                                 <thead>
                                 <tr>
@@ -161,11 +161,11 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tbody id="main">
+                                <tbody id="change">
                                 <script type="text/template" id="temp1">
                                 {{each datalist}}
 
-                                <tr >
+                                <tr id='{{$index}}'>
                                     <td>{{$value.pId}}</td>
                                     <td>{{$value.name}}</td>
                                     <td>{{$value.workplace}}</td>
@@ -230,7 +230,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" style="background-color: #fff"><span class="am-icon-trash-o"></span> 删除</button>
+                                                <button  onclick="deleteItem('{{$index}}')" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" style="background-color: #fff"><span class="am-icon-trash-o"></span> 删除</button>
                                             </div>
                                         </div>
                                     </td>
@@ -240,7 +240,7 @@
 
                                 </tbody>
                             </table>
-                        </form>
+
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3" style="text-align: center;margin-top: 20px">
                                 <a class="am-btn am-btn-primary" style="color:white;margin-right: 20px;" href="judge.html">上一步</a>
@@ -273,8 +273,9 @@
     /**
      *  上传excel,返回 选手数据
      */
+
+    var datalist=[]
     function importExp() {
-        var datalist=[]
 
         var formData = new FormData();
 
@@ -301,7 +302,7 @@
                         datalist:datalist
                     };
                     var html = template('temp1', data);
-                    document.getElementById('main').innerHTML = html;
+                    document.getElementById('change').innerHTML = html;
                     // console.log(datalist);
                 }else{
                     alert("导入失败");
@@ -310,6 +311,40 @@
         });
     }
 
+    function deleteItem(index) {
+        var key = parseInt(index);
+
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../people/delete_item",
+            data:{
+                index: index,
+                type:"player"
+            },
+
+            success:function(res){
+
+                if (res.code == 0) {
+                    alert("删除成功");
+
+                    datalist.splice(key, 1);//从下标key开始，删 1 个元素
+                    var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1', data);
+                    document.getElementById('change').innerHTML = html;
+
+                }else {
+                    alert(res.msg)
+                }
+
+            },
+            error:function(){
+                alert("删除失败");
+            }
+        });
+    }
 
 
 </script>
