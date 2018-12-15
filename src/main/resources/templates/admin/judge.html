@@ -215,7 +215,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button  onclick="deleteItem('{{$value.rid}}','{{$index}}')" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"  style="background-color: #fff"><span class="am-icon-trash-o"></span> 删除</button>
+                                                <button  onclick="deleteItem('{{$index}}')" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"  style="background-color: #fff"><span class="am-icon-trash-o"></span> 删除</button>
 
                                             </div>
                                         </div>
@@ -268,7 +268,7 @@
      *  上传excel,返回 评委数据
      */
 
-
+    var datalist=[]; //数据给该数组，方便遍历和删除操作
 
     function importExp() {
 
@@ -305,13 +305,7 @@
         });
     }
 
-
-
-    var datalist=[]; //数据给该数组，方便遍历和删除操作
-
-
-
-    function deleteItem(id,index) {
+    function deleteItem(index) {
         var key = parseInt(index);
 
         $.ajax({

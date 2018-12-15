@@ -8,6 +8,7 @@ import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
 import com.lz.palmscore.enums.ActivityEnum;
 import com.lz.palmscore.enums.FileEnum;
+import com.lz.palmscore.enums.PeopleEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.exception.FileException;
 import com.lz.palmscore.service.PeopleService;
@@ -100,7 +101,7 @@ public class PeopleController {
                         FileEnum.FILE_UPLOAD_ERROR.getMessage());
             }
 
-            session.setAttribute("playList", playerList);
+            session.setAttribute("playerList", playerList);
             return ResultVOUtil.success(playerList);
 
 
@@ -113,7 +114,7 @@ public class PeopleController {
 
     /**
      * 删除 评委或选手 单条数据
-     * @param index   页面遍历的索引
+     * @param index   页面遍历 对象数组的索引
      * @param type    删除类型
      * @param session
      * @return
@@ -122,19 +123,24 @@ public class PeopleController {
     public ResultVO deleteItem(@RequestParam("index") int index, @RequestParam("type") String type,
                                HttpSession session) {
 
-        if (type.equals("rater")) {
-            List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
-            raterList.remove(index);
+        try {
+            if (type.equals("rater")) {
+                List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
+                raterList.remove(index);
+            }
+
+            if (type.equals("player")) {
+                List<Player> playerList = (List<Player>) session.getAttribute("playerList");
+                playerList.remove(index);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        if (type.equals("player")) {
-            List<Player> playerList = (List<Player>) session.getAttribute("playerList");
-            playerList.remove(index);
-        }
-
-        List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
-        System.out.println(raterList);
-
+//
+        List<Player> playerList = (List<Player>) session.getAttribute("playerList");
+//        System.out.println(playerList);
         return ResultVOUtil.success();
     }
 
