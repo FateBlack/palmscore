@@ -30,7 +30,7 @@ public class PeopleServiceImpl implements PeopleService {
 
 
     @Override
-    public List<Rater> batchInputRater(String fileName, MultipartFile file,Integer activityId) throws Exception {
+    public List<Rater> batchInputRater(String fileName, MultipartFile file) throws Exception {
         boolean notNull = false;
         List<Rater> raterList = new ArrayList<Rater>();
 
@@ -62,7 +62,6 @@ public class PeopleServiceImpl implements PeopleService {
             }
 
             rater = raterExcelGet(row, rater);
-            rater.setActivityId(activityId);
 
             raterList.add(rater);
         }
@@ -73,7 +72,7 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     @Override
-    public List<Player> batchInputPlayer(String fileName, MultipartFile file,Integer activityId) throws Exception {
+    public List<Player> batchInputPlayer(String fileName, MultipartFile file) throws Exception {
         boolean notNull = false;
         List<Player> playerList = new ArrayList<>();
 
@@ -104,7 +103,6 @@ public class PeopleServiceImpl implements PeopleService {
             }
 
             player = playerExcelGet(row, player);
-            player.setActivityId(activityId);
 
             playerList.add(player);
         }

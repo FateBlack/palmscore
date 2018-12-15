@@ -1,5 +1,6 @@
 package com.lz.palmscore.form;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -8,24 +9,25 @@ import java.util.Objects;
  */
 public class RaterForm implements Serializable {
 
-    private String rId;//评委教工号
+    @NotEmpty(message = "评委教工号必填")
+    private String rid;//评委教工号
+
+    @NotEmpty(message = "评委姓名必填")
     private String name;//评委姓名
+
+    @NotEmpty(message = "职务必填")
     private String job;//职务
+
+    @NotEmpty(message = "工作单位必填")
     private String workplace;//工作单位
 
-    public RaterForm(String rId, String name, String job, String workplace) {
-        this.rId = rId;
-        this.name = name;
-        this.job = job;
-        this.workplace = workplace;
+
+    public String getRid() {
+        return rid;
     }
 
-    public String getrId() {
-        return rId;
-    }
-
-    public void setrId(String rId) {
-        this.rId = rId;
+    public void setRid(String rid) {
+        this.rid = rid;
     }
 
     public String getName() {
