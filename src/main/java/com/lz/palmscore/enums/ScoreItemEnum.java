@@ -1,7 +1,8 @@
 package com.lz.palmscore.enums;
 
 public enum ScoreItemEnum {
-    SCOREITEM_ERROR(202,"评分项创建失败")
+    SCOREITEM_ERROR(201,"评分项格式错误"),
+    CREATE_ERROR(202,"评分项添加失败")
 
     ;
     private Integer code;
