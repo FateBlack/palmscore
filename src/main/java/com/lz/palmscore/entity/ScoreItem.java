@@ -16,8 +16,10 @@ public class ScoreItem {
   private String name;//评分项
   private double rate;//占比
   private String note;//备注
-    private Integer fileUpload;//是否需要上传文件
-    public Integer getId() {
+  private Integer fileUpload;//是否需要上传文件
+
+  public Integer getId() {
+
     return id;
   }
 

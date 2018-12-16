@@ -23,6 +23,15 @@ public class Player {
   private Integer activityId;// 活动 id
 
 
+  public Player(String pId, String name,Integer order) {
+    this.pId = pId;
+    this.name = name;
+    this.order = order;
+  }
+
+  public Player() {
+  }
+
   public Integer getId() {
     return id;
   }

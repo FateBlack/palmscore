@@ -28,7 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  评委 和 选手
@@ -119,13 +121,14 @@ public class PeopleController {
         try {
             if (type.equals("rater")) {
                 List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
+
+                log.info("测试删除, raterList={}", raterList);
                 raterList.remove(index);
             }
 
             if (type.equals("player")) {
                 List<Player> playerList = (List<Player>) session.getAttribute("playerList");
                 playerList.remove(index);
-
             }
 
         } catch (Exception e) {
@@ -140,7 +143,6 @@ public class PeopleController {
     @PostMapping("add_rater")
     public ResultVO add(@Valid RaterForm raterForm, BindingResult bindingResult, HttpSession session) {
 
-
         if (bindingResult.hasErrors()) {
             return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
@@ -149,7 +151,7 @@ public class PeopleController {
 
         List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
 
-        log.info("测试, raterList={}", raterList);
+        log.info("测试添加, raterList={}", raterList);
 
         if (raterList == null) {
             raterList = new ArrayList<>();
@@ -173,14 +175,34 @@ public class PeopleController {
 
         List<Player> playerList = (List<Player>) session.getAttribute("raterList");
 
-        log.info("测试, raterList={}", playerList);
+        log.info("测试添加, playerList={}", playerList);
 
         if (playerList == null) {
             playerList = new ArrayList<>();
         }
 
         playerList.add(player);
+
+
         return ResultVOUtil.success(player);
+    }
+
+    @GetMapping("test")
+    public ResultVO test() {
+
+        Map map = new HashMap();
+        List<Rater> raterList = new ArrayList<>();
+        raterList.add(new Rater("123", "sd", "dd", "pp"));
+        raterList.add(new Rater("22", "a", "b", "c"));
+        raterList.add(new Rater("33", "d", "e", "f"));
+
+        map.put("player", new Player("666", "ppp", 999));
+
+        map.put("list", raterList);
+
+        map.put("staut", 1);
+
+        return ResultVOUtil.success(map);
     }
 
 
