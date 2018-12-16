@@ -1,5 +1,6 @@
 package com.lz.palmscore.controller;
 
+import com.lz.palmscore.Conventer.ScoreItemForm2ScoreItemConventer;
 import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.enums.ScoreItemEnum;
 import com.lz.palmscore.exception.ScoreItemException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.xml.ws.BindingType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,15 +50,8 @@ public class ScoreItemController {
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
-        ScoreItem scoreItem = new ScoreItem();
-        scoreItem.setName(scoreItemForm.getName());
-        scoreItem.setRate(scoreItemForm.getRate());
-        scoreItem.setNote(scoreItem.getNote());
-        System.out.println(scoreItem.getNote());
-        scoreItem.setFileUpload(scoreItemForm.getFileUpload());
-        System.out.println(scoreItem.getFileUpload());
-        int id= (int) session.getAttribute("activityId");
-        scoreItem.setActivityId(id);
+        ScoreItem scoreItem=ScoreItemForm2ScoreItemConventer.conventer(scoreItemForm);
+
         if (scoreItem==null){
             log.error("[登陆]账号密码错误");
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR);
@@ -66,6 +61,12 @@ public class ScoreItemController {
         return ResultVOUtil.success(list);
     }
 
+    /**
+     * 删除订单项
+     * @param index
+     * @param session
+     * @return
+     */
    @PostMapping("score_item_delete")
     public ResultVO ScoreItemDelete(@RequestParam int index,
                                     HttpSession  session){
@@ -80,5 +81,25 @@ public class ScoreItemController {
        System.out.println(list.size());
         session.setAttribute("list",list);
         return  ResultVOUtil.success();
+    }
+    @PostMapping("score_item_edit")
+    public ResultVO ScoreItemEdit(@RequestParam int index,
+                                  @Valid ScoreItemForm scoreItemForm,
+                                  BindingResult bindingResult,
+                                  HttpSession session){
+        if (bindingResult.hasErrors()) {
+            log.error("[添加活动]格式错误");
+            throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR.getCode(),
+                    bindingResult.getFieldError().getDefaultMessage());
+        }
+        System.out.println(index);
+        List<ScoreItem> list= (List<ScoreItem>) session.getAttribute("list");
+        list.get(index).setName(scoreItemForm.getName());
+        list.get(index).setNote(scoreItemForm.getNote());
+        list.get(index).setRate(scoreItemForm.getRate());
+        list.get(index).setFileUpload(scoreItemForm.getFileUpload());
+        session.setAttribute("list",list);
+        return  ResultVOUtil.success(list);
+
     }
 }
