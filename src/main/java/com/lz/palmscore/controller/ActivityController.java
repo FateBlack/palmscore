@@ -34,14 +34,20 @@ public class ActivityController  {
     @Autowired
     ActivityService activityService;
 
+    /**
+     * 活动添加
+     * @param activityForm
+     * @param bindingResult
+     * @param session
+     * @return
+     */
     @PostMapping("activity_add")
     public ResultVO ActivityAdd(@Valid ActivityForm activityForm,
                                 BindingResult bindingResult,
                                 HttpSession session){
         if (bindingResult.hasErrors()) {
             log.error("[添加活动]格式错误");
-            throw new AcitvityException(ActivityEnum.ACTIVITY_ERROR.getCode(),
-                    bindingResult.getFieldError().getDefaultMessage());
+            return ResultVOUtil.error(ActivityEnum.ACTIVITY_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
 
         Activity activity = ActivityForm2ActivityConventer.conventer(activityForm);
@@ -54,7 +60,11 @@ public class ActivityController  {
         return ResultVOUtil.success();
     }
 
-    /**点击创建活动时创建id**/
+    /**
+     * 默认值创建活动
+     * @param session
+     * @return
+     */
     @GetMapping("createId")
     public ModelAndView createId(HttpSession session) {
         Activity activity=new Activity();
