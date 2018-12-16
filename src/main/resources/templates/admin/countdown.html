@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>教务评分后台管理系统</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/echarts.min.js"></script>
+    <script src="assets/js/template-web.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/countdown.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var date_str = "";
+            for (var i = 0; i <= 23; i++) {
+                var d_;
+                i < 10 ? d_ = "0" + i : d_ = i;
+                date_str = date_str + "<option>" + d_ + "</option><br/>"
+            }
+            $("#_minute").append(date_str);
+            var time_str = "";
+            for (var i = 0; i <= 59; i++) {
+                var t_;
+                i < 10 ? t_ = "0" + i : t_ = i;
+                time_str = time_str + "<option>" + t_ + "</option><br/>"
+            }
+            $("#_second").append(time_str);
+        });
+        $(document).ready(function() {
+            $("#start_").click(function() {
+                var m_ = $("#_minute").val();
+                var s_ = $("#_second").val();
+                seconds_ = m_ * 60 + s_ * 1;
+            });
+            $("#reset_").click(function() {
+                $("#_minute").val("00");
+                $("#_second").val("00");
+                seconds_ = 0;
+                clearInterval(timer);
+            });
+        });
+    </script>
+</head>
+
+<body data-type="index">
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-topbar-brand">
+        <div class="am-topbar-brand">
+            <a href="javascript:;" class="tpl-logo">
+                <img style="width:60px;height:60px;" src="assets/images/xiaohui.png" alt="">
+            </a>
+            <label style="color: rgb(50, 197, 210);">教务评分后台管理系统</label>
+        </div>
+    </div>
+    <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
+
+    </div>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
+            <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen" class="tpl-header-list-link"><span
+                    class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+            <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                    你好,<span>超级管理员</span>
+                </a>
+            </li>
+            <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                    退出登录
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</header>
+<div class="tpl-page-container tpl-page-header-fixed" style="background-color: #e9ecf3;">
+    <div class="tpl-left-nav tpl-left-nav-hover">
+        <div class="tpl-left-nav-title">
+            功能列表
+        </div>
+        <div class="tpl-left-nav-list">
+            <ul class="tpl-left-nav-menu">
+                <li class="tpl-left-nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="am-icon-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="competitor.html" class="nav-link">
+                        <i class="am-icon-calendar-minus-o"></i>
+                        <span>我的活动</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="countdown.html" class="nav-link active">
+                        <i class="am-icon-clock-o"></i>
+                        <span>倒计时</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="result.html" class="nav-link ">
+                        <i class="am-icon-comments-o"></i>
+                        <span>结果通知</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="repassword.html" class="nav-link tpl-left-nav-link-list">
+                        <i class="am-icon-key"></i>
+                        <span>修改密码</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="tpl-content-wrapper">
+        <div class="tpl-content-scope">
+            <div class="note note-info">
+
+                <form role="form">
+                    <div class="form-group">
+                        <div style="display: inline-block;margin-top: 50px;margin-left: 25%">
+                            <div style="display: inline-block;">
+                                <select class="form-control" id="_minute" style="width:100px">
+                                </select>
+                            </div>
+                            &nbsp;<span style="color:white">分</span>
+                            <div style="display: inline-block;">
+                                <select class="form-control" id="_second" style="width:100px">
+                                </select>
+                            </div>
+                            &nbsp;<span style="color:white">秒</span> </div>
+                            <div style="display: inline-block;">
+                               <button class="btn btn-success" type="button" id="start_">Start</button>
+                               <button class="btn btn-danger" type="button" id="reset_">Reset</button>
+                            </div>
+
+                         </div>
+                    <div class="time">
+                        <div class="digit minutes">
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                        </div>
+                        <div class="digit minutes">
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                        </div>
+                        <div class="separator"></div>
+                        <div class="digit seconds">
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                        </div>
+                        <div class="digit seconds">
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                            <div class="segment"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/iscroll.js"></script>
+<script src="assets/js/app.js"></script>
+
+
+
+</body>
+
+</html>
