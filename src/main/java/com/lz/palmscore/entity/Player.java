@@ -16,7 +16,7 @@ public class Player {
   private String name;//选手姓名
   private String workplace;//单位
   private String course;//课程
-  private long order;//出场顺序
+  private Integer order;//出场顺序
   private String note;//备注
   private double totalScore;//总分
   private String password;//选手密码
@@ -65,15 +65,13 @@ public class Player {
     this.course = course;
   }
 
-
-  public long getOrder() {
+  public Integer getOrder() {
     return order;
   }
 
-  public void setOrder(long order) {
+  public void setOrder(Integer order) {
     this.order = order;
   }
-
 
   public String getNote() {
     return note;

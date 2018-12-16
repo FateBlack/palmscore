@@ -114,7 +114,7 @@
                                         <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
                                     </div>
                                     <div class="am-modal-bd">
-                                        <form class="am-form am-form-horizontal">
+                                        <form onsubmit="return false" class="am-form am-form-horizontal">
                                             <div class="am-form-group">
                                                 <label for="judge-num" class="am-u-sm-3 am-form-label">教工号</label>
                                                 <div class="am-u-sm-9">
@@ -128,17 +128,18 @@
                                                 </div>
                                             </div>
                                             <div class="am-form-group">
-                                                <label for="judge-duty" class="am-u-sm-3 am-form-label">职务</label>
-                                                <div class="am-u-sm-9">
-                                                    <input type="text" id="judge-duty" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="am-form-group">
                                                 <label for="judge-home" class="am-u-sm-3 am-form-label">单位</label>
                                                 <div class="am-u-sm-9">
                                                     <input type="text" id="judge-home" placeholder="">
                                                 </div>
                                             </div>
+                                            <div class="am-form-group">
+                                                <label for="judge-duty" class="am-u-sm-3 am-form-label">职务</label>
+                                                <div class="am-u-sm-9">
+                                                    <input type="text" id="judge-duty" placeholder="">
+                                                </div>
+                                            </div>
+
                                             <button type="button" id="closemodal" onclick="closeM()" class="am-btn am-btn-secondary js-modal-close">确定</button>
                                         </form>
                                     </div>
@@ -193,28 +194,28 @@
                                                         <div class="am-modal-bd">
                                                             <form class="am-form am-form-horizontal">
                                                                 <div class="am-form-group">
-                                                                    <label for="judge-num"
+                                                                    <label for="rejudge-num"
                                                                            class="am-u-sm-3 am-form-label">教工号</label>
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="rejudge-num" placeholder="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
-                                                                    <label for="judge-name"
+                                                                    <label for="rejudge-name"
                                                                            class="am-u-sm-3 am-form-label">姓名</label>
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="rejudge-name" placeholder="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
-                                                                    <label for="judge-home"
+                                                                    <label for="rejudge-duty"
                                                                            class="am-u-sm-3 am-form-label">职务</label>
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="rejudge-duty" placeholder="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
-                                                                    <label for="judge-home"
+                                                                    <label for="rejudge-home"
                                                                            class="am-u-sm-3 am-form-label">单位</label>
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="rejudge-home" placeholder="">
@@ -267,12 +268,46 @@
             $('#file-list').html(fileNames);
         });
     });
+
+
+    //添加 一条数据并关闭页面
     function closeM() {
+
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../people/add_rater",
+            data:{
+                rid:$("#judge-num").val(),
+                name:$("#judge-name").val(),
+                workplace:$("#judge-home").val(),
+                job:$("#judge-duty").val()
+            },
+            success:function(res){
+                if (res.code == 0) {
+                    alert("添加成功");
+                    //添加 新数据到数组末尾
+                    datalist.push(res.data);
+                    var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1', data);
+                    document.getElementById('change').innerHTML = html;
+                }else {
+                    alert(res.msg);
+                }
+            },
+            error:function(){
+                alert("添加失败");
+            }
+        });
+
         $('#doc-modal-1').modal('close')
     };
 
     function recloseM() {
-        $('#doc-modal-2').modal('close')
+
+        $('#doc-modal-2').modal('close');
     };
 
 
@@ -352,6 +387,40 @@
         });
     }
 
+
+    /**
+     * 添加单条数据
+     */
+    function add(){
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../people/add_rater",
+            data:{
+                rid:$("#judge-num").val(),
+                name:$("#judge-name").val(),
+                workplace:$("#judge-home").val(),
+                job:$("#judge-duty").val()
+            },
+            success:function(res){
+                if (res.code == 0) {
+                    alert("添加成功");
+                    //添加 新数据到数组末尾
+                    datalist.push(res.data);
+                    var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1', data);
+                    document.getElementById('change').innerHTML = html;
+                }else {
+                    alert(res.msg);
+                }
+            },
+            error:function(){
+                alert("添加失败");
+            }
+        });
+    }
 </script>
 
 

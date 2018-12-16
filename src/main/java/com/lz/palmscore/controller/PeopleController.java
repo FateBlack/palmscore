@@ -4,6 +4,8 @@ package com.lz.palmscore.controller;
  * Created by 白 on 2018/12/12.
  */
 
+import com.lz.palmscore.Conventer.PlayerForm2PlayerConverter;
+import com.lz.palmscore.Conventer.RaterForm2RaterConverter;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
 import com.lz.palmscore.enums.ActivityEnum;
@@ -11,15 +13,20 @@ import com.lz.palmscore.enums.FileEnum;
 import com.lz.palmscore.enums.PeopleEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.exception.FileException;
+import com.lz.palmscore.form.PlayerForm;
+import com.lz.palmscore.form.RaterForm;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.ResultVO;
+import com.sun.deploy.nativesandbox.NativeSandboxBroker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,27 +54,16 @@ public class PeopleController {
     public ResultVO batchInput(@RequestParam("file") MultipartFile file,
                                @RequestParam("type") String type,
                                HttpSession session) throws FileException {
-        System.out.println("进入页面");
-
         String fileName = file.getOriginalFilename();
-        Integer activityId = (Integer) session.getAttribute("activityId");
 
         //判断文件格式
         if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
             return ResultVOUtil.error(FileEnum.FILE_FORMATES_ERROR.getCode(), FileEnum.FILE_FORMATES_ERROR.getMessage());
         }
 
-
-        System.out.println("文件名"+fileName);
         /**
          *  测试 数据 1，待删除
          */
-        activityId = 1;
-
-        if (activityId == null) {
-            log.info("[excel 文件上传]活动id不存在,activity={}", activityId);
-            throw new AcitvityException(ActivityEnum.ACTIVITY_ID_NOF_FOUND);
-        }
 
         List<Rater> raterList = null;
         List<Player> playerList = null;
@@ -75,7 +71,7 @@ public class PeopleController {
         try {
 
             if (type.equals("raterFile")) {
-                raterList = peopleService.batchInputRater(fileName, file, activityId);
+                raterList = peopleService.batchInputRater(fileName, file);
 
                 if (raterList == null || raterList.isEmpty()) {
                     return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getCode(),
@@ -83,29 +79,24 @@ public class PeopleController {
                 }
 
                 session.setAttribute("raterList", raterList);
-
-                /*List<Rater> test = (List<Rater>) session.getAttribute("raterList");
-                log.info("测试 test={}", test);*/
-
-
                 return ResultVOUtil.success(raterList);
-
             }
 
+            if (type.equals("playerFile")){
+                playerList = peopleService.batchInputPlayer(fileName, file);
 
+                if (playerList == null || playerList.isEmpty()) {
+                    return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getCode(),
+                            FileEnum.FILE_UPLOAD_ERROR.getMessage());
+                }
 
-            playerList = peopleService.batchInputPlayer(fileName, file,activityId);
-
-            if (playerList == null || playerList.isEmpty()) {
-                return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getCode(),
-                        FileEnum.FILE_UPLOAD_ERROR.getMessage());
+                session.setAttribute("playerList", playerList);
+                return ResultVOUtil.success(playerList);
             }
-
-            session.setAttribute("playerList", playerList);
-            return ResultVOUtil.success(playerList);
 
 
         } catch (Exception e) {
+            log.error("[评委或选手excel文件上传]文件读取异常,fileName={}",fileName);
             e.printStackTrace();
         }
         return ResultVOUtil.success();
@@ -119,7 +110,9 @@ public class PeopleController {
      * @param session
      * @return
      */
-    @PostMapping("/delete_item")
+
+
+    @DeleteMapping("/delete_item")
     public ResultVO deleteItem(@RequestParam("index") int index, @RequestParam("type") String type,
                                HttpSession session) {
 
@@ -132,16 +125,63 @@ public class PeopleController {
             if (type.equals("player")) {
                 List<Player> playerList = (List<Player>) session.getAttribute("playerList");
                 playerList.remove(index);
+
             }
 
         } catch (Exception e) {
+            log.error("[删除评委或选手]索引越界,index={}", index);
             e.printStackTrace();
         }
 
-//
-        List<Player> playerList = (List<Player>) session.getAttribute("playerList");
-//        System.out.println(playerList);
         return ResultVOUtil.success();
     }
+
+
+    @PostMapping("add_rater")
+    public ResultVO add(@Valid RaterForm raterForm, BindingResult bindingResult, HttpSession session) {
+
+
+        if (bindingResult.hasErrors()) {
+            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+
+        Rater rater = RaterForm2RaterConverter.conventer(raterForm);
+
+        List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
+
+        log.info("测试, raterList={}", raterList);
+
+        if (raterList == null) {
+            raterList = new ArrayList<>();
+        }
+
+        raterList.add(rater);
+        return ResultVOUtil.success(rater);
+    }
+
+
+    @PostMapping("add_player")
+    public ResultVO add(@Valid PlayerForm form, BindingResult bindingResult, HttpSession session) {
+
+        System.out.println(form);
+
+        if (bindingResult.hasErrors()) {
+            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+
+        Player player = PlayerForm2PlayerConverter.conventer(form);
+
+        List<Player> playerList = (List<Player>) session.getAttribute("raterList");
+
+        log.info("测试, raterList={}", playerList);
+
+        if (playerList == null) {
+            playerList = new ArrayList<>();
+        }
+
+        playerList.add(player);
+        return ResultVOUtil.success(player);
+    }
+
 
 }

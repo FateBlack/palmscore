@@ -11,7 +11,7 @@ import java.util.List;
  * Created by 白 on 2018/12/12.
  */
 public interface PeopleService {
-    List<Rater> batchInputRater(String fileName, MultipartFile file,Integer activityId) throws Exception;
+    List<Rater> batchInputRater(String fileName, MultipartFile file) throws Exception;
 
-    List<Player> batchInputPlayer(String fileName, MultipartFile file,Integer activityId) throws Exception;
+    List<Player> batchInputPlayer(String fileName, MultipartFile file) throws Exception;
 }

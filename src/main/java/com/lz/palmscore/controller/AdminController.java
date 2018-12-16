@@ -57,7 +57,7 @@ public class AdminController {
                           HttpServletRequest request){
 
         if (bindingResult.hasErrors()) {
-            log.error("[登陆]格式错误");
+            log.error("[管理员登陆]格式错误");
             throw new AdminException(AdminEnum.PARAM_ERROR.getCode(),
                     bindingResult.getFieldError().getDefaultMessage());
         }
@@ -69,7 +69,7 @@ public class AdminController {
         Admin admin = adminService.login(loginAdmin);
 
         if (admin==null){
-            log.error("[登陆]账号密码错误");
+            log.error("[管理员登陆]账号密码错误");
             throw new AdminException(AdminEnum.LOGIN_FAIL);
         }
 
@@ -89,7 +89,8 @@ public class AdminController {
 
         Admin admin = (Admin) session.getAttribute("admin");
         if (admin == null){
-            log.error("[管理员主页]请先登陆");
+            log.info("[进入管理员主页]session中不存在管理员信息");
+            return new ModelAndView("/admin/login");
         }
         map.put("admin",admin);
         return new ModelAndView("/admin/index");
