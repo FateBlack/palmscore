@@ -75,6 +75,18 @@
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
+                    <a href="countdown.html" class="nav-link ">
+                        <i class="am-icon-clock-o"></i>
+                        <span>倒计时</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="result.html" class="nav-link ">
+                        <i class="am-icon-comments-o"></i>
+                        <span>结果通知</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
                     <a href="repassword.html" class="nav-link tpl-left-nav-link-list">
                         <i class="am-icon-key"></i>
                         <span>修改密码</span>
@@ -99,7 +111,7 @@
                                         <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
                                     </div>
                                     <div class="am-modal-bd">
-                                        <form class="am-form am-form-horizontal">
+                                        <form  onsubmit="return false" class="am-form am-form-horizontal">
                                             <div class="am-form-group">
                                                 <label for="judge-num" class="am-u-sm-3 am-form-label">教工号</label>
                                                 <div class="am-u-sm-9">
@@ -125,9 +137,9 @@
                                                 </div>
                                             </div>
                                             <div class="am-form-group">
-                                                <label for="judge-orader" class="am-u-sm-3 am-form-label">出场顺序</label>
+                                                <label for="judge-order" class="am-u-sm-3 am-form-label">出场顺序</label>
                                                 <div class="am-u-sm-9">
-                                                    <input type="text" id="judge-orader" placeholder="">
+                                                    <input type="text" id="judge-order" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="am-form-group">
@@ -166,7 +178,7 @@
                                 {{each datalist}}
 
                                 <tr id='{{$index}}'>
-                                    <td>{{$value.pId}}</td>
+                                    <td>{{$value.pid}}</td>
                                     <td>{{$value.name}}</td>
                                     <td>{{$value.workplace}}</td>
                                     <td>{{$value.course}}</td>
@@ -189,34 +201,34 @@
                                                         <div class="am-modal-bd">
                                                             <form class="am-form am-form-horizontal">
                                                                 <div class="am-form-group">
-                                                                    <label for="judge-num"
+                                                                    <label for="rejudge-num"
                                                                            class="am-u-sm-3 am-form-label">教工号</label>
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="rejudge-num" placeholder="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
-                                                                    <label for="judge-name"
+                                                                    <label for="rejudge-name"
                                                                            class="am-u-sm-3 am-form-label">姓名</label>
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="rejudge-name" placeholder="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
-                                                                    <label for="judge-home"
+                                                                    <label for="rejudge-home"
                                                                            class="am-u-sm-3 am-form-label">单位</label>
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="rejudge-home" placeholder="">
                                                                     </div>
                                                                 </div>
-                                                                <div class="am-form-group">
-                                                                    <label for="judge-home"
+                                                                <div class="recoursename">
+                                                                    <label for="rejudge-home"
                                                                            class="am-u-sm-3 am-form-label">课程名</label>
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="recoursename" placeholder="">
                                                                     </div>
                                                                 </div>
-                                                                <div class="am-form-group">
+                                                                <div class="rejudge-orader">
                                                                     <label for="judge-home"
                                                                            class="am-u-sm-3 am-form-label">出场顺序</label>
                                                                     <div class="am-u-sm-9">
@@ -269,6 +281,56 @@
 <script src="assets/js/iscroll.js"></script>
 <script src="assets/js/app.js"></script>
 <script>
+
+
+    //添加 一条数据并关闭页面
+    function closeM() {
+        // 如果字符串 为空，则忽略，否则判断是否为正整数
+        var r = /^\+?[1-9][0-9]*$/;　　//正整数
+        var str = $("#judge-order").val();
+        if(typeof str == "undefined" || str == null || str == ""){
+
+        }else{
+            if (!r.test(str)) {
+                alert("出场顺序必须为正整数");
+                return false;
+            }
+        }
+
+        $.ajax({
+            type: 'POST',
+            dataType: "json",
+            url: "../people/add_player",
+            data: {
+                pid: $("#judge-num").val(),
+                name: $("#judge-name").val(),
+                workplace: $("#judge-home").val(),
+                course: $("#judge-coursename").val(),
+                order: $("#judge-order").val(),
+                note: $("#user-intro").val()
+            },
+            success: function (res) {
+                if (res.code == 0) {
+                    alert("添加成功");
+                    //添加 新数据到数组末尾
+                    datalist.push(res.data);
+                    var data = {
+                        datalist: datalist
+                    };
+                    var html = template('temp1', data);
+                    document.getElementById('change').innerHTML = html;
+                } else {
+                    alert(res.msg);
+                }
+            },
+            error: function () {
+                alert("添加失败");
+            }
+        });
+
+        $('#doc-modal-1').modal('close');
+    }
+
 
     /**
      *  上传excel,返回 选手数据
@@ -345,6 +407,7 @@
             }
         });
     }
+
 
 
 </script>

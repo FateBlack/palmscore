@@ -1,0 +1,342 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>教务评分后台管理系统</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+    <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script src="assets/js/echarts.min.js"></script>
+
+    <script src="assets/js/template-web.js"></script>
+</head>
+
+<body data-type="index">
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-topbar-brand">
+        <div class="am-topbar-brand">
+            <a href="javascript:;" class="tpl-logo">
+                <img style="width:60px;height:60px;" src="assets/images/xiaohui.png" alt="">
+            </a>
+            <label style="color: rgb(50, 197, 210);">教务评分后台管理系统</label>
+        </div>
+    </div>
+    <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
+
+    </div>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
+            <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen" class="tpl-header-list-link"><span
+                    class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+            <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                    你好,<span>超级管理员</span>
+                </a>
+            </li>
+            <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                    退出登录
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</header>
+<div class="tpl-page-container tpl-page-header-fixed">
+    <div class="tpl-left-nav tpl-left-nav-hover">
+        <div class="tpl-left-nav-title">
+            功能列表
+        </div>
+        <div class="tpl-left-nav-list">
+            <ul class="tpl-left-nav-menu">
+                <li class="tpl-left-nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="am-icon-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="competitor.html" class="nav-link">
+                        <i class="am-icon-calendar-minus-o"></i>
+                        <span>我的活动</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="countdown.html" class="nav-link ">
+                        <i class="am-icon-clock-o"></i>
+                        <span>倒计时</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="result.html" class="nav-link active">
+                        <i class="am-icon-comments-o"></i>
+                        <span>结果通知</span>
+                    </a>
+                </li>
+                <li class="tpl-left-nav-item">
+                    <a href="repassword.html" class="nav-link tpl-left-nav-link-list">
+                        <i class="am-icon-key"></i>
+                        <span>修改密码</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="tpl-content-wrapper">
+        <div class="tpl-content-scope">
+            <h2 style="color:#686868;margin-left:10px;">最终结果</h2>
+            <div class="note note-info">
+                <div class="am-g tpl-amazeui-form">
+                    <div class="am-u-sm-12 am-u-md-12">
+                        <form class="am-form am-form-horizontal" id="form1"  onsubmit="return false" >
+
+                            <div class="am-form-group">
+                                <div class="am-u-sm-12">
+                                    <table class="am-table am-table-bordered am-table-striped am-table-compact">
+                                        <thead>
+                                        <tr>
+                                            <th>选手</th>
+                                            <th>姓名</th>
+                                            <th>一号评委</th>
+                                            <th>二号评委</th>
+                                            <th>三号评委</th>
+                                            <th>四号评委</th>
+                                            <th>五号评委</th>
+                                            <th>六号评委</th>
+                                            <th>七号评委</th>
+                                            <th>八号评委</th>
+                                            <th>九号评委</th>
+                                            <th>十号评委</th>
+                                            <th>十一号评委</th>
+                                            <th>教案得分</th>
+                                            <th>听课得分</th>
+                                            <th>最终得分</th>
+                                            <th>当前排名</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody >
+                                           <tr>
+                                              <td>5</td>
+                                               <td>张三</td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td>1</td>
+                                           </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/iscroll.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+
+    var datalist=[];
+    $(function() {
+        var startDate = new Date(2014, 11, 20);
+        var endDate = new Date(2014, 11, 25);
+        var $alert = $('#my-alert');
+        $('#my-start').datepicker().
+        on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() > endDate.valueOf()) {
+                $alert.find('p').text('开始日期应小于结束日期！').end().show();
+            } else {
+                $alert.hide();
+                startDate = new Date(event.date);
+                $('#my-startDate').text($('#my-start').data('date'));
+            }
+            $(this).datepicker('close');
+        });
+
+        $('#my-end').datepicker().
+        on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() < startDate.valueOf()) {
+                $alert.find('p').text('结束日期应大于开始日期！').end().show();
+            } else {
+                $alert.hide();
+                endDate = new Date(event.date);
+                $('#my-endDate').text($('#my-end').data('date'));
+            }
+            $(this).datepicker('close');
+        });
+    });
+    //新增评分内容
+    function closeM(e) {
+        // $("#reclosemodal").click(function(e){
+
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../score_item/score_item_add",
+            data:{
+                name:$("#judge-name").val(),
+                rate:$("#judge-num").val(),
+                note:$("#judge-home").val(),
+                fileUpload:$('input[name="doc-radio-1"]:checked').val(),
+            },
+            success:function(res){
+                alert("添加成功");
+                if(res.code=="0"){
+                    console.log(res);
+                    datalist=res.data;
+                    var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1',data);
+                    document.getElementById('main').innerHTML = html;
+                    /* var sum="";
+                     if(datalist.length==1){
+                     sum=datalist[0].name+"*"+ datalist[0].rate;
+                     }else{*/
+                    var sum=datalist[0].name+"*"+ datalist[0].rate;
+                    for (var i = 1; i<datalist.length; i++) {
+                        sum=sum + "+"+datalist[i].name+"×"+ datalist[i].rate;
+                    }
+                    document.getElementById('spanFirst').innerHTML = sum;
+                    console.log(sum)
+
+                }else {
+                    alert("失败；额~");
+                }
+            },
+            error:function(){
+//            $("#test").html("发生错误:"+jqXHR.status);
+                alert("添加失败");
+            }
+        });
+
+        $('#doc-modal-1').modal('close')
+    };
+
+    //删除订单
+    function deleteS(index){
+        var key = parseInt(index);//数组索引
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../score_item/score_item_delete",
+            data:{
+                index: index
+            },
+            success:function(res){
+
+                if (res.code == 0) {
+                    alert("删除成功");
+                    datalist.splice(key, 1);//从索引key开始，删 1 个元素
+                    var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1',data);
+                    document.getElementById('main').innerHTML = html;
+                    var sum=datalist[0].name+"*"+ datalist[0].rate;
+                    for (var i = 1; i<datalist.length; i++) {
+                        sum=sum + "+"+datalist[i].name+"×"+ datalist[i].rate;
+                    }
+                    document.getElementById('spanFirst').innerHTML = sum;
+
+                }else {
+                    alert("删除失败")
+                }
+            },
+            error:function(){
+                alert("删除失败");
+            }
+        });
+    };
+    //修改评分内容
+    function recloseM(e) {
+
+        // $("#reclosemodal").click(function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../score_item/score_item_add",
+            data:{
+                name:$("#rejudge-name").val(),
+                rate:$("#rejudge-num").val(),
+                note:$("#rejudge-home").val(),
+            },
+            success:function(data){
+                alert("添加成功");
+                window.location.href="/admin/activity";
+            },
+            error:function(){
+//            $("#test").html("发生错误:"+jqXHR.status);
+                alert("添加失败");
+            }
+        });
+        //   $('#doc-modal-2').modal('close')
+    };
+
+    function text(){
+        var $date1=$('#activityEndTime').val();
+        console.log($date1)
+    }
+</script>
+<script>
+    $("#next").click(function(e){
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../admin/activity_add",
+            data:{
+                name:$("#user-name").val(),
+                startTime:$("#startTime").val(),
+                endTime:$("#endTime").val(),
+                uploadTime:$("#activityEndTime").val(),
+                scoreRule:$("#user-intro").val(),
+                //      fileUpload:$("#password").val(),
+            },
+            success:function(data){
+                alert("添加成功");
+                window.location.href="/admin/judge.html";
+            },
+            error:function(){
+//            $("#test").html("发生错误:"+jqXHR.status);
+                alert("添加失败");
+            }
+        });
+    })
+</script>
+</body>
+
+</html>
