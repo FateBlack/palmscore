@@ -20,7 +20,39 @@
 
     <script src="assets/js/template-web.js"></script>
 </head>
+<script type="text/javascript">
+    window.onload=function back(){
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../admin/show",
+            success:function(res){
+                if(res.code=="0"){
+                    var   map=res.data;
+                   var a=map.get();
+                    $("#user-name").attr("value",a.name);
+                    $("#startTime").attr("value",a.startTime);
+                    $("#endTime").attr("value",a.endTime);
+                    $("#user-intro").attr("value",a.scoreRule);
+                    $("#groupNum").attr("value",a.groupNum);
 
+                   /* var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1',data);
+                    document.getElementById('main').innerHTML = html;*/
+                }else{
+                    alert(res.msg);
+                }
+            },
+
+            error:function(){
+//            $("#test").html("发生错误:"+jqXHR.status);
+                alert("添加失败");
+            }
+        });
+    }
+</script>
 <body data-type="index">
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
@@ -329,16 +361,17 @@
                                     </div>
                                 </div>
                                 <div class="am-form-group">
-                                    <label for="user-name" class="am-u-sm-3 am-form-label">参赛组</label>
+                                    <label for="user-name" class="am-u-sm-3 am-form-label">参赛组数</label>
                                     <div class="am-u-sm-9">
                                         <div class="am-form-group am-form-select">
-                                            <select class="">
+                                            <input type="text" id="groupNum" value="" placeholder="请填入数字，例如 1,2,3...">
+                                           <!-- <select class="">
                                                 <option value="">1</option>
                                                 <option value="">2</option>
                                                 <option value="">3</option>
                                                 <option value="">4</option>
                                                 <option value="">5</option>
-                                            </select>
+                                            </select>-->
                                         </div>
                                     </div>
                                 </div>
@@ -349,9 +382,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
 
                         </form>
                     </div>
@@ -543,26 +573,20 @@
     }
 </script>
 <script>
-
     //添加活动
     $("#next").click(function(){
-        var name=$("#user-name").val();
-        var startTime=$("#startTime").val();
-        var endTime=$("#endTime").val();
-        var uploadTime=$("#activityEndTime").val();
-        var scoreRule=$("#user-intro").val();
 
         $.ajax({
             type:'POST',
             dataType: "json",
             url:"../admin/activity_add",
             data:{
-                name:name,
-                startTime:startTime,
-                endTime:endTime,
-                uploadTime:uploadTime,
-                scoreRule:scoreRule,
-                //      fileUpload:$("#password").val(),
+                name:$("#user-name").val(),
+                startTime:$("#startTime").val(),
+                endTime:$("#endTime").val(),
+                uploadTime:$("#activityEndTime").val(),
+                scoreRule:$("#user-intro").val(),
+                groupNum:$("#groupNum").val(),
             },
             success:function(res){
                 if(res.code=="0"){

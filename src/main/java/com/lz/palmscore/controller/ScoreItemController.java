@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.xml.ws.BindingType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +36,6 @@ public class ScoreItemController {
     public ResultVO ScoreItemAdd(@Valid ScoreItemForm scoreItemForm,
                                  BindingResult bindingResult,
                                  HttpSession  session) {
-
-
         List<ScoreItem> list = (List<ScoreItem>) session.getAttribute("list");
 
         if(list == null){
@@ -71,7 +68,7 @@ public class ScoreItemController {
                                     HttpSession  session){
         List<ScoreItem> list = (List<ScoreItem>) session.getAttribute("list");
         ScoreItem scoreItem=list.get(index);
-   /*    for(int h=0;h<list.size();h++){
+        /*    for(int h=0;h<list.size();h++){
            if(scoreItem.equals(list.get(index))){
                list.remove(h);
            }

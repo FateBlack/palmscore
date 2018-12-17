@@ -71,6 +71,13 @@ public class PeopleServiceImpl implements PeopleService {
         return raterList;
     }
 
+    /**
+     *
+     * @param fileName
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<Player> batchInputPlayer(String fileName, MultipartFile file) throws Exception {
         boolean notNull = false;
@@ -186,12 +193,11 @@ public class PeopleServiceImpl implements PeopleService {
         }
         player.setCourse(course);
 
-        String note = row.getCell(5).getStringCellValue();
-        if(note==null|| note.isEmpty()){
-            note = "0";
+        String group = row.getCell(5).getStringCellValue();
+        if(group==null|| group.isEmpty()){
+            group = "0";
         }
-        player.setNote(note);
-
+        player.setGroup(group);
         return  player;
     }
 }

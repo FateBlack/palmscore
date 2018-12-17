@@ -139,14 +139,14 @@
                                             <div class="am-form-group">
                                                 <label for="judge-order" class="am-u-sm-3 am-form-label">出场顺序</label>
                                                 <div class="am-u-sm-9">
-                                                    <input type="text" id="judge-order" placeholder="">
+                                                    <input type="text" id="judge-order" placeholder="可为空或输入正整数">
                                                 </div>
                                             </div>
                                             <div class="am-form-group">
-                                                <label for="user-intro" class="am-u-sm-3 am-form-label">备注</label>
+                                                <label for="user-intro" class="am-u-sm-3 am-form-label">所属组</label>
                                                 <div class="am-u-sm-9">
-                                                    <textarea class="" rows="5" id="user-intro" ></textarea>
-                                                </div>
+                                                    <input type="text" id="user-intro" placeholder="可为空或输入正整数">
+                                               </div>
                                             </div>
                                             <button type="button" id="closemodal" onclick="closeM()" class="am-btn am-btn-secondary js-modal-close">确定</button>
                                         </form>
@@ -169,7 +169,7 @@
                                     <th>单位</th>
                                     <th>课程名</th>
                                     <th>出场顺序</th>
-                                    <th>备注</th>
+                                    <th>所属组</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -183,7 +183,7 @@
                                     <td>{{$value.workplace}}</td>
                                     <td>{{$value.course}}</td>
                                     <td>{{$value.order}}</td>
-                                    <td>{{$value.note}}</td>
+                                    <td>{{$value.group}}</td>
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs" >
@@ -195,44 +195,49 @@
                                                 </button>
                                                 <div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-2">
                                                     <div class="am-modal-dialog" id="ream-modal-dialog">
-                                                        <div class="am-modal-hd">添加评分内容
-                                                            <a href="" class="am-close am-close-spin" >&times;</a>
+                                                        <div class="am-modal-hd">修改选手信息
+                                                            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
                                                         </div>
                                                         <div class="am-modal-bd">
                                                             <form class="am-form am-form-horizontal">
+                                                                <input type="hidden" id="index" value="">
                                                                 <div class="am-form-group">
                                                                     <label for="rejudge-num"
                                                                            class="am-u-sm-3 am-form-label">教工号</label>
                                                                     <div class="am-u-sm-9">
-                                                                        <input type="text" id="rejudge-num" placeholder="">
+                                                                        <input type="text" id="rejudge-num" placeholder="必填">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
                                                                     <label for="rejudge-name"
                                                                            class="am-u-sm-3 am-form-label">姓名</label>
                                                                     <div class="am-u-sm-9">
-                                                                        <input type="text" id="rejudge-name" placeholder="">
+                                                                        <input type="text" id="rejudge-name" placeholder="必填">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
                                                                     <label for="rejudge-home"
                                                                            class="am-u-sm-3 am-form-label">单位</label>
                                                                     <div class="am-u-sm-9">
-                                                                        <input type="text" id="rejudge-home" placeholder="">
+                                                                        <input type="text" id="rejudge-home" placeholder="必填">
                                                                     </div>
                                                                 </div>
-                                                                <div class="recoursename">
-                                                                    <label for="rejudge-home"
-                                                                           class="am-u-sm-3 am-form-label">课程名</label>
+                                                                <div class="am-form-group">
+                                                                    <label for="rejudge-coursename" class="am-u-sm-3 am-form-label">课程名</label>
                                                                     <div class="am-u-sm-9">
-                                                                        <input type="text" id="recoursename" placeholder="">
+                                                                        <input type="text" id="rejudge-coursename" placeholder="">
                                                                     </div>
                                                                 </div>
-                                                                <div class="rejudge-orader">
-                                                                    <label for="judge-home"
-                                                                           class="am-u-sm-3 am-form-label">出场顺序</label>
+                                                                <div class="am-form-group">
+                                                                    <label for="rejudge-order" class="am-u-sm-3 am-form-label">出场顺序</label>
                                                                     <div class="am-u-sm-9">
-                                                                        <input type="text" id="rejudge-orader" placeholder="">
+                                                                        <input type="text" id="rejudge-order" placeholder="可为空或输入正整数">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="am-form-group">
+                                                                    <label for="user-intro" class="am-u-sm-3 am-form-label">所属组</label>
+                                                                    <div class="am-u-sm-9">
+                                                                        <input type="text" id="reuser-intro" placeholder="可为空或输入正整数">
                                                                     </div>
                                                                 </div>
                                                                 <button type="button" id="reclosemodal"  onclick="recloseM()"
@@ -281,7 +286,7 @@
 <script src="assets/js/iscroll.js"></script>
 <script src="assets/js/app.js"></script>
 <script>
-
+    var datalist=[]
 
     //添加 一条数据并关闭页面
     function closeM() {
@@ -307,13 +312,12 @@
                 workplace: $("#judge-home").val(),
                 course: $("#judge-coursename").val(),
                 order: $("#judge-order").val(),
-                note: $("#user-intro").val()
+                group: $("#user-intro").val()
             },
             success: function (res) {
                 if (res.code == 0) {
                     alert("添加成功");
-                    //添加 新数据到数组末尾
-                    datalist.push(res.data);
+                    datalist=res.data;
                     var data = {
                         datalist: datalist
                     };
@@ -330,13 +334,49 @@
 
         $('#doc-modal-1').modal('close');
     }
+    //修改选手信息
+    function recloseM() {
+        // $("#reclosemodal").click(function(e){
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../people/player_edit",
+            data:{
+                index:$("#index").val(),
+                pid: $("#rejudge-num").val(),
+                name: $("#rejudge-name").val(),
+                workplace: $("#rejudge-home").val(),
+                course: $("#rejudge-coursename").val(),
+                order: $("#rejudge-order").val(),
+                note: $("#reuser-intro").val()
+            },
+            success:function(res){
+                if(res.code=="0"){
+                    alert("修改成功");
+                    datalist=res.data;
+                    var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1', data);
+                    document.getElementById('change').innerHTML = html;
+
+                }else{
+                    alert(res.msg);
+                }
+            },
+            error:function() {
+//            $("#test").html("发生错误:"+jqXHR.status);
+                alert("修改失败");
+            }
+        });
+        $('#doc-modal-2').modal('close');
+    };
 
 
     /**
      *  上传excel,返回 选手数据
      */
 
-    var datalist=[]
     function importExp() {
 
         var formData = new FormData();
@@ -372,7 +412,7 @@
             }
         });
     }
-
+    //删除选手
     function deleteItem(index) {
         var key = parseInt(index);
 

@@ -17,7 +17,16 @@ public class Activity {
   private String uploadTime;//提交截止时间
   private String scoreRule;//评分细则
   private Integer group_num;//组数
+  private String password;
 
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
   public Integer getGroup_num() {
     return group_num;

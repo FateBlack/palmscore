@@ -17,11 +17,20 @@ public class Player {
   private String workplace;//单位
   private String course;//课程
   private Integer order;//出场顺序
-  private String note;//备注
+  private String group;//备注
   private double totalScore;//总分
-  private String password;//选手密码
+  private String password;//选手登录密码
   private Integer activityId;// 活动 id
 
+
+
+  public String getGroup() {
+    return group;
+  }
+
+  public void setGroup(String group) {
+    this.group = group;
+  }
 
   public Integer getId() {
     return id;
@@ -73,14 +82,6 @@ public class Player {
     this.order = order;
   }
 
-  public String getNote() {
-    return note;
-  }
-
-  public void setNote(String note) {
-    this.note = note;
-  }
-
 
   public double getTotalScore() {
     return totalScore;
@@ -116,7 +117,7 @@ public class Player {
             ", workplace='" + workplace + '\'' +
             ", course='" + course + '\'' +
             ", order=" + order +
-            ", note='" + note + '\'' +
+            ", group='" + group + '\'' +
             ", totalScore=" + totalScore +
             ", password='" + password + '\'' +
             '}';

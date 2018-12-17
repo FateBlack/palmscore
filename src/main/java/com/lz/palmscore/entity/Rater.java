@@ -16,7 +16,16 @@ public class Rater {
   private String workplace;//工作单位
   private String job;//职务
   private long activityId;//所属活动id
+  private Integer group;//所属组别
+  private String password;//评委登录密码
 
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
   public Integer getId() {
     return id;
@@ -26,6 +35,13 @@ public class Rater {
     this.id = id;
   }
 
+  public Integer getGroup() {
+    return group;
+  }
+
+  public void setGroup(Integer group) {
+    this.group = group;
+  }
 
   public String getRId() {
     return rId;
