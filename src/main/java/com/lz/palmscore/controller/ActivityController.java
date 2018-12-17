@@ -2,7 +2,6 @@ package com.lz.palmscore.controller;
 
 import com.lz.palmscore.Conventer.ActivityForm2ActivityConventer;
 import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.enums.ActivityEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.form.ActivityForm;

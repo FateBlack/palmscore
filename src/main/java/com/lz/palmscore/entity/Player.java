@@ -31,6 +31,15 @@ public class Player {
     this.group = group;
   }
 
+  public Player(String pId, String name,Integer order) {
+    this.pId = pId;
+    this.name = name;
+    this.order = order;
+  }
+
+  public Player() {
+  }
+
   public Integer getId() {
     return id;
   }

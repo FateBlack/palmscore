@@ -51,10 +51,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>net.sourceforge.ntkohtml</groupId>
             <artifactId>ntkohtml</artifactId>
-        </dependency>
+
+            <version>1.9.22</version>
+        </dependency>-->
 
 
 
@@ -79,6 +81,7 @@
     </dependencies>
 
     <build>
+        <finalName>palmscore</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

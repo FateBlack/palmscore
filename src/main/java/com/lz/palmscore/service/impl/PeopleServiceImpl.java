@@ -193,10 +193,18 @@ public class PeopleServiceImpl implements PeopleService {
         }
         player.setCourse(course);
 
-        String group = row.getCell(5).getStringCellValue();
-        if(group==null|| group.isEmpty()){
-            group = "0";
+        String groupString = row.getCell(5).getStringCellValue();
+        if(groupString==null|| groupString.isEmpty()){
+            groupString = "0";
         }
+        Integer group = 1;
+
+        try {
+            group = Integer.parseInt(groupString);
+        } catch (Exception e) {
+            log.info("选手组别必须为整型数字");
+        }
+
         player.setGroup(group);
         return  player;
     }

@@ -145,6 +145,7 @@
                                                     <input type="text" id="judge-duty" placeholder="">
                                                 </div>
                                             </div>
+
                                             <button type="button" id="closemodal" onclick="closeM()" class="am-btn am-btn-secondary js-modal-close">确定</button>
                                         </form>
                                     </div>
@@ -155,13 +156,13 @@
                                    name="pppfile" id="upfile" type="file" />
                             <button id="upload_button" onclick="importExp()">上传</button>
                         </div>
-                     <from >
-                        <div class="am-form am-form-horizontal" >
+
+                        <form class="am-form am-form-horizontal">
                             <div class="am-form-group" style="display: flex;flex-direction: row">
                                 <label for="doc-ipt-3"  style="color:rgb(50, 197, 210);font-size:15px;">设置评委打分密码</label>
-                                <input id="password" style="width:200px;margin-left:30px;" type="email" id="doc-ipt-3" placeholder="不写默认为123456~">
+                                <input id="password" style="width:200px;margin-left:30px;" type="email" id="doc-ipt-3" placeholder="不写默认为123456">
                             </div>
-                        </div>
+                        </form>
 
                             <table class="am-table am-table-bordered am-table-striped am-table-compact" >
                                 <thead>
@@ -251,7 +252,6 @@
                                 <a class="am-btn am-btn-primary" style="color:white"  onclick="ckPassword()" href="">下一步</a>
                             </div>
                         </div>
-                     </from>
                     </div>
                 </div>
             </div>
@@ -306,6 +306,7 @@
                 alert("添加失败");
             }
         });
+
         $('#doc-modal-1').modal('close')
     };
     //修改数据
@@ -345,9 +346,11 @@
         $('#doc-modal-2').modal('close');
     };
 
+
     /**
      *  上传excel,返回 评委数据
      */
+
 
     function importExp() {
 
@@ -495,6 +498,8 @@
             });
         }
 </script>
+
+
 
 </body>
 </html>

@@ -28,7 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  评委 和 选手
@@ -98,8 +100,6 @@ public class PeopleController {
         }
         return ResultVOUtil.success();
     }
-
-
     /**
      * 删除 评委或选手 单条数据
      * @param index   页面遍历 对象数组的索引
@@ -107,6 +107,7 @@ public class PeopleController {
      * @param session
      * @return
      */
+
     @PostMapping("/delete_item")
     public ResultVO deleteItem(@RequestParam("index") int index, @RequestParam("type") String type,
                                HttpSession session) {
@@ -121,13 +122,11 @@ public class PeopleController {
             if (type.equals("player")) {
                 List<Player> playerList = (List<Player>) session.getAttribute("playerList");
                 playerList.remove(index);
-                session.setAttribute("playerList",playerList);
+                session.setAttribute("raterList",playerList);
             }
 
         return ResultVOUtil.success();
     }
-
-
 
     /**
      * 单个添加评委信息
@@ -210,6 +209,7 @@ public class PeopleController {
         session.setAttribute("raterList",raterList);
         return  ResultVOUtil.success(raterList);
     }
+
     /**
      * 选手修改
      * @param index
@@ -227,7 +227,7 @@ public class PeopleController {
             return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
         List<Player> playerList = (List<Player>) session.getAttribute("playerList");
-        System.out.println(index);
+
         playerList.get(index).setPId(playerForm.getPid());
         playerList.get(index).setName(playerForm.getName());
         playerList.get(index).setWorkplace(playerForm.getWorkplace());
@@ -237,5 +237,7 @@ public class PeopleController {
 
         session.setAttribute("playerList",playerList);
         return  ResultVOUtil.success(playerList);
+
     }
+
 }
