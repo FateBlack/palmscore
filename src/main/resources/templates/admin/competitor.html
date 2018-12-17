@@ -267,7 +267,7 @@
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3" style="text-align: center;margin-top: 20px">
                                 <a class="am-btn am-btn-primary" style="color:white;margin-right: 20px;" href="judge.html">上一步</a>
-                                <button type="button" class="am-btn am-btn-primary"  data-am-modal="{target: '#my-alert'}">完成</button>
+                                <button type="button" class="am-btn am-btn-primary" onclick="all_insert()"  data-am-modal="{target: '#my-alert'}">完成</button>
                                 <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
                                     <div class="am-modal-dialog">
                                         <div class="am-modal-hd"> 活动创建完成！</div>
@@ -454,6 +454,30 @@
         });
     }
 
+    function all_insert() {
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../admin/all_insert",
+            // data:{
+            //     index: index,
+            //     type:"player"
+            // },
+            success:function(res){
+
+                if (res.code == 0) {
+
+                }else {
+                    alert(res.msg)
+                }
+
+            },
+            error:function(){
+                alert("创建失败");
+            }
+        });
+
+    }
 
 
 </script>

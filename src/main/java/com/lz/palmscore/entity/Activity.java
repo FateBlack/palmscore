@@ -16,9 +16,8 @@ public class Activity {
   private String endTime;//结束日期
   private String uploadTime;//提交截止时间
   private String scoreRule;//评分细则
-  private Integer group_num;//组数
+  private Integer groupNum;//组数
   private String password;
-
 
   public String getPassword() {
     return password;
@@ -28,11 +27,12 @@ public class Activity {
     this.password = password;
   }
 
-  public Integer getGroup_num() {
-    return group_num;
+  public Integer getGroupNum() {
+    return groupNum;
   }
-  public void setGroup_num(Integer group_num) {
-    this.group_num = group_num;
+
+  public void setGroupNum(Integer groupNum) {
+    this.groupNum = groupNum;
   }
 
   public Integer getId() {

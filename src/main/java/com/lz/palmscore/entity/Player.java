@@ -17,22 +17,15 @@ public class Player {
   private String workplace;//单位
   private String course;//课程
   private Integer order;//出场顺序
-  private String group;//备注
+  private Integer group;//备注
   private double totalScore;//总分
   private String password;//选手登录密码
   private Integer activityId;// 活动 id
 
 
 
-  public String getGroup() {
-    return group;
-  }
 
-  public void setGroup(String group) {
-    this.group = group;
-  }
-
-  public Player(String pId, String name,Integer order) {
+  public Player(String pId, String name, Integer order) {
     this.pId = pId;
     this.name = name;
     this.order = order;
@@ -49,7 +42,6 @@ public class Player {
     this.id = id;
   }
 
-
   public String getPId() {
     return pId;
   }
@@ -57,7 +49,6 @@ public class Player {
   public void setPId(String pId) {
     this.pId = pId;
   }
-
 
   public String getName() {
     return name;
@@ -108,13 +99,20 @@ public class Player {
     this.password = password;
   }
 
-
   public Integer getActivityId() {
     return activityId;
   }
 
   public void setActivityId(Integer activityId) {
     this.activityId = activityId;
+  }
+
+  public Integer getGroup() {
+    return group;
+  }
+
+  public void setGroup(Integer group) {
+    this.group = group;
   }
 
   @Override

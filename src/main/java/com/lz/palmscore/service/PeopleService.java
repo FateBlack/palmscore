@@ -1,7 +1,9 @@
 package com.lz.palmscore.service;
 
+import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
+import com.lz.palmscore.entity.ScoreItem;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,4 +16,6 @@ public interface PeopleService {
     List<Rater> batchInputRater(String fileName, MultipartFile file) throws Exception;
 
     List<Player> batchInputPlayer(String fileName, MultipartFile file) throws Exception;
+
+
 }

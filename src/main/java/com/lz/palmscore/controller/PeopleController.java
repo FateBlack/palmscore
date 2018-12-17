@@ -111,7 +111,7 @@ public class PeopleController {
      */
 
 
-    @DeleteMapping("/delete_item")
+    @PostMapping("/delete_item")
     public ResultVO deleteItem(@RequestParam("index") int index, @RequestParam("type") String type,
                                HttpSession session) {
 
@@ -126,7 +126,7 @@ public class PeopleController {
             if (type.equals("player")) {
                 List<Player> playerList = (List<Player>) session.getAttribute("playerList");
                 playerList.remove(index);
-                session.setAttribute("raterList",playerList);
+                session.setAttribute("playerList",playerList);
             }
 
         } catch (Exception e) {
@@ -196,6 +196,8 @@ public class PeopleController {
         session.setAttribute("playerList",playerList);
         return ResultVOUtil.success(playerList);
     }
+
+
 
     /**
      * 修改评委

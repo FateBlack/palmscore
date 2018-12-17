@@ -4,8 +4,10 @@ package com.lz.palmscore.enums;
  * Created by 白 on 2018/12/13.
  */
 public enum PeopleEnum {
-    DELETE_ERROR(401,"删除失败"),
-    PARAM_ERROR(402,"提交参数有误"),
+    DELETE_ERROR(501,"删除失败"),
+    PARAM_ERROR(502,"提交参数有误"),
+    PLAYERS_EMPTY(503, "选手列表为空"),
+    RATERS_EMPTY(504, "评委列表为空"),
     ;
 
     private Integer code;

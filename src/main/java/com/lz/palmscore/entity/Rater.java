@@ -69,7 +69,6 @@ public class Rater {
     this.job = job;
   }
 
-
   public String getWorkplace() {
     return workplace;
   }
@@ -77,7 +76,6 @@ public class Rater {
   public void setWorkplace(String workplace) {
     this.workplace = workplace;
   }
-
 
   public long getActivityId() {
     return activityId;
@@ -90,12 +88,8 @@ public class Rater {
   @Override
   public String toString() {
     return "Rater{" +
-            "id=" + id +
-            ", rId='" + rId + '\'' +
-            ", name='" + name + '\'' +
-            ", job='" + job + '\'' +
-            ", workplace='" + workplace + '\'' +
-            ", activityId=" + activityId +
+            "name='" + name + '\'' +
+            ", group=" + group +
             '}';
   }
 
