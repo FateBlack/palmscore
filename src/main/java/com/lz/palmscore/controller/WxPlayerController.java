@@ -5,11 +5,10 @@ import com.lz.palmscore.vo.AcitvityVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 白 on 2018/12/16.
@@ -46,7 +45,8 @@ public class WxPlayerController {
      * @return
      */
     @PostMapping("file_upload")
-    public ResultVO fileUpload(@RequestParam("id") Integer id) {
+    public ResultVO fileUpload(@RequestParam("id") Integer id,@RequestParam("file") MultipartFile file) {
+
 
         return ResultVOUtil.success();
     }

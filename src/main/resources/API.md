@@ -104,33 +104,14 @@ POST /wx/player/file_upload
 ```
 参数
 ```
-id 选手主键 
+id 选手主键  file 教案图片
 ```
 返回  
 ```
 {
     "code": 0,
     "msg": "成功",
-    "data": [
-        {
-            "id": 1,                 //选手主键
-            "name": "老李",
-            "activityName": "教师大赛A",
-            "score": 66
-        },
-        {
-            "id": 2,
-            "name": "老王",
-            "activityName": "教师大赛B",
-            "score": 0
-        },
-        {
-            "id": 3,
-            "name": "老赵",
-            "activityName": "教师大赛C",
-            "score": 22
-        }
-    ]
+    "data":null
 }
 
 ```

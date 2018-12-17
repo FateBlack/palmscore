@@ -1,7 +1,6 @@
 package com.lz.palmscore.controller;
 
 import com.lz.palmscore.util.ResultVOUtil;
-import com.lz.palmscore.vo.AcitvityVO;
 import com.lz.palmscore.vo.PlayerVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;

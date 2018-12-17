@@ -21,7 +21,6 @@ import java.util.Map;
 public class WxPeopleController {
     /**
      * 微信端登陆
-     *
      * @return
      */
     @PostMapping("login")

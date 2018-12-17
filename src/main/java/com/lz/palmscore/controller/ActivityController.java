@@ -20,9 +20,6 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
-import java.util.UUID;
-
 /**
  * Created by 白 on 2018/12/12.
  */
