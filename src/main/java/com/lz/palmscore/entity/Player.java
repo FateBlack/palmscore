@@ -17,18 +17,17 @@ public class Player {
   private String workplace;//单位
   private String course;//课程
   private Integer order;//出场顺序
-  private String group;//备注
+  private Integer group;//备注
   private double totalScore;//总分
   private String password;//选手登录密码
   private Integer activityId;// 活动 id
 
 
-
-  public String getGroup() {
+  public Integer getGroup() {
     return group;
   }
 
-  public void setGroup(String group) {
+  public void setGroup(Integer group) {
     this.group = group;
   }
 

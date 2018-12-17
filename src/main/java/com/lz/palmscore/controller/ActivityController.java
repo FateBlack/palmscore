@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -91,5 +93,24 @@ public class ActivityController  {
         map.put("activity",activity);
         map.put("list",list);
         return ResultVOUtil.success(map);
+    }
+
+    /**
+     * 添加密码
+     * @param password
+     * @param session
+     * @return
+     */
+    @PostMapping("password_add")
+    public ResultVO addPassword(@RequestParam String password,
+                                HttpSession session){
+        Activity activity= (Activity) session.getAttribute("activity");
+        System.out.println(password);
+        if(password==null){
+            return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(),ActivityEnum.PASSWORD_NULL.getMessage());
+        }
+        activity.setPassword(password);
+        session.setAttribute("activity",activity);
+        return ResultVOUtil.success();
     }
 }

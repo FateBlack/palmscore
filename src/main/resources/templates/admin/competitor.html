@@ -193,7 +193,7 @@
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs" >
-                                                <button type="button" class="am-btn am-btn-default"
+                                                <button type="button" class="am-btn am-btn-default" onclick="editPlayer('{{$index}}')"
                                                         style="background-color: white;color: #dd514c"
                                                         data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 500, height: 400}">
                                                     <span class="am-icon-plus"></span>
@@ -236,8 +236,7 @@
                                                                 </div>
                                                                 <div class="am-form-group">
                                                                     <label for="rejudge-order" class="am-u-sm-3 am-form-label">出场顺序</label>
-                                                                    <div class="am-u-sm-9">
-                                                                        <input type="text" id="rejudge-order" placeholder="可为空或输入正整数">
+                                                                    <div class="am-u-sm-9"><input type="text" id="rejudge-order" placeholder="可为空或输入正整数">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
@@ -245,6 +244,7 @@
                                                                     <div class="am-u-sm-9">
                                                                         <input type="text" id="reuser-intro" placeholder="可为空或输入正整数">
                                                                     </div>
+
                                                                 </div>
                                                                 <button type="button" id="reclosemodal"  onclick="recloseM()"
                                                                         class="am-btn am-btn-secondary js-modal-close">确定
@@ -339,7 +339,24 @@
         });
 
         $('#doc-modal-1').modal('close');
-    }
+    };
+
+
+    //编辑页面回显
+    function editPlayer(index){
+        var a=datalist[index];
+        console.log(a);
+        //   $("#judge-name").val(a.name);
+        $("#rejudge-num").attr("value",a.pid);
+        $("#rejudge-name").attr("value",a.name);
+        $("#rejudge-home").attr("value",a.workplace);
+        $("#rejudge-coursename").attr("value",a.course);
+        $("#rejudge-order").attr("value",a.order);
+        $("#reuser-intro").attr("value",a.group);
+        $("#index").attr("value",index);
+
+    };
+
     //修改选手信息
     function recloseM() {
         // $("#reclosemodal").click(function(e){
@@ -354,7 +371,7 @@
                 workplace: $("#rejudge-home").val(),
                 course: $("#rejudge-coursename").val(),
                 order: $("#rejudge-order").val(),
-                note: $("#reuser-intro").val()
+                group: $("#reuser-intro").val()
             },
             success:function(res){
                 if(res.code=="0"){

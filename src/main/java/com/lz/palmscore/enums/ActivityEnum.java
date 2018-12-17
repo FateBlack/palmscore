@@ -6,7 +6,9 @@ package com.lz.palmscore.enums;
 public enum ActivityEnum {
     ACTIVITY_ERROR(201,"活动创建失败"),
 
-    ACTIVITY_ID_NOF_FOUND(207,"活动id未取得")
+    ACTIVITY_ID_NOF_FOUND(207,"活动id未取得"),
+
+    PASSWORD_NULL(205,"评委打分密码必填")
     ;
     private Integer code;
     private String message;

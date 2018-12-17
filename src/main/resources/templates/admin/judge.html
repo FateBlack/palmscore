@@ -145,7 +145,6 @@
                                                     <input type="text" id="judge-duty" placeholder="">
                                                 </div>
                                             </div>
-
                                             <button type="button" id="closemodal" onclick="closeM()" class="am-btn am-btn-secondary js-modal-close">确定</button>
                                         </form>
                                     </div>
@@ -156,13 +155,13 @@
                                    name="pppfile" id="upfile" type="file" />
                             <button id="upload_button" onclick="importExp()">上传</button>
                         </div>
-
-                        <form class="am-form am-form-horizontal">
+                     <from >
+                        <div class="am-form am-form-horizontal" >
                             <div class="am-form-group" style="display: flex;flex-direction: row">
-                                <label for="doc-ipt-3"  style="color:rgb(50, 197, 210);font-size:15px;">设置评委密码</label>
-                                <input style="width:200px;margin-left:30px;" type="email" id="doc-ipt-3" placeholder="123456">
+                                <label for="doc-ipt-3"  style="color:rgb(50, 197, 210);font-size:15px;">设置评委打分密码</label>
+                                <input id="password" style="width:200px;margin-left:30px;" type="email" id="doc-ipt-3" placeholder="不写默认为123456~">
                             </div>
-                        </form>
+                        </div>
 
                             <table class="am-table am-table-bordered am-table-striped am-table-compact" >
                                 <thead>
@@ -249,9 +248,10 @@
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3" style="text-align: center;">
                                 <a class="am-btn am-btn-primary" style="color:white;margin-right: 20px;" href="activity.html">上一步</a>
-                                <a class="am-btn am-btn-primary" style="color:white" href="competitor.html">下一步</a>
+                                <a class="am-btn am-btn-primary" style="color:white"  onclick="ckPassword()" href="">下一步</a>
                             </div>
                         </div>
+                     </from>
                     </div>
                 </div>
             </div>
@@ -306,7 +306,6 @@
                 alert("添加失败");
             }
         });
-
         $('#doc-modal-1').modal('close')
     };
     //修改数据
@@ -346,11 +345,9 @@
         $('#doc-modal-2').modal('close');
     };
 
-
     /**
      *  上传excel,返回 评委数据
      */
-
 
     function importExp() {
 
@@ -386,7 +383,7 @@
             }
         });
     }
-
+//删除数据
     function deleteItem(index) {
         var key = parseInt(index);
         $.ajax({
@@ -466,9 +463,38 @@
             }
         });
     }
+
+    function ckPassword() {
+
+        var str=$("#password").val();
+        if(str == null || str == "")
+            str="123456";
+
+            $.ajax({
+                type:'POST',
+                dataType: "json",
+                url:"../admin/password_add",
+                data:{
+                    password:str,
+                },
+                success:function(res){
+                    if(res.code=="0"){
+
+                        alert("添加成功");
+                        window.location.href="/admin/competitor.html";
+                    }
+                    else{
+                        alert(res.msg);
+                    }
+                },
+
+                error:function(){
+//            $("#test").html("发生错误:"+jqXHR.status);
+                    alert("添加失败");
+                }
+            });
+        }
 </script>
-
-
 
 </body>
 </html>
