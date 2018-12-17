@@ -3,6 +3,7 @@ package com.lz.palmscore.form;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by 白 on 2018/12/12.
@@ -24,6 +25,17 @@ public class ActivityForm {
     @NotEmpty(message = "评分细则必填")
     private String scoreRule;//评分细则
 
+    @NotNull(message = "分组数量必填")
+    private Integer group_num;
+
+
+    public Integer getGroup_num() {
+        return group_num;
+    }
+
+    public void setGroup_num(Integer group_num) {
+        this.group_num = group_num;
+    }
 
     public String getName() {
         return name;

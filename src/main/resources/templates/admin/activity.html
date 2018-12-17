@@ -189,7 +189,7 @@
                                                         <label for="rejudge-home"
                                                                class="am-u-sm-3 am-form-label">备注</label>
                                                         <div class="am-u-sm-9">
-                                                            <input type="text" id="judge-home" value="" placeholder="">
+                                                            <input type="text" id="judge-home" value="无" placeholder="">
                                                         </div>
                                                     </div>
                                                     <div class="am-form-group">
@@ -416,8 +416,8 @@
                 fileUpload:$('input[name="doc-radio-1"]:checked').val(),
             },
             success:function(res){
-                alert("添加成功");
                 if(res.code=="0"){
+                    alert("添加成功");
                     console.log(res);
                     datalist=res.data;
                     var data={
@@ -437,7 +437,7 @@
                    console.log(sum)
 
                 }else {
-                    alert("失败；额~");
+                    alert(res.msg);
                 }
             },
             error:function(){
@@ -514,8 +514,8 @@
                 fileUpload:$('input[name="doc-radio-1"]:checked').val(),
             },
             success:function(res){
-                alert("修改成功");
                 if(res.code=="0"){
+                    alert("修改成功");
                     console.log(res);
                     datalist=res.data;
                     var data={
@@ -530,11 +530,11 @@
                     document.getElementById('spanFirst').innerHTML = sum;
                     console.log(sum)
 
-                }else {
-                    alert("失败；额~");
+                }else{
+                    alert(res.msg);
                 }
-            },
-            error:function(){
+                },
+            error:function() {
 //            $("#test").html("发生错误:"+jqXHR.status);
                 alert("修改失败");
             }
@@ -549,23 +549,35 @@
     }
 </script>
 <script>
-    $("#next").click(function(e){
+
+    //添加活动
+    $("#next").click(function(){
+        var name=$("#user-name").val();
+        var startTime=$("#startTime").val();
+        var endTime=$("#endTime").val();
+        var uploadTime=$("#activityEndTime").val();
+        var scoreRule=$("#user-intro").val();
+
         $.ajax({
             type:'POST',
             dataType: "json",
             url:"../admin/activity_add",
             data:{
-                name:$("#user-name").val(),
-                startTime:$("#startTime").val(),
-                endTime:$("#endTime").val(),
-                uploadTime:$("#activityEndTime").val(),
-                scoreRule:$("#user-intro").val(),
+                name:name,
+                startTime:startTime,
+                endTime:endTime,
+                uploadTime:uploadTime,
+                scoreRule:scoreRule,
                 //      fileUpload:$("#password").val(),
             },
-            success:function(data){
-                alert("添加成功");
+            success:function(res){
+                if(res.code=="0"){
+                alert("活动添加成功");
                 window.location.href="/admin/judge.html";
-            },
+            }else{
+                    alert(res.msg);
+                }},
+
             error:function(){
 //            $("#test").html("发生错误:"+jqXHR.status);
                 alert("添加失败");

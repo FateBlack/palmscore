@@ -16,6 +16,16 @@ public class Activity {
   private String endTime;//结束日期
   private String uploadTime;//提交截止时间
   private String scoreRule;//评分细则
+  private Integer group_num;//组数
+
+
+  public Integer getGroup_num() {
+    return group_num;
+  }
+  public void setGroup_num(Integer group_num) {
+    this.group_num = group_num;
+  }
+
   public Integer getId() {
     return id;
   }

@@ -46,14 +46,13 @@ public class ScoreItemController {
         }
 
         if (bindingResult.hasErrors()) {
-            log.error("[添加活动]格式错误");
-            throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR.getCode(),
-                    bindingResult.getFieldError().getDefaultMessage());
+           // log.error("[评分项]格式错误");
+            return ResultVOUtil.error(ScoreItemEnum.SCOREITEM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
         ScoreItem scoreItem=ScoreItemForm2ScoreItemConventer.conventer(scoreItemForm);
 
         if (scoreItem==null){
-            log.error("[登陆]账号密码错误");
+            log.error("[评分项]添加错误");
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR);
         }
         list.add(scoreItem);
@@ -82,15 +81,23 @@ public class ScoreItemController {
         session.setAttribute("list",list);
         return  ResultVOUtil.success();
     }
+
+    /**
+     * 修改评分项
+     * @param index
+     * @param scoreItemForm
+     * @param bindingResult
+     * @param session
+     * @return
+     */
     @PostMapping("score_item_edit")
     public ResultVO ScoreItemEdit(@RequestParam int index,
                                   @Valid ScoreItemForm scoreItemForm,
                                   BindingResult bindingResult,
                                   HttpSession session){
         if (bindingResult.hasErrors()) {
-            log.error("[添加活动]格式错误");
-            throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR.getCode(),
-                    bindingResult.getFieldError().getDefaultMessage());
+          //  log.error("[修改]格式错误");
+            return ResultVOUtil.error(ScoreItemEnum.SCOREITEM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
         System.out.println(index);
         List<ScoreItem> list= (List<ScoreItem>) session.getAttribute("list");
