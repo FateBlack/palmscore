@@ -20,6 +20,10 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by 白 on 2018/12/12.
  */
@@ -76,6 +80,15 @@ public class ActivityController  {
         }
         session.setAttribute("activityId",activityNew.getId());
         return  new ModelAndView("/admin/activity");
-
+    }
+    @PostMapping("show")
+    public ResultVO show( HttpSession session){
+         Activity activity= (Activity) session.getAttribute("activity");
+         List<ScoreItem> list= (List<ScoreItem>) session.getAttribute("list");
+       // Map<> map=new HashMap<>();
+        Map map=new HashMap();
+        map.put("activity",activity);
+        map.put("list",list);
+        return ResultVOUtil.success(map);
     }
 }

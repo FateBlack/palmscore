@@ -25,16 +25,16 @@ public class ActivityForm {
     @NotEmpty(message = "评分细则必填")
     private String scoreRule;//评分细则
 
-    @NotNull(message = "分组数量必填")
-    private Integer group_num;
+    @NotNull(message = "参赛组数必填")
+    private Integer groupNum;
 
 
-    public Integer getGroup_num() {
-        return group_num;
+    public Integer getGroupNum() {
+        return groupNum;
     }
 
-    public void setGroup_num(Integer group_num) {
-        this.group_num = group_num;
+    public void setGroupNum(Integer groupNum) {
+        this.groupNum = groupNum;
     }
 
     public String getName() {

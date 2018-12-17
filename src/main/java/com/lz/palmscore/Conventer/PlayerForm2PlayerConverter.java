@@ -13,7 +13,7 @@ public class PlayerForm2PlayerConverter {
         player.setName(form.getName());
         player.setWorkplace(form.getWorkplace());
         player.setCourse(form.getCourse());
-        player.setNote(form.getNote());
+        player.setGroup(form.getGroup());
         player.setOrder(form.getOrder());
 
         return player;

@@ -21,7 +21,7 @@ public class PlayerForm {
 
     private Integer order;//出场顺序
 
-    private String note;//备注
+    private String group;//所属组
 
 
     /**
@@ -67,12 +67,12 @@ public class PlayerForm {
         this.course = course;
     }
 
-    public String getNote() {
-        return note;
+    public String getGroup() {
+        return group;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public Integer getOrder() {
