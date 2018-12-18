@@ -56,6 +56,7 @@ public class PeopleController {
     public ResultVO batchInput(@RequestParam("file") MultipartFile file,
                                @RequestParam("type") String type,
                                HttpSession session) throws FileException {
+
         String fileName = file.getOriginalFilename();
 
         //判断文件格式
@@ -246,7 +247,7 @@ public class PeopleController {
         playerList.get(index).setName(playerForm.getName());
         playerList.get(index).setWorkplace(playerForm.getWorkplace());
         playerList.get(index).setCourse(playerForm.getCourse());
-        playerList.get(index).setOrder(playerForm.getOrder());
+        playerList.get(index).setOrders(playerForm.getOrder());
         playerList.get(index).setGroups(playerForm.getGroups());
 
         session.setAttribute("playerList",playerList);

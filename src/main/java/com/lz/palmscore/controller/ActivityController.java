@@ -122,8 +122,8 @@ public class ActivityController  {
                                 HttpSession session){
         Activity activity= (Activity) session.getAttribute("activity");
         System.out.println(password);
-        if(password==null){
-            return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(),ActivityEnum.PASSWORD_NULL.getMessage());
+        if (password == null || password.length() <= 0) {
+            return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(), ActivityEnum.PASSWORD_NULL.getMessage());
         }
         activity.setPassword(password);
         System.out.println("添加密码后~"+activity.toString());
@@ -158,6 +158,16 @@ public class ActivityController  {
 //        if (playerList == null || playerList.isEmpty()) {
 //            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), PeopleEnum.PARAM_ERROR.getMessage());
 //        }
+
+        Integer activityId = activity.getId();
+        for (Player player : playerList) {
+            player.setActivityId(activityId);
+        }
+
+        for (Rater rater : raterList) {
+            rater.setActivityId(activityId);
+        }
+
 
         activityService.allInsert(activity, scoreItemList, raterList, playerList);
 
