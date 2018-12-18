@@ -67,12 +67,13 @@ public class PlayerForm {
         this.course = course;
     }
 
-    public Integer getGroup() {
-        return group;
+
+    public Integer getGroups() {
+        return groups;
     }
 
-    public void setGroup(Integer group) {
-        this.group = group;
+    public void setGroups(Integer groups) {
+        this.groups = groups;
     }
 
     public Integer getOrder() {
