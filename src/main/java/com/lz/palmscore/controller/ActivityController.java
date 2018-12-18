@@ -37,6 +37,7 @@ import java.util.Map;
 @RequestMapping("/admin")
 @Slf4j
 public class ActivityController  {
+
     @Autowired
     ActivityService activityService;
 
@@ -71,14 +72,18 @@ public class ActivityController  {
      * @param session
      * @return
      */
-    @GetMapping("createId")
+    @GetMapping("create_id")
     public ModelAndView createId(HttpSession session) {
+
+        log.info("进入活动");
         Activity activity=new Activity();
         activity.setName("1");
         activity.setUploadTime("1");
         activity.setStartTime("1");
         activity.setScoreRule("1");
         activity.setEndTime("1");
+        activity.setPassword("1");
+        activity.setGroupNum(1);
         Activity activityNew=activityService.add(activity);
         if (activityNew==null){
             System.out.println("嗯哼？错了");
@@ -153,7 +158,6 @@ public class ActivityController  {
 
         return ResultVOUtil.success();
     }
-
 
 
 }

@@ -352,7 +352,7 @@
         $("#rejudge-home").attr("value",a.workplace);
         $("#rejudge-coursename").attr("value",a.course);
         $("#rejudge-order").attr("value",a.order);
-        $("#reuser-intro").attr("value",a.group);
+        $("#reuser-intro").attr("value",a.groups);
         $("#index").attr("value",index);
 
     };
@@ -371,7 +371,7 @@
                 workplace: $("#rejudge-home").val(),
                 course: $("#rejudge-coursename").val(),
                 order: $("#rejudge-order").val(),
-                group: $("#reuser-intro").val()
+                groups: $("#reuser-intro").val()
             },
             success:function(res){
                 if(res.code=="0"){

@@ -21,7 +21,7 @@ public class PlayerForm {
 
     private Integer order;//出场顺序
 
-    private Integer group;//所属组
+    private Integer groups;//所属组
 
 
     /**
@@ -67,12 +67,12 @@ public class PlayerForm {
         this.course = course;
     }
 
-    public Integer getGroup() {
-        return group;
+    public Integer getGroups() {
+        return groups;
     }
 
-    public void setGroup(Integer group) {
-        this.group = group;
+    public void setGroups(Integer groups) {
+        this.groups = groups;
     }
 
     public Integer getOrder() {
