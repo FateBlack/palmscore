@@ -63,6 +63,8 @@ public class ActivityController  {
             log.error("[活动]创建失败");
             throw new AcitvityException(ActivityEnum.ACTIVITY_ERROR);
         }
+        Integer id= (Integer) session.getAttribute("activityId");
+        activity.setId(id);
         session.setAttribute("activity",activity);
         return ResultVOUtil.success();
     }
