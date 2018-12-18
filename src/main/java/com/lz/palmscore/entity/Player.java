@@ -42,6 +42,7 @@ public class Player {
     this.id = id;
   }
 
+
   public String getPId() {
     return pId;
   }
@@ -49,6 +50,7 @@ public class Player {
   public void setPId(String pId) {
     this.pId = pId;
   }
+
 
   public String getName() {
     return name;
@@ -98,6 +100,7 @@ public class Player {
   public void setPassword(String password) {
     this.password = password;
   }
+
 
   public Integer getActivityId() {
     return activityId;

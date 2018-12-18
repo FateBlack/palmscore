@@ -5,6 +5,7 @@ import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
 import com.lz.palmscore.entity.ScoreItem;
+import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.enums.ActivityEnum;
 import com.lz.palmscore.enums.PeopleEnum;
 import com.lz.palmscore.exception.AcitvityException;
@@ -36,6 +37,7 @@ import java.util.Map;
 @RequestMapping("/admin")
 @Slf4j
 public class ActivityController  {
+
     @Autowired
     ActivityService activityService;
 
@@ -70,14 +72,18 @@ public class ActivityController  {
      * @param session
      * @return
      */
-    @GetMapping("createId")
+    @GetMapping("create_id")
     public ModelAndView createId(HttpSession session) {
+
+        log.info("进入活动");
         Activity activity=new Activity();
         activity.setName("1");
         activity.setUploadTime("1");
         activity.setStartTime("1");
         activity.setScoreRule("1");
         activity.setEndTime("1");
+        activity.setPassword("1");
+        activity.setGroupNum(1);
         Activity activityNew=activityService.add(activity);
         if (activityNew==null){
             System.out.println("嗯哼？错了");
@@ -100,6 +106,25 @@ public class ActivityController  {
         map.put("activity",activity);
         map.put("list",list);
         return ResultVOUtil.success(map);
+    }
+
+    /**
+     * 添加密码
+     * @param password
+     * @param session
+     * @return
+     */
+    @PostMapping("password_add")
+    public ResultVO addPassword(@RequestParam String password,
+                                HttpSession session){
+        Activity activity= (Activity) session.getAttribute("activity");
+        System.out.println(password);
+        if(password==null){
+            return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(),ActivityEnum.PASSWORD_NULL.getMessage());
+        }
+        activity.setPassword(password);
+        session.setAttribute("activity",activity);
+        return ResultVOUtil.success();
     }
 
 
@@ -133,7 +158,6 @@ public class ActivityController  {
 
         return ResultVOUtil.success();
     }
-
 
 
 }

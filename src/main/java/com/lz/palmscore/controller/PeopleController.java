@@ -8,14 +8,17 @@ import com.lz.palmscore.Conventer.PlayerForm2PlayerConverter;
 import com.lz.palmscore.Conventer.RaterForm2RaterConverter;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
+import com.lz.palmscore.enums.ActivityEnum;
 import com.lz.palmscore.enums.FileEnum;
 import com.lz.palmscore.enums.PeopleEnum;
+import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.exception.FileException;
 import com.lz.palmscore.form.PlayerForm;
 import com.lz.palmscore.form.RaterForm;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.ResultVO;
+import com.sun.deploy.nativesandbox.NativeSandboxBroker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -110,7 +113,6 @@ public class PeopleController {
      * @return
      */
 
-
     @PostMapping("/delete_item")
     public ResultVO deleteItem(@RequestParam("index") int index, @RequestParam("type") String type,
                                HttpSession session) {
@@ -175,10 +177,9 @@ public class PeopleController {
      * @return
      */
     @PostMapping("add_player")
-    public ResultVO add(@Valid PlayerForm form, BindingResult bindingResult, HttpSession session) {
-
-        System.out.println(form);
-
+    public ResultVO add(@Valid PlayerForm form,
+                        BindingResult bindingResult,
+                        HttpSession session) {
         if (bindingResult.hasErrors()) {
             return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
@@ -196,8 +197,6 @@ public class PeopleController {
         session.setAttribute("playerList",playerList);
         return ResultVOUtil.success(playerList);
     }
-
-
 
     /**
      * 修改评委

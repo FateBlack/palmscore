@@ -8,9 +8,11 @@ public enum ActivityEnum {
 
     ACTIVITY_ID_NOF_FOUND(207,"活动id未取得"),
 
+    PASSWORD_NULL(205,"评委打分密码必填"),
+
     ACTIVITY_EMPTY(208,"活动属性为空"),
 
-    SCORE_ITEM_EMPTY(209, "活动细则为空"),
+    SCORE_ITEM_EMPTY(209, "活动细则为空")
     ;
     private Integer code;
     private String message;

@@ -159,8 +159,8 @@
 
                         <form class="am-form am-form-horizontal">
                             <div class="am-form-group" style="display: flex;flex-direction: row">
-                                <label for="doc-ipt-3"  style="color:rgb(50, 197, 210);font-size:15px;">设置评委密码</label>
-                                <input style="width:200px;margin-left:30px;" type="email" id="doc-ipt-3" placeholder="123456">
+                                <label for="doc-ipt-3"  style="color:rgb(50, 197, 210);font-size:15px;">设置评委打分密码</label>
+                                <input id="password" style="width:200px;margin-left:30px;" type="email" id="doc-ipt-3" placeholder="不写默认为123456">
                             </div>
                         </form>
 
@@ -203,14 +203,14 @@
                                                                     <label for="rejudge-num"
                                                                            class="am-u-sm-3 am-form-label">教工号</label>
                                                                     <div class="am-u-sm-9">
-                                                                        <input type="text"  id="rejudge-num" placeholder="">
+                                                                        <input type="text" id="rejudge-num" placeholder="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="am-form-group">
                                                                     <label for="rejudge-name"
                                                                            class="am-u-sm-3 am-form-label">姓名</label>
                                                                     <div class="am-u-sm-9">
-                                                                        <input type="text"  id="rejudge-name" placeholder="">
+                                                                        <input type="text" id="rejudge-name" placeholder="">
                                                                     </div>
                                                                 </div>
 
@@ -250,7 +250,7 @@
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3" style="text-align: center;">
                                 <a class="am-btn am-btn-primary" style="color:white;margin-right: 20px;" href="activity.html">上一步</a>
-                                <a class="am-btn am-btn-primary" style="color:white" href="competitor.html">下一步</a>
+                                <a class="am-btn am-btn-primary" style="color:white"  onclick="ckPassword()" href="">下一步</a>
                             </div>
                         </div>
                     </div>
@@ -386,10 +386,9 @@
             }
         });
     }
-
+//删除数据
     function deleteItem(index) {
         var key = parseInt(index);
-
         $.ajax({
             type:'POST',
             dataType: "json",
@@ -469,6 +468,37 @@
             }
         });
     }
+
+    function ckPassword() {
+
+        var str=$("#password").val();
+        if(str == null || str == "")
+            str="123456";
+
+            $.ajax({
+                type:'POST',
+                dataType: "json",
+                url:"../admin/password_add",
+                data:{
+                    password:str,
+                },
+                success:function(res){
+                    if(res.code==0){
+
+                        alert("添加成功");
+                        window.location.href="/admin/competitor.html";
+                    }
+                    else{
+                        alert(res.msg);
+                    }
+                },
+
+                error:function(){
+//            $("#test").html("发生错误:"+jqXHR.status);
+                    alert("添加失败");
+                }
+            });
+        }
 </script>
 
 

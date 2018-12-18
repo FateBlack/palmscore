@@ -8,5 +8,10 @@ import com.lz.palmscore.entity.Admin;
  */
 
 public interface AdminService {
+
     Admin login(Admin admin);
+
+    Admin edit(Admin admin);
+
+    Admin getPassById(int id);
 }
