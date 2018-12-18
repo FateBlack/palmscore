@@ -70,4 +70,16 @@ public class ScoreItem {
     public void setFileUpload(Integer fileUpload) {
         this.fileUpload = fileUpload;
     }
+
+  @Override
+  public String toString() {
+    return "ScoreItem{" +
+            "id=" + id +
+            ", activityId=" + activityId +
+            ", name='" + name + '\'' +
+            ", rate=" + rate +
+            ", note='" + note + '\'' +
+            ", fileUpload=" + fileUpload +
+            '}';
+  }
 }

@@ -9,15 +9,19 @@ public class ScoreItemForm {
     /** 评分项**/
     @NotEmpty(message = "姓名不能为空")
     private String name;
+
     /** 占比**/
     @NotNull(message = "比率不能为空")
     private double rate;
+
     /** 备注**/
     @NotEmpty(message = "备注为空~")
     private String note;
+
     /**是否上传**/
     @Value("1")
     private Integer fileUpload;
+
 
     public String getName() {
         return name;

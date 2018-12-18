@@ -468,9 +468,8 @@
             }
         });
     }
-    //添加评委密码
+    //添加评委打分密码
     function ckPassword() {
-
         var str=$("#password").val();
         if(str == null || str == "")
             str="123456";
@@ -484,7 +483,6 @@
                 },
                 success:function(res){
                     if(res.code==0){
-
                         alert("添加成功");
                         window.location.href="/admin/competitor.html";
                     }

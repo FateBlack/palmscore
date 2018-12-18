@@ -51,7 +51,9 @@ public class ScoreItemController {
             return ResultVOUtil.error(ScoreItemEnum.SCOREITEM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
         ScoreItem scoreItem=ScoreItemForm2ScoreItemConventer.conventer(scoreItemForm);
-
+        Integer id= (Integer) session.getAttribute("activityId");
+        scoreItem.setActivityId(id);
+        System.out.println(scoreItem.toString());
         if (scoreItem==null){
             log.error("[评分项]添加错误");
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR);
@@ -60,7 +62,6 @@ public class ScoreItemController {
         session.setAttribute("list",list);
         return ResultVOUtil.success(list);
     }
-
     /**
      * 删除订单项
      * @param index

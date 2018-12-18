@@ -65,6 +65,7 @@ public class ActivityController  {
         }
         Integer id= (Integer) session.getAttribute("activityId");
         activity.setId(id);
+        System.out.println("第一次添加"+activity.toString());
         session.setAttribute("activity",activity);
         return ResultVOUtil.success();
     }
@@ -125,6 +126,8 @@ public class ActivityController  {
             return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(),ActivityEnum.PASSWORD_NULL.getMessage());
         }
         activity.setPassword(password);
+        System.out.println("添加密码后~"+activity.toString());
+
         session.setAttribute("activity",activity);
         return ResultVOUtil.success();
     }

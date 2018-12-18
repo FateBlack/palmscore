@@ -87,4 +87,17 @@ public class Activity {
     this.scoreRule = scoreRule;
   }
 
+  @Override
+  public String toString() {
+    return "Activity{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", startTime='" + startTime + '\'' +
+            ", endTime='" + endTime + '\'' +
+            ", uploadTime='" + uploadTime + '\'' +
+            ", scoreRule='" + scoreRule + '\'' +
+            ", groupNum=" + groupNum +
+            ", password='" + password + '\'' +
+            '}';
+  }
 }
