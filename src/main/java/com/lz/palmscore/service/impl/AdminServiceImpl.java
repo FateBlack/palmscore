@@ -28,4 +28,16 @@ public class AdminServiceImpl implements AdminService {
         return admins.get(0);
     }
 
+    @Override
+    public Admin edit(Admin admin) {
+        Admin admin1=adminRepository.save(admin);
+        return admin1;
+    }
+
+    @Override
+    public Admin getPassById(int id) {
+        return adminRepository.getOne(id);
+    }
+
+
 }

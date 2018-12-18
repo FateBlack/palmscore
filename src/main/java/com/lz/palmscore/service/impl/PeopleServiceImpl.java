@@ -2,8 +2,6 @@ package com.lz.palmscore.service.impl;
 
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
-import com.lz.palmscore.enums.FileEnum;
-import com.lz.palmscore.exception.FileException;
 import com.lz.palmscore.service.PeopleService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -14,8 +12,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,13 +67,6 @@ public class PeopleServiceImpl implements PeopleService {
         return raterList;
     }
 
-    /**
-     *
-     * @param fileName
-     * @param file
-     * @return
-     * @throws Exception
-     */
     @Override
     public List<Player> batchInputPlayer(String fileName, MultipartFile file) throws Exception {
         boolean notNull = false;
@@ -204,7 +193,6 @@ public class PeopleServiceImpl implements PeopleService {
         } catch (Exception e) {
             log.info("选手组别必须为整型数字");
         }
-
         player.setGroup(group);
         return  player;
     }
