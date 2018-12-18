@@ -119,8 +119,8 @@ public class ActivityController  {
                                 HttpSession session){
         Activity activity= (Activity) session.getAttribute("activity");
         System.out.println(password);
-        if(password==null){
-            return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(),ActivityEnum.PASSWORD_NULL.getMessage());
+        if (password == null || password.length() <= 0) {
+            return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(), ActivityEnum.PASSWORD_NULL.getMessage());
         }
         activity.setPassword(password);
         session.setAttribute("activity",activity);
@@ -153,6 +153,12 @@ public class ActivityController  {
 //        if (playerList == null || playerList.isEmpty()) {
 //            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), PeopleEnum.PARAM_ERROR.getMessage());
 //        }
+
+        int activityid = activity.getId();
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).setActivityId(activityid);
+
+        }
 
         activityService.allInsert(activity, scoreItemList, raterList, playerList);
 

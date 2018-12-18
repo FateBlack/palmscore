@@ -65,7 +65,7 @@ public class ActivityServiceImpl implements ActivityService {
 
         List<Rater> finalRaters =   groupRater(raterList, groupNum);
 
-        SqlParameterSource[] beanSources  = SqlParameterSourceUtils.createBatch(list.toArray());
+        SqlParameterSource[] beanSources = SqlParameterSourceUtils.createBatch(playerList.toArray());
         String sql = "INSERT INTO player(p_id,name,workplace,course,order,groups,activity_id)" +
                 " VALUES (:pId,:name,:workplace,:course,:order,:groups,:activity_id)";
         namedParameterJdbcTemplate.batchUpdate(sql, beanSources);
