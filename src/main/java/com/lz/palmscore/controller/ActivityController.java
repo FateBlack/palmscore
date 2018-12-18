@@ -156,11 +156,15 @@ public class ActivityController  {
 //            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), PeopleEnum.PARAM_ERROR.getMessage());
 //        }
 
-        int activityid = activity.getId();
-        for (int i = 0; i < playerList.size(); i++) {
-            playerList.get(i).setActivityId(activityid);
-
+        Integer activityId = activity.getId();
+        for (Player player : playerList) {
+            player.setActivityId(activityId);
         }
+
+        for (Rater rater : raterList) {
+            rater.setActivityId(activityId);
+        }
+
 
         activityService.allInsert(activity, scoreItemList, raterList, playerList);
 

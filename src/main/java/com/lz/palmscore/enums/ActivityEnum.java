@@ -12,7 +12,8 @@ public enum ActivityEnum {
 
     ACTIVITY_EMPTY(208,"活动属性为空"),
 
-    SCORE_ITEM_EMPTY(209, "活动细则为空")
+    SCORE_ITEM_EMPTY(209, "活动细则为空"),
+    ACTIVITY_INSERT_ERROR(210, "活动所有内容插入数据库失败"),
     ;
     private Integer code;
     private String message;

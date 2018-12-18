@@ -59,20 +59,44 @@ public class ActivityServiceImpl implements ActivityService {
 
         List<List<Rater>> list = new ArrayList<>();
 
-//        Integer groupNum = activity.getGroupNum();
+        Integer groupNum = activity.getGroupNum();
         //TODO 等待删除
-        int groupNum = 5;
+//        int groupNum = 5;
 
         List<Rater> finalRaters =   groupRater(raterList, groupNum);
 
-        SqlParameterSource[] beanSources = SqlParameterSourceUtils.createBatch(playerList.toArray());
-        String sql = "INSERT INTO player(p_id,name,workplace,course,order,groups,activity_id)" +
-                " VALUES (:pId,:name,:workplace,:course,:order,:groups,:activity_id)";
-        namedParameterJdbcTemplate.batchUpdate(sql, beanSources);
+
+        String sqlP = "INSERT INTO player(p_id,name,workplace,course,orders,groups,activity_id)" +
+                " VALUES (:pId,:name,:workplace,:course,:orders,:groups,:activityId)";
+
+        String sqlR = "INSERT INTO rater(r_id,name,job,workplace,activity_id,groups)" +
+                " VALUES (:rId,:name,:job,:workplace,:activityId,:groups)";
+
+        String sqlS = "INSERT INTO score_item(activity_id,name,rate,note,file_upload)" +
+                " VALUES (:activityId,:name,:rate,:note,:fileUpload)";
+
+        Boolean flag = false;
+        try {
+            SqlParameterSource[] beanSourcesP = SqlParameterSourceUtils.createBatch(playerList.toArray());
+            SqlParameterSource[] beanSourcesR = SqlParameterSourceUtils.createBatch(raterList.toArray());
+            SqlParameterSource[] beanSourcesS = SqlParameterSourceUtils.createBatch(scoreItemList.toArray());
+
+            namedParameterJdbcTemplate.batchUpdate(sqlP, beanSourcesP);
+            namedParameterJdbcTemplate.batchUpdate(sqlR, beanSourcesR);
+            namedParameterJdbcTemplate.batchUpdate(sqlS, beanSourcesS);
+            activityRepository.save(activity);
+
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-        return false;
+
+        return flag;
     }
+
+
 
     /**
      * 根据输入分组
@@ -121,13 +145,13 @@ public class ActivityServiceImpl implements ActivityService {
 
         List<Rater> finalList = new ArrayList<>();
 
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("搞点"+list.get(i));
-            finalList.addAll(list.get(i));
-        }
-
-
-        System.out.println("最终" + finalList);
+//        for (int i = 0; i < list.size(); i++) {
+//            System.out.println("搞点"+list.get(i));
+//            finalList.addAll(list.get(i));
+//        }
+//
+//
+//        System.out.println("最终" + finalList);
 
         return finalList;
     }

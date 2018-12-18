@@ -16,19 +16,17 @@ public class Player {
   private String name;//选手姓名
   private String workplace;//单位
   private String course;//课程
-  private Integer order;//出场顺序
+  private Integer orders;//出场顺序
   private Integer groups;//组别
   private double totalScore;//总分
   private String password;//选手登录密码
   private Integer activityId;// 活动 id
 
 
-
-
   public Player(String pId, String name, Integer order) {
     this.pId = pId;
     this.name = name;
-    this.order = order;
+    this.orders = order;
   }
 
   public Player() {
@@ -76,14 +74,13 @@ public class Player {
     this.course = course;
   }
 
-  public Integer getOrder() {
-    return order;
+  public Integer getOrders() {
+    return orders;
   }
 
-  public void setOrder(Integer order) {
-    this.order = order;
+  public void setOrders(Integer orders) {
+    this.orders = orders;
   }
-
 
   public double getTotalScore() {
     return totalScore;
@@ -118,19 +115,19 @@ public class Player {
         this.groups = groups;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", pId='" + pId + '\'' +
-                ", name='" + name + '\'' +
-                ", workplace='" + workplace + '\'' +
-                ", course='" + course + '\'' +
-                ", order=" + order +
-                ", groups=" + groups +
-                ", totalScore=" + totalScore +
-                ", password='" + password + '\'' +
-                ", activityId=" + activityId +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Player{" +
+            "id=" + id +
+            ", pId='" + pId + '\'' +
+            ", name='" + name + '\'' +
+            ", workplace='" + workplace + '\'' +
+            ", course='" + course + '\'' +
+            ", orders=" + orders +
+            ", groups=" + groups +
+            ", totalScore=" + totalScore +
+            ", password='" + password + '\'' +
+            ", activityId=" + activityId +
+            '}';
+  }
 }
