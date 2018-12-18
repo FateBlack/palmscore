@@ -248,7 +248,7 @@ public class PeopleController {
         playerList.get(index).setWorkplace(playerForm.getWorkplace());
         playerList.get(index).setCourse(playerForm.getCourse());
         playerList.get(index).setOrder(playerForm.getOrder());
-        playerList.get(index).setGroup(playerForm.getGroup());
+        playerList.get(index).setGroups(playerForm.getGroup());
 
         session.setAttribute("playerList",playerList);
         return  ResultVOUtil.success(playerList);

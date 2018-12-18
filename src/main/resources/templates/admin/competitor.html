@@ -189,7 +189,7 @@
                                     <td>{{$value.workplace}}</td>
                                     <td>{{$value.course}}</td>
                                     <td>{{$value.order}}</td>
-                                    <td>{{$value.group}}</td>
+                                    <td>{{$value.groups}}</td>
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs" >
@@ -318,7 +318,7 @@
                 workplace: $("#judge-home").val(),
                 course: $("#judge-coursename").val(),
                 order: $("#judge-order").val(),
-                group: $("#user-intro").val()
+                groups: $("#user-intro").val()
             },
             success: function (res) {
                 if (res.code == 0) {

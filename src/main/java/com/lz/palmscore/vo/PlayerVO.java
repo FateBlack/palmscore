@@ -1,5 +1,9 @@
 package com.lz.palmscore.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
 /**
  * Created by 白 on 2018/12/16.
  *
@@ -13,13 +17,40 @@ public class PlayerVO {
 
     private String activityName;//活动名
 
-    private Integer score;//分数
+    private Integer order;      // 出场顺序
 
-    public PlayerVO(Integer id, String name, String activityName, Integer score) {
+    @JsonProperty("score_state")
+    private Integer scoreState;//评分状态 1 已经评分,2未评分
+
+    public PlayerVO(Integer id, String name, String activityName, Integer order) {
         this.id = id;
         this.name = name;
         this.activityName = activityName;
-        this.score = score;
+        this.order = order;
+    }
+
+    public PlayerVO(Integer id, String name, String activityName, Integer order, Integer scoreState) {
+        this.id = id;
+        this.name = name;
+        this.activityName = activityName;
+        this.order = order;
+        this.scoreState = scoreState;
+    }
+
+    public Integer getScoreState() {
+        return scoreState;
+    }
+
+    public void setScoreState(Integer scoreState) {
+        this.scoreState = scoreState;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     public Integer getId() {
@@ -46,11 +77,4 @@ public class PlayerVO {
         this.activityName = activityName;
     }
 
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
 }

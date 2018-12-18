@@ -16,7 +16,7 @@ public class Rater {
   private String workplace;//工作单位
   private String job;//职务
   private long activityId;//所属活动id
-  private Integer group;//所属组别
+  private Integer groups;//所属组别
   private String password;//评委登录密码
 
   public String getPassword() {
@@ -35,12 +35,12 @@ public class Rater {
     this.id = id;
   }
 
-  public Integer getGroup() {
-    return group;
+  public Integer getGroups() {
+    return groups;
   }
 
-  public void setGroup(Integer group) {
-    this.group = group;
+  public void setGroups(Integer groups) {
+    this.groups = groups;
   }
 
   public String getRId() {
@@ -88,8 +88,14 @@ public class Rater {
   @Override
   public String toString() {
     return "Rater{" +
-            "name='" + name + '\'' +
-            ", group=" + group +
+            "id=" + id +
+            ", rId='" + rId + '\'' +
+            ", name='" + name + '\'' +
+            ", workplace='" + workplace + '\'' +
+            ", job='" + job + '\'' +
+            ", activityId=" + activityId +
+            ", groups=" + groups +
+            ", password='" + password + '\'' +
             '}';
   }
 

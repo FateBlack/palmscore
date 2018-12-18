@@ -10,7 +10,12 @@ import com.lz.palmscore.repository.RaterRepository;
 import com.lz.palmscore.repository.ScoreItemRepository;
 import com.lz.palmscore.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +40,10 @@ public class ActivityServiceImpl implements ActivityService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+
 
     @Override
     public Activity add(Activity ac) {
@@ -42,19 +51,25 @@ public class ActivityServiceImpl implements ActivityService {
         return activity;
     }
 
+    @Transactional
     @Override
     public boolean allInsert(Activity activity, List<ScoreItem> scoreItemList, List<Rater> raterList, List<Player> playerList) {
 
-        //Collections.shuffle(raterList);
+        Collections.shuffle(raterList);
 
         List<List<Rater>> list = new ArrayList<>();
 
-        //Integer groupNum = activity.getGroupNum();
-
+        Integer groupNum = activity.getGroupNum();
         //TODO 等待删除
-        int groupNum = 5;
+//        int groupNum = 5;
 
-        groupRater(raterList, groupNum);
+        List<Rater> finalRaters =   groupRater(raterList, groupNum);
+
+        SqlParameterSource[] beanSources  = SqlParameterSourceUtils.createBatch(list.toArray());
+        String sql = "INSERT INTO player(p_id,name,workplace,course,order,groups,activity_id)" +
+                " VALUES (:pId,:name,:workplace,:course,:order,:groups,:activity_id)";
+        namedParameterJdbcTemplate.batchUpdate(sql, beanSources);
+
 
         return false;
     }
@@ -63,7 +78,7 @@ public class ActivityServiceImpl implements ActivityService {
      * 根据输入分组
      * @return
      */
-    public List<List<Rater>> groupRater(List<Rater> raterList, int groupNum) {
+    public List<Rater> groupRater(List<Rater> raterList, int groupNum) {
 
 
         List<List<Rater>> list = new ArrayList<>();
@@ -83,25 +98,38 @@ public class ActivityServiceImpl implements ActivityService {
             for (int j = 1; j <= count; j++) {
                 int s = count * (i - 1) + j - 1;
                 Rater rater = raterList.get(s);
-                rater.setGroup(i);
+                rater.setGroups(i);
                 sonList.add(rater);
             }
             list.add(sonList);
         }
 
+
+        List<Rater> extraList = new ArrayList<>();
         if (extra != 0) {
             for (int i = extra; i > 0; i--) {
                 Rater rater = raterList.get(length - i);
-                rater.setGroup(groupNum);
-                list.get(groupNum - 1).add(rater);
+                extraList.add(rater);
             }
         }
 
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println("搞点"+list.get(i));
+        for (int i = 0; i < extra; i++) {
+            extraList.get(i).setGroups(i + 1);
+            list.get(i).add(extraList.get(i));
         }
 
-        return list;
+
+        List<Rater> finalList = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("搞点"+list.get(i));
+            finalList.addAll(list.get(i));
+        }
+
+
+        System.out.println("最终" + finalList);
+
+        return finalList;
     }
 
 

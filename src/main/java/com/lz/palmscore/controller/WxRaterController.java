@@ -6,10 +6,13 @@ import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 白 on 2018/12/16.
@@ -21,17 +24,45 @@ import java.util.List;
 public class WxRaterController {
 
     /**
-     * 评委主页
+     * 评委主页 只显示已评分的选手，并给出活动实时评分密码
+     * @param id 评委主键
      * @return
      */
     @GetMapping("index")
-    public ResultVO raterIndex() {
+    public ResultVO raterIndex(@RequestParam("rater_id") Integer id) {
 
         List<PlayerVO> list = new ArrayList<>();
-        list.add(new PlayerVO(1, "老李", "教师大赛A", 66));
-        list.add(new PlayerVO(1, "老王", "教师大赛B", 0));
-        list.add(new PlayerVO(1, "老赵", "教师大赛C", 66));
+        list.add(new PlayerVO(66, "老李", "教师大赛A", 1));
+        list.add(new PlayerVO(77, "老王", "教师大赛B", 2));
+        list.add(new PlayerVO(89, "老赵", "教师大赛C", 5));
 
-        return ResultVOUtil.success(list);
+        Map map = new HashMap();
+        map.put("list", list);
+        map.put("activity_password", 123123);
+
+        return ResultVOUtil.success(map);
     }
+
+    @GetMapping("score_list")
+    public ResultVO scoreList(@RequestParam("rater_id") Integer id) {
+
+        List<PlayerVO> list = new ArrayList<>();
+        list.add(new PlayerVO(66, "老李", "教师大赛A", 1,1));
+        list.add(new PlayerVO(77, "老王", "教师大赛B", 2,1));
+
+        list.add(new PlayerVO(12, "飞飞", "教师大赛C", 3,2));
+        list.add(new PlayerVO(45, "白", "教师大赛C", 4,2));
+
+        list.add(new PlayerVO(89, "老赵", "教师大赛C", 5,1));
+
+        Map map = new HashMap();
+        map.put("list", list);
+        map.put("activity_password", 123123);
+
+        return ResultVOUtil.success(map);
+    }
+
+
+
+
 }

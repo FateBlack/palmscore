@@ -205,7 +205,7 @@ public class PeopleServiceImpl implements PeopleService {
             log.info("选手组别必须为整型数字");
         }
 
-        player.setGroup(group);
+        player.setGroups(group);
         return  player;
     }
 }

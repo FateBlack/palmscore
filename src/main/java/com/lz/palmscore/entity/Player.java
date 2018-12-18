@@ -17,7 +17,7 @@ public class Player {
   private String workplace;//单位
   private String course;//课程
   private Integer order;//出场顺序
-  private Integer group;//备注
+  private Integer groups;//组别
   private double totalScore;//总分
   private String password;//选手登录密码
   private Integer activityId;// 活动 id
@@ -107,28 +107,27 @@ public class Player {
     this.activityId = activityId;
   }
 
-  public Integer getGroup() {
-    return group;
-  }
+    public Integer getGroups() {
+        return groups;
+    }
 
-  public void setGroup(Integer group) {
-    this.group = group;
-  }
+    public void setGroups(Integer groups) {
+        this.groups = groups;
+    }
 
-  @Override
-  public String toString() {
-    return "Player{" +
-            "id=" + id +
-            ", pId='" + pId + '\'' +
-            ", name='" + name + '\'' +
-            ", workplace='" + workplace + '\'' +
-            ", course='" + course + '\'' +
-            ", order=" + order +
-            ", group='" + group + '\'' +
-            ", totalScore=" + totalScore +
-            ", password='" + password + '\'' +
-            '}';
-  }
-
-
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", pId='" + pId + '\'' +
+                ", name='" + name + '\'' +
+                ", workplace='" + workplace + '\'' +
+                ", course='" + course + '\'' +
+                ", order=" + order +
+                ", groups=" + groups +
+                ", totalScore=" + totalScore +
+                ", password='" + password + '\'' +
+                ", activityId=" + activityId +
+                '}';
+    }
 }
