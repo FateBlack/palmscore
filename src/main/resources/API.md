@@ -14,7 +14,8 @@ password
     "code": 0,
     "msg": "成功",
     "data": {
-        "type" : 1  
+        "type" : 1              //1 评委 ，2选手
+        "id" : 34               //选手或评委id
     }
 }
 ```
@@ -25,7 +26,7 @@ GET /wx/player/index
 ```
 参数
 ```
-
+player_id 选手主键
 
 ```
 返回  
@@ -67,33 +68,36 @@ GET /wx/rater/index
 ```
 参数
 ```
-
+rater_id  评委主键id
 ```
 返回  
 ```
 {
     "code": 0,
     "msg": "成功",
-    "data": [
-        {
-            "id": 1,                 //选手主键
-            "name": "老李",
-            "activityName": "教师大赛A",
-            "score": 66
-        },
-        {
-            "id": 2,
-            "name": "老王",
-            "activityName": "教师大赛B",
-            "score": 0
-        },
-        {
-            "id": 3,
-            "name": "老赵",
-            "activityName": "教师大赛C",
-            "score": 22
-        }
-    ]
+    "data": {
+        "activity_password": 123123,      //活动实时评分密码
+        "list": [
+            {
+                "id": 66,
+                "name": "老李",
+                "activityName": "教师大赛A",
+                "order": 1
+            },
+            {
+                "id": 77,
+                "name": "老王",
+                "activityName": "教师大赛B",
+                "order": 2
+            },
+            {
+                "id": 89,
+                "name": "老赵",
+                "activityName": "教师大赛C",
+                "order": 3
+            }
+        ]
+    }
 }
 
 ```
@@ -104,7 +108,7 @@ POST /wx/player/file_upload
 ```
 参数
 ```
-id 选手主键  file 教案图片
+id 选手主键  filepath 教案路径
 ```
 返回  
 ```
@@ -114,4 +118,91 @@ id 选手主键  file 教案图片
     "data":null
 }
 
+```
+
+
+### 选手个人参赛信息
+```
+GET /wx/player/player_info
+```
+参数
+```
+id 选手主键 
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "id": 2,
+        "name": "风清扬",
+        "workplace": "教研室",
+        "course": "C语言",
+        "file_list": [
+            "http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg",
+            "http://b.hiphotos.baidu.com/image/pic/item/359b033b5bb5c9ea5c0e3c23d139b6003bf3b374.jpg",
+            "http://img.my.csdn.net/uploads/201407/26/1406383299_1976.jpg",
+            "http://img.my.csdn.net/uploads/201407/26/1406383275_3977.jpg"
+        ]
+    }
+}
+
+```
+
+
+### 评委评分列表
+```
+ GET /wx/rater/score_list
+```
+参数
+```
+rater_id 评委主键
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "activity_password": 123123,
+        "list": [
+            {
+                "id": 66,
+                "name": "老李",
+                "activityName": "教师大赛A",
+                "order": 1,
+                "score_state": 1   //评分状态: 1已评分，2未评分
+            },
+            {
+                "id": 77,
+                "name": "老王",
+                "activityName": "教师大赛B",
+                "order": 2,
+                "score_state": 1
+            },
+            {
+                "id": 12,
+                "name": "飞飞",
+                "activityName": "教师大赛C",
+                "order": 3,
+                "score_state": 2
+            },
+            {
+                "id": 45,
+                "name": "白",
+                "activityName": "教师大赛C",
+                "order": 4,
+                "score_state": 2
+            },
+            {
+                "id": 89,
+                "name": "老赵",
+                "activityName": "教师大赛C",
+                "order": 5,
+                "score_state": 1
+            }
+        ]
+    }
+}
 ```

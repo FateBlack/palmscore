@@ -189,7 +189,7 @@
                                     <td>{{$value.workplace}}</td>
                                     <td>{{$value.course}}</td>
                                     <td>{{$value.order}}</td>
-                                    <td>{{$value.group}}</td>
+                                    <td>{{$value.groups}}</td>
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs" >
@@ -267,7 +267,7 @@
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3" style="text-align: center;margin-top: 20px">
                                 <a class="am-btn am-btn-primary" style="color:white;margin-right: 20px;" href="judge.html">上一步</a>
-                                <button type="button" class="am-btn am-btn-primary"  data-am-modal="{target: '#my-alert'}">完成</button>
+                                <button type="button" class="am-btn am-btn-primary" onclick="all_insert()"  data-am-modal="{target: '#my-alert'}">完成</button>
                                 <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
                                     <div class="am-modal-dialog">
                                         <div class="am-modal-hd"> 活动创建完成！</div>
@@ -318,7 +318,7 @@
                 workplace: $("#judge-home").val(),
                 course: $("#judge-coursename").val(),
                 order: $("#judge-order").val(),
-                group: $("#user-intro").val()
+                groups: $("#user-intro").val()
             },
             success: function (res) {
                 if (res.code == 0) {
@@ -471,6 +471,30 @@
         });
     }
 
+    function all_insert() {
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../admin/all_insert",
+            // data:{
+            //     index: index,
+            //     type:"player"
+            // },
+            success:function(res){
+
+                if (res.code == 0) {
+
+                }else {
+                    alert(res.msg)
+                }
+
+            },
+            error:function(){
+                alert("创建失败");
+            }
+        });
+
+    }
 
 
 </script>

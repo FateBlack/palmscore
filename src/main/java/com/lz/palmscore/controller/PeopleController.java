@@ -69,6 +69,7 @@ public class PeopleController {
 
         List<Rater> raterList = null;
         List<Player> playerList = null;
+
         try {
 
             if (type.equals("raterFile")) {
@@ -94,12 +95,16 @@ public class PeopleController {
                 session.setAttribute("playerList", playerList);
                 return ResultVOUtil.success(playerList);
             }
+
+
         } catch (Exception e) {
             log.error("[评委或选手excel文件上传]文件读取异常,fileName={}",fileName);
             e.printStackTrace();
         }
         return ResultVOUtil.success();
     }
+
+
     /**
      * 删除 评委或选手 单条数据
      * @param index   页面遍历 对象数组的索引
@@ -111,9 +116,10 @@ public class PeopleController {
     @PostMapping("/delete_item")
     public ResultVO deleteItem(@RequestParam("index") int index, @RequestParam("type") String type,
                                HttpSession session) {
+
+        try {
             if (type.equals("rater")) {
                 List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
-                System.out.println(raterList.size());
                 raterList.remove(index);
                 System.out.println(raterList.size());
                 session.setAttribute("raterList",raterList);
@@ -122,8 +128,13 @@ public class PeopleController {
             if (type.equals("player")) {
                 List<Player> playerList = (List<Player>) session.getAttribute("playerList");
                 playerList.remove(index);
-                session.setAttribute("raterList",playerList);
+                session.setAttribute("playerList",playerList);
             }
+
+        } catch (Exception e) {
+            log.error("[删除评委或选手]索引越界,index={}", index);
+            e.printStackTrace();
+        }
 
         return ResultVOUtil.success();
     }
@@ -152,6 +163,7 @@ public class PeopleController {
         if (raterList == null) {
             raterList = new ArrayList<>();
         }
+
         raterList.add(rater);
         session.setAttribute("raterList",raterList);
         return ResultVOUtil.success(raterList);
@@ -171,6 +183,7 @@ public class PeopleController {
         if (bindingResult.hasErrors()) {
             return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
+
         Player player = PlayerForm2PlayerConverter.conventer(form);
 
         List<Player> playerList = (List<Player>) session.getAttribute("playerList");
@@ -178,6 +191,7 @@ public class PeopleController {
         if (playerList == null) {
             playerList = new ArrayList<>();
         }
+
         playerList.add(player);
 
         session.setAttribute("playerList",playerList);
@@ -233,7 +247,7 @@ public class PeopleController {
         playerList.get(index).setWorkplace(playerForm.getWorkplace());
         playerList.get(index).setCourse(playerForm.getCourse());
         playerList.get(index).setOrder(playerForm.getOrder());
-        playerList.get(index).setGroup(playerForm.getGroup());
+        playerList.get(index).setGroups(playerForm.getGroup());
 
         session.setAttribute("playerList",playerList);
         return  ResultVOUtil.success(playerList);

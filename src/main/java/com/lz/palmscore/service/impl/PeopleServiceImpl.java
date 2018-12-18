@@ -67,6 +67,13 @@ public class PeopleServiceImpl implements PeopleService {
         return raterList;
     }
 
+    /**
+     *
+     * @param fileName
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<Player> batchInputPlayer(String fileName, MultipartFile file) throws Exception {
         boolean notNull = false;
@@ -193,7 +200,8 @@ public class PeopleServiceImpl implements PeopleService {
         } catch (Exception e) {
             log.info("选手组别必须为整型数字");
         }
-        player.setGroup(group);
+
+        player.setGroups(group);
         return  player;
     }
 }

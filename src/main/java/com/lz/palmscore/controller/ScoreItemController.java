@@ -18,6 +18,10 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 评分细则
+ */
+
 @RestController
 @RequestMapping("/score_item")
 @Slf4j

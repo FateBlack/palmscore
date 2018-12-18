@@ -19,25 +19,35 @@ import java.util.Map;
 @RequestMapping("/wx/people")
 @Slf4j
 public class WxPeopleController {
+
     /**
      * 微信端登陆
+     * @param account
+     * @param password
      * @return
      */
     @PostMapping("login")
     public ResultVO peopleLogin(@RequestParam("account") String account, @RequestParam("password") String password) {
 
+        Map map = new HashMap();
+
         int type = 666;
+        int id = 999;
         if (account.equals("a") && password.equals("123")) {
             type = 1;
+            id = 1;
         }
         if (account.equals("b") && password.equals("123")){
             type = 2;
+            id = 2;
         }
 
-        Map map = new HashMap();
         map.put("type", type);
+        map.put("id", id);
 
         return ResultVOUtil.success(map);
     }
+
+
 
 }

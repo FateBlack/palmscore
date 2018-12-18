@@ -2,8 +2,12 @@ package com.lz.palmscore.controller;
 
 import com.lz.palmscore.Conventer.ActivityForm2ActivityConventer;
 import com.lz.palmscore.entity.Activity;
+import com.lz.palmscore.entity.Player;
+import com.lz.palmscore.entity.Rater;
+import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.enums.ActivityEnum;
+import com.lz.palmscore.enums.PeopleEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.form.ActivityForm;
 import com.lz.palmscore.service.ActivityService;
@@ -18,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,7 +41,7 @@ public class ActivityController  {
     ActivityService activityService;
 
     /**
-     * 活动添加
+     * 活动添加 仅添加
      * @param activityForm
      * @param bindingResult
      * @param session
@@ -84,6 +86,12 @@ public class ActivityController  {
         session.setAttribute("activityId",activityNew.getId());
         return  new ModelAndView("/admin/activity");
     }
+
+    /**
+     * 回显
+     * @param session
+     * @return
+     */
     @PostMapping("show")
     public ResultVO show( HttpSession session){
          Activity activity= (Activity) session.getAttribute("activity");
@@ -113,4 +121,39 @@ public class ActivityController  {
         session.setAttribute("activity",activity);
         return ResultVOUtil.success();
     }
+
+
+    /**
+     * 所有活动及 评委 选手数据最终加入数据库
+     * @param session
+     * @return
+     */
+    @PostMapping("all_insert")
+    public ResultVO addInsert(HttpSession session) {
+
+        Activity activity = (Activity) session.getAttribute("activity");
+        List<ScoreItem> scoreItemList = (List<ScoreItem>) session.getAttribute("list");
+        List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
+        List<Player> playerList = (List<Player>) session.getAttribute("playerList");
+
+//        if (activity == null) {
+//            return ResultVOUtil.error(ActivityEnum.ACTIVITY_EMPTY.getCode(), ActivityEnum.ACTIVITY_EMPTY.getMessage());
+//        }
+//        if (scoreItemList == null || scoreItemList.isEmpty()) {
+//            return ResultVOUtil.error(ActivityEnum.SCORE_ITEM_EMPTY.getCode(), ActivityEnum.SCORE_ITEM_EMPTY.getMessage());
+//        }
+//        if (raterList == null || raterList.isEmpty()) {
+//            return ResultVOUtil.error(PeopleEnum.RATERS_EMPTY.getCode(), PeopleEnum.RATERS_EMPTY.getMessage());
+//        }
+//        if (playerList == null || playerList.isEmpty()) {
+//            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), PeopleEnum.PARAM_ERROR.getMessage());
+//        }
+
+        activityService.allInsert(activity, scoreItemList, raterList, playerList);
+
+        return ResultVOUtil.success();
+    }
+
+
+
 }

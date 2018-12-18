@@ -213,6 +213,7 @@
                                                                         <input type="text" id="rejudge-name" placeholder="">
                                                                     </div>
                                                                 </div>
+
                                                                 <div class="am-form-group">
                                                                     <label for="rejudge-duty"
                                                                            class="am-u-sm-3 am-form-label">职务</label>
@@ -351,7 +352,6 @@
      *  上传excel,返回 评委数据
      */
 
-
     function importExp() {
 
         var formData = new FormData();
@@ -397,10 +397,12 @@
                  index: index,
                  type:"rater"
              },
+
             success:function(res){
 
                 if (res.code == 0) {
                     alert("删除成功");
+
                     datalist.splice(key, 1);//从下标key开始，删 1 个元素
                     var data={
                         datalist:datalist

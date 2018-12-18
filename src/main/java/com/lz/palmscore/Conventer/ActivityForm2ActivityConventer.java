@@ -21,7 +21,7 @@ public class ActivityForm2ActivityConventer {
         activity.setEndTime(activityForm.getEndTime());
         activity.setScoreRule(activityForm.getScoreRule());
         activity.setUploadTime(activityForm.getUploadTime());
-        activity.setGroup_num(activityForm.getGroupNum());
+        activity.setGroupNum(activityForm.getGroupNum());
 
         return activity;
     }
