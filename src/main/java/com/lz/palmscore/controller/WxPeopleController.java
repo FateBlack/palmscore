@@ -37,7 +37,7 @@ public class WxPeopleController {
             type = 1;
             id = 1;
         }
-        if (account.equals("b") && password.equals("123")){
+        if (account.equals("b") && password.equals("123")) {
             type = 2;
             id = 2;
         }
@@ -47,7 +47,4 @@ public class WxPeopleController {
 
         return ResultVOUtil.success(map);
     }
-
-
-
 }
