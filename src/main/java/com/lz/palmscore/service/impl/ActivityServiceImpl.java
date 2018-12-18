@@ -59,9 +59,9 @@ public class ActivityServiceImpl implements ActivityService {
 
         List<List<Rater>> list = new ArrayList<>();
 
-        Integer groupNum = activity.getGroupNum();
+//        Integer groupNum = activity.getGroupNum();
         //TODO 等待删除
-//        int groupNum = 5;
+        int groupNum = 5;
 
         List<Rater> finalRaters =   groupRater(raterList, groupNum);
 

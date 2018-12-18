@@ -67,6 +67,7 @@ public class PlayerForm {
         this.course = course;
     }
 
+
     public Integer getGroups() {
         return groups;
     }
