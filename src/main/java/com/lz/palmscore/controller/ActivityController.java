@@ -5,9 +5,7 @@ import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
 import com.lz.palmscore.entity.ScoreItem;
-import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.enums.ActivityEnum;
-import com.lz.palmscore.enums.PeopleEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.form.ActivityForm;
 import com.lz.palmscore.service.ActivityService;
@@ -92,7 +90,7 @@ public class ActivityController  {
             System.out.println("嗯哼？错了");
         }
         session.setAttribute("activityId",activityNew.getId());
-        return  new ModelAndView("/admin/activity");
+        return  new ModelAndView("admin/activity");
     }
 
     /**

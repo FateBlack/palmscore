@@ -51,13 +51,6 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-<!--        <dependency>
-            <groupId>net.sourceforge.ntkohtml</groupId>
-            <artifactId>ntkohtml</artifactId>
-
-            <version>1.9.22</version>
-        </dependency>-->
-
 
 
         <!--  导入 excel  所需依赖    -->

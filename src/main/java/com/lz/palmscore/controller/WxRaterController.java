@@ -5,10 +5,7 @@ import com.lz.palmscore.vo.MarkPageVO;
 import com.lz.palmscore.vo.PlayerVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +80,13 @@ public class WxRaterController {
         return ResultVOUtil.success(markPageVOList);
     }
 
+    @PostMapping("mark")
+    public ResultVO mark(@RequestParam("player_id") Integer playerId,@RequestParam("rater_id") Integer raterId) {
+
+
+
+        return ResultVOUtil.success();
+    }
 
 
 
