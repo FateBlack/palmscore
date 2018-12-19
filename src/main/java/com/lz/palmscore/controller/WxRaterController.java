@@ -73,9 +73,9 @@ public class WxRaterController {
     public ResultVO markPage() {
 
         List<MarkPageVO> markPageVOList = new ArrayList<>();
-        markPageVOList.add(new MarkPageVO("教案", 0.5));
-        markPageVOList.add(new MarkPageVO("现场", 0.3));
-        markPageVOList.add(new MarkPageVO("技术", 0.2));
+        markPageVOList.add(new MarkPageVO(88, "教案", 0.5, 1));
+        markPageVOList.add(new MarkPageVO(33, "现场", 0.3, 2));
+        markPageVOList.add(new MarkPageVO(99, "技术", 0.2, 1));
 
         return ResultVOUtil.success(markPageVOList);
     }

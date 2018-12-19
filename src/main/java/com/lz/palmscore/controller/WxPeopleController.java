@@ -90,7 +90,7 @@ public class WxPeopleController {
         if (type == 1) { //评委
             Rater rater = peopleService.findById(id);
             String realPas = rater.getPassword();
-            System.out.println(realPas);
+
             //if (realPas==password) {//这种不对啊啊啊啊啊啊啊！！！！！
               if (!realPas.equals(password)) {//原始密码不相等
                   return ResultVOUtil.error(510,"原密码输入不正确");

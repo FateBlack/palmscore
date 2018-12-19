@@ -88,10 +88,10 @@ public class AdminController {
         Admin admin = (Admin) session.getAttribute("admin");
         if (admin == null) {
             log.info("[进入管理员主页]session中不存在管理员信息");
-            return new ModelAndView("/admin/login");
+            return new ModelAndView("admin/login");
         }
         map.put("admin", admin);
-        return new ModelAndView("/admin/index");
+        return new ModelAndView("admin/index");
     }
 
     /**

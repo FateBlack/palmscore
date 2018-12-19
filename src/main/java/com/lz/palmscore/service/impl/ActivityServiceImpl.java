@@ -32,18 +32,7 @@ public class ActivityServiceImpl implements ActivityService {
     private ActivityRepository activityRepository;
 
     @Autowired
-    private ScoreItemRepository scoreItemRepository;
-
-    @Autowired
-    private RaterRepository raterRepository;
-
-    @Autowired
-    private PlayerRepository playerRepository;
-
-    @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-
 
     @Override
     public Activity add(Activity ac) {

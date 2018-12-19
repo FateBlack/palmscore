@@ -153,7 +153,6 @@ public class ActivityController  {
             rater.setActivityId(activityId);
         }
 
-
         activityService.allInsert(activity, scoreItemList, raterList, playerList);
 
         return ResultVOUtil.success();

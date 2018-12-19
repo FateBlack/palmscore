@@ -211,11 +211,18 @@ public class PeopleController {
             return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
         List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
+
+
         System.out.println(raterList);
+
+
+
         raterList.get(index).setRId(raterForm.getRid());
         raterList.get(index).setName(raterForm.getName());
         raterList.get(index).setJob(raterForm.getJob());
         raterList.get(index).setWorkplace(raterForm.getWorkplace());
+
+
         session.setAttribute("raterList",raterList);
         return  ResultVOUtil.success(raterList);
     }
@@ -248,6 +255,18 @@ public class PeopleController {
         session.setAttribute("playerList",playerList);
         return  ResultVOUtil.success(playerList);
 
+    }
+
+    /**
+     * 抽签
+     * @return
+     */
+    @GetMapping("draw_lots")
+    public ResultVO drawLots() {
+
+        peopleService.drawLots();
+
+        return ResultVOUtil.success();
     }
 
 }

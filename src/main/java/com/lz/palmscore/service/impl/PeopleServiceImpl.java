@@ -1,7 +1,9 @@
 package com.lz.palmscore.service.impl;
 
+import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
+import com.lz.palmscore.repository.ActivityRepository;
 import com.lz.palmscore.repository.PlayerRepository;
 import com.lz.palmscore.repository.RaterRepository;
 import com.lz.palmscore.service.PeopleService;
@@ -13,14 +15,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 白 on 2018/12/12.
@@ -31,11 +31,12 @@ import java.util.Map;
 public class PeopleServiceImpl implements PeopleService {
     @Autowired
     private PlayerRepository playerRepository;
+
     @Autowired
     private RaterRepository raterRepository;
-    @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
+    @Autowired
+    private ActivityRepository activityRepository;
 
     @Override
     public List<Rater> batchInputRater(String fileName, MultipartFile file) throws Exception {
@@ -128,6 +129,30 @@ public class PeopleServiceImpl implements PeopleService {
 
 
     /**
+     * 抽签  实际上在创建活动时就已经随机排序，此处无需随机
+     * @return
+     */
+    @Override
+    public List<List<Player>> drawLots() {
+
+        List<List<Player>> playerList = new ArrayList<>();
+
+        List<Activity> activityList = activityRepository.findAll();
+        Integer groupNum = activityList.get(0).getGroupNum();
+
+        try {
+            for (int i = 1; i <= groupNum; i++) {
+                List<Player> list = playerRepository.findByGroups(i);
+                playerList.add(list);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return playerList;
+    }
+
+    /**
      * 通过id查询评委
      * @param id
      * @return
@@ -175,6 +200,9 @@ public class PeopleServiceImpl implements PeopleService {
      * @param id
      * @return
      */
+
+
+
 
 
     /**

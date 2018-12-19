@@ -12,3 +12,6 @@ import java.util.List;
 public interface AdminRepository extends JpaRepository<Admin,Integer> {
     List<Admin> findByAccountAndPassword(String account,String password);
 }
+
+
+

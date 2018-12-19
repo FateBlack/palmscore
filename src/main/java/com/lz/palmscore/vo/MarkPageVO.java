@@ -5,12 +5,25 @@ package com.lz.palmscore.vo;
  * 评委打分页面
  */
 public class MarkPageVO {
+    private Integer id;//评分项主键
     private String name;//评分项
     private double rate;//占比
+    private Integer fileUpload;//是否需要文件上传 1:需要  2:不需要
 
-    public MarkPageVO(String name, double rate) {
+
+    public MarkPageVO(Integer id, String name, double rate, Integer fileUpload) {
+        this.id = id;
         this.name = name;
         this.rate = rate;
+        this.fileUpload = fileUpload;
+    }
+
+    public Integer getFileUpload() {
+        return fileUpload;
+    }
+
+    public void setFileUpload(Integer fileUpload) {
+        this.fileUpload = fileUpload;
     }
 
     public String getName() {
@@ -27,5 +40,13 @@ public class MarkPageVO {
 
     public void setRate(double rate) {
         this.rate = rate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
