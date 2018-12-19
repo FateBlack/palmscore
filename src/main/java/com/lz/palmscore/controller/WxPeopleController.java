@@ -28,6 +28,8 @@ public class WxPeopleController {
     @Autowired
     PeopleService peopleService;
 
+
+
     /**
      * 微信端登陆
      *
@@ -39,7 +41,9 @@ public class WxPeopleController {
     public ResultVO peopleLogin(@RequestParam("account") String account, @RequestParam("password") String password) {
 
         Map map = new HashMap();
+        //
 
+        //
         int type = 666;
         int id = 999;
         if (account.equals("a") && password.equals("123")) {
