@@ -55,8 +55,8 @@ public class WxPlayerController {
 
 
     /**
-     *  id  选手主键
-     * @param id
+     *  选手信息
+     * @param id 选手主键
      * @return
      */
     @GetMapping("player_info")

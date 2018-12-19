@@ -23,17 +23,16 @@ public class AcitvityVO {
 
     private String uploadTime;//提交截止时间
 
-    @JsonProperty("file_upload")
-    private Integer fileUpload;
+    private Integer state;
 
 
-    public AcitvityVO(Integer id, String name, String startTime, String endTime, String uploadTime, Integer fileUpload) {
+    public AcitvityVO(Integer id, String name, String startTime, String endTime, String uploadTime, Integer state) {
         this.id = id;
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.uploadTime = uploadTime;
-        this.fileUpload = fileUpload;
+        this.state = state;
     }
 
     public Integer getId() {
@@ -76,11 +75,11 @@ public class AcitvityVO {
         this.uploadTime = uploadTime;
     }
 
-    public Integer getFileUpload() {
-        return fileUpload;
+    public Integer getState() {
+        return state;
     }
 
-    public void setFileUpload(Integer fileUpload) {
-        this.fileUpload = fileUpload;
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

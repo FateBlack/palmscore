@@ -8,17 +8,14 @@ import com.lz.palmscore.Conventer.PlayerForm2PlayerConverter;
 import com.lz.palmscore.Conventer.RaterForm2RaterConverter;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
-import com.lz.palmscore.enums.ActivityEnum;
 import com.lz.palmscore.enums.FileEnum;
 import com.lz.palmscore.enums.PeopleEnum;
-import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.exception.FileException;
 import com.lz.palmscore.form.PlayerForm;
 import com.lz.palmscore.form.RaterForm;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.ResultVO;
-import com.sun.deploy.nativesandbox.NativeSandboxBroker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -28,9 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *  评委 和 选手

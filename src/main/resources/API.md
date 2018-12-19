@@ -11,13 +11,14 @@ password
 返回  评委 1 选手 2
 ```
 {
-    "code": 0,
-    "msg": "成功",
-    "data": {
-        "type" : 1              //1 评委 ，2选手
-        "id" : 34               //选手或评委id
-    }
-}
+     "code": 0,
+     "msg": "成功",
+     "data": {
+         "groups": 3,
+         "type" : 1              //1 评委 ，2选手
+         "id" : 34               //选手或评委id
+     }
+ }
 ```
 
 ### 选手主页
@@ -41,7 +42,7 @@ player_id 选手主键
             "startTime": "2018-12-15",
             "endTime": "2018-12-28",
             "uploadTime": "2018-12-14",
-            "file_upload": 1
+            "state": 1                  //1:已上传 ，2:未上传，3:已结束
         },
         {
             "id": 2,
@@ -49,15 +50,7 @@ player_id 选手主键
             "startTime": "2018-12-1",
             "endTime": "2018-12-3",
             "uploadTime": "2018-12-14",
-            "file_upload": 2
-        },
-        {
-            "id": 3,
-            "name": "教师大赛C",
-            "startTime": "2018-12-15",
-            "endTime": "2018-12-16",
-            "uploadTime": "2018-12-14",
-            "file_upload": 2
+            "state": 2
         }
     ]
 }
@@ -89,12 +82,6 @@ rater_id  评委主键id
                 "name": "老王",
                 "activityName": "教师大赛B",
                 "order": 2
-            },
-            {
-                "id": 89,
-                "name": "老赵",
-                "activityName": "教师大赛C",
-                "order": 3
             }
         ]
     }
@@ -180,29 +167,65 @@ rater_id 评委主键
                 "activityName": "教师大赛B",
                 "order": 2,
                 "score_state": 1
-            },
-            {
-                "id": 12,
-                "name": "飞飞",
-                "activityName": "教师大赛C",
-                "order": 3,
-                "score_state": 2
-            },
-            {
-                "id": 45,
-                "name": "白",
-                "activityName": "教师大赛C",
-                "order": 4,
-                "score_state": 2
-            },
-            {
-                "id": 89,
-                "name": "老赵",
-                "activityName": "教师大赛C",
-                "order": 5,
-                "score_state": 1
             }
         ]
     }
+}
+```
+
+
+### 评委打分页面
+```
+ GET /wx/rater/mark_page
+```
+参数
+```
+无
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": [
+        {
+            "name": "教案",
+            "rate": 0.7
+        },
+        {
+            "name": "技术",
+            "rate": 0.3
+        }
+    ]
+}
+```
+
+### 结果 排名 界面
+```
+ GET /wx/people/rank
+```
+参数
+```
+groups 组别
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": [
+        {
+            "orders": 3,
+            "name": "老牛头",
+            "totalScore": 88.4,
+            "rank": 1
+        },
+        {
+            "orders": 6,
+            "name": "八百",
+            "totalScore": 77.9,
+            "rank": 2
+        }
+    ]
 }
 ```

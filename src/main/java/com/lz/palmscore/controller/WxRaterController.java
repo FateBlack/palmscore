@@ -1,6 +1,7 @@
 package com.lz.palmscore.controller;
 
 import com.lz.palmscore.util.ResultVOUtil;
+import com.lz.palmscore.vo.MarkPageVO;
 import com.lz.palmscore.vo.PlayerVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,11 @@ public class WxRaterController {
         return ResultVOUtil.success(map);
     }
 
+    /**
+     * 单个评委评分记录页,显示已评分和未评分选手
+     * @param id
+     * @return
+     */
     @GetMapping("score_list")
     public ResultVO scoreList(@RequestParam("rater_id") Integer id) {
 
@@ -61,6 +67,23 @@ public class WxRaterController {
 
         return ResultVOUtil.success(map);
     }
+
+    /**
+     * 评委打分页面
+     * @return
+     */
+    @GetMapping("mark_page")
+    public ResultVO markPage() {
+
+        List<MarkPageVO> markPageVOList = new ArrayList<>();
+        markPageVOList.add(new MarkPageVO("教案", 0.5));
+        markPageVOList.add(new MarkPageVO("现场", 0.3));
+        markPageVOList.add(new MarkPageVO("技术", 0.2));
+
+        return ResultVOUtil.success(markPageVOList);
+    }
+
+
 
 
 
