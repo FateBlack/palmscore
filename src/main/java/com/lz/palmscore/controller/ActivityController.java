@@ -146,19 +146,6 @@ public class ActivityController  {
         List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
         List<Player> playerList = (List<Player>) session.getAttribute("playerList");
 
-//        if (activity == null) {
-//            return ResultVOUtil.error(ActivityEnum.ACTIVITY_EMPTY.getCode(), ActivityEnum.ACTIVITY_EMPTY.getMessage());
-//        }
-//        if (scoreItemList == null || scoreItemList.isEmpty()) {
-//            return ResultVOUtil.error(ActivityEnum.SCORE_ITEM_EMPTY.getCode(), ActivityEnum.SCORE_ITEM_EMPTY.getMessage());
-//        }
-//        if (raterList == null || raterList.isEmpty()) {
-//            return ResultVOUtil.error(PeopleEnum.RATERS_EMPTY.getCode(), PeopleEnum.RATERS_EMPTY.getMessage());
-//        }
-//        if (playerList == null || playerList.isEmpty()) {
-//            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), PeopleEnum.PARAM_ERROR.getMessage());
-//        }
-
         Integer activityId = activity.getId();
         for (Player player : playerList) {
             player.setActivityId(activityId);

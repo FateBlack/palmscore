@@ -62,7 +62,7 @@ public class WxPlayerController {
     @GetMapping("player_info")
     public ResultVO playerInfo(@RequestParam("id") Integer id) {
 
-        PlayerInfoVO playerInfoVO = new PlayerInfoVO(2, "风清扬", "教研室", "C语言");
+        PlayerInfoVO playerInfoVO = new PlayerInfoVO(2, "风清扬", "教研室", "C语言",1);
         List<String> fileList = new ArrayList<>();
         fileList.add("http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg");
         fileList.add("http://b.hiphotos.baidu.com/image/pic/item/359b033b5bb5c9ea5c0e3c23d139b6003bf3b374.jpg");
