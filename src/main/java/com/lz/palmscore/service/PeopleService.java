@@ -18,4 +18,11 @@ public interface PeopleService {
     List<Player> batchInputPlayer(String fileName, MultipartFile file) throws Exception;
 
 
+    Rater findById(int id);
+
+    Player findById2(int id);
+
+    Rater updateById(Rater rater);
+
+    Player updateById2(Player player);
 }

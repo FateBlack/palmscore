@@ -2,6 +2,8 @@ package com.lz.palmscore.service.impl;
 
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
+import com.lz.palmscore.repository.PlayerRepository;
+import com.lz.palmscore.repository.RaterRepository;
 import com.lz.palmscore.service.PeopleService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -10,11 +12,15 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 白 on 2018/12/12.
@@ -23,6 +29,12 @@ import java.util.List;
 @Service
 @Slf4j
 public class PeopleServiceImpl implements PeopleService {
+    @Autowired
+    private PlayerRepository playerRepository;
+    @Autowired
+    private RaterRepository raterRepository;
+    @Autowired
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 
     @Override
@@ -113,6 +125,56 @@ public class PeopleServiceImpl implements PeopleService {
 
         return playerList;
     }
+
+
+    /**
+     * 通过id查询评委
+     * @param id
+     * @return
+     */
+    @Override
+    public Rater findById(int id) {
+        return raterRepository.getOne(id);
+    }
+
+
+    /**
+     * 通过id查询选手
+     * @param id
+     * @return
+     */
+    @Override
+    public Player findById2(int id) {
+        return playerRepository.getOne(id);
+    }
+
+    /**
+     * 修改评委密码
+     * @param rater
+     * @return
+     */
+    @Override
+    public Rater updateById(Rater rater) {
+        return raterRepository.save(rater);
+    }
+
+    @Override
+    public Player updateById2(Player player) {
+        return playerRepository.save(player);
+    }
+    /**
+     * 通过id修改评委密码
+     * @param rePassword
+     * @param id
+     * @return
+     */
+
+    /**
+     * 通过id修改选手密码
+     * @param rePassword
+     * @param id
+     * @return
+     */
 
 
     /**

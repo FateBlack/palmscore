@@ -229,3 +229,29 @@ groups 组别
     ]
 }
 ```
+###修改密码
+```
+POST /wx/people/password_edit
+```
+参数
+```
+type （修改类型 1评委 2选手） 
+id（选手或评委id）
+password（原密码）
+rePassword（修改密码）
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": null
+
+}
+{
+    "code": 510,
+    "msg": "原密码输入不正确",
+    "data": null
+}
+```
+
