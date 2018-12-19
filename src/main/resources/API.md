@@ -200,6 +200,26 @@ rater_id 评委主键
 }
 ```
 
+###评委打分按钮
+```
+POST /wx/people/mark
+```
+参数
+```
+playerId  选手主键
+raterId   评委主键
+score 分数
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": null
+
+}
+```
+
 ### 结果 排名 界面
 ```
  GET /wx/people/rank
