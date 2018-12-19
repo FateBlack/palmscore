@@ -80,10 +80,17 @@ public class WxRaterController {
         return ResultVOUtil.success(markPageVOList);
     }
 
+    /**
+     *
+     * @param playerId  选手主键
+     * @param raterId   评委主键
+     * @param score 分数
+     * @return
+     */
     @PostMapping("mark")
-    public ResultVO mark(@RequestParam("player_id") Integer playerId,@RequestParam("rater_id") Integer raterId) {
-
-
+    public ResultVO mark(@RequestParam("player_id") Integer playerId,
+                         @RequestParam("rater_id") Integer raterId,
+                         @RequestParam("score") double score){
 
         return ResultVOUtil.success();
     }

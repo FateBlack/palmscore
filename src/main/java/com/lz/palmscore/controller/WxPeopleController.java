@@ -69,7 +69,7 @@ public class WxPeopleController {
      * @return
      */
     @GetMapping("rank")
-    public ResultVO rank(@RequestParam("groups") String groups) {
+    public ResultVO rank(@RequestParam("groups") Integer groups) {
         List<RankVO> rankList = new ArrayList<>();
         rankList.add(new RankVO(3, "老牛头", 88.4, 1));
         rankList.add(new RankVO(6, "八百", 77.9, 2));
