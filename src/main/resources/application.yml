@@ -15,10 +15,13 @@ spring:
 
   thymeleaf:
     cache: false # 开发时关闭缓存,不然没法看到实时页面
-    mode: LEGACYHTML5 # 用非严格的 HTML
+#    mode: LEGACYHTML5 # 用非严格的 HTML
+    mode: HTML5
     encoding: UTF-8
+#    prefix: classpath:/admin
     servlet:
       content-type: text/html
+    suffix: .html
 
   servlet:
     multipart:

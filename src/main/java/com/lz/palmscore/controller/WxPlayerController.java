@@ -4,12 +4,10 @@ import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.AcitvityVO;
 import com.lz.palmscore.vo.PlayerInfoVO;
-import com.lz.palmscore.vo.PlayerVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
