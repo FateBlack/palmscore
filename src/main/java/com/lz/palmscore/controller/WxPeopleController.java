@@ -3,6 +3,7 @@ package com.lz.palmscore.controller;
         import com.lz.palmscore.entity.Player;
         import com.lz.palmscore.entity.Rater;
         import com.lz.palmscore.service.PeopleService;
+        import com.lz.palmscore.service.PlayerService;
         import com.lz.palmscore.util.ResultVOUtil;
         import com.lz.palmscore.vo.RankVO;
         import com.lz.palmscore.vo.ResultVO;
@@ -26,6 +27,10 @@ public class WxPeopleController {
 
     @Autowired
     PeopleService peopleService;
+
+
+    @Autowired
+    PlayerService playerService;
 
 
     /**
@@ -65,18 +70,19 @@ public class WxPeopleController {
 
     /**
      * 微信端 评分结果排名
-     *
      * @param groups 组别
      * @return
      */
     @GetMapping("rank")
     public ResultVO rank(@RequestParam("groups") Integer groups) {
         List<RankVO> rankList = new ArrayList<>();
-        rankList.add(new RankVO(3, "老牛头", 88.4, 1));
-        rankList.add(new RankVO(6, "八百", 77.9, 2));
-        rankList.add(new RankVO(1, "分发", 66.89, 3));
-        rankList.add(new RankVO(2, "胖胖", 55.22, 4));
+        List<Player> playerList = playerService.findByGroups(groups);
 
+        int i=playerList.size();
+        for(int a=i-1,b=1;a>=0;a--,b++){
+            rankList.add(new RankVO(playerList.get(a).getOrders(), playerList.get(a).getName(), playerList.get(a).getTotalScore(), b));
+
+        }
         return ResultVOUtil.success(rankList);
     }
 

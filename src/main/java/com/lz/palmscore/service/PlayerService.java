@@ -2,6 +2,7 @@ package com.lz.palmscore.service;
 
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.PlayerFile;
+import com.lz.palmscore.vo.RankVO;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ public interface PlayerService {
     List<PlayerFile> findFileById(Integer id);
 
     Boolean savefile(List<PlayerFile> playerFileList);
+
+    List<Player> findByGroups(Integer groups);
 }

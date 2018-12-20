@@ -5,6 +5,7 @@ import com.lz.palmscore.entity.PlayerFile;
 import com.lz.palmscore.repository.PlayerFileRepository;
 import com.lz.palmscore.repository.PlayerRepository;
 import com.lz.palmscore.service.PlayerService;
+import com.lz.palmscore.vo.RankVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -62,5 +63,15 @@ public class PlayerServiceImpl implements PlayerService {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    /**
+     * 查询所有成绩排序
+     * @param groups
+     * @return
+     */
+    @Override
+    public List<Player> findByGroups(Integer groups) {
+        return playerRepository.findByGroupsOrderByTotalScore(groups);
     }
 }

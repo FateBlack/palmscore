@@ -13,4 +13,6 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
     List<Player> findByGroups(int groups);
 
     List<Player> findAllByPIdAndPassword(String pId, String password);
+
+    List<Player> findByGroupsOrderByTotalScore(Integer groups);
 }
