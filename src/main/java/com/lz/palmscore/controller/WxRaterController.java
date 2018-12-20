@@ -110,7 +110,7 @@ public class WxRaterController {
     }
 
     /**
-     *
+     *评委打分按钮
      * @param MarkForm
      * @param bindingResult
      * @return
@@ -118,7 +118,6 @@ public class WxRaterController {
     @PostMapping("mark")
     public ResultVO mark(@Valid MarkForm MarkForm,
                          BindingResult bindingResult){
-
         return ResultVOUtil.success();
     }
 

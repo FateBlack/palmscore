@@ -1,7 +1,11 @@
 package com.lz.palmscore.controller;
 
+import com.lz.palmscore.entity.Activity;
+import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.PlayerFile;
+import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.service.PeopleService;
+import com.lz.palmscore.service.PlayerService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.AcitvityVO;
 import com.lz.palmscore.vo.PlayerInfoVO;
@@ -25,6 +29,11 @@ public class WxPlayerController {
     @Autowired
     PeopleService peopleService;
 
+    @Autowired
+    PlayerService playerService;
+
+    @Autowired
+    ActivityService activityService;
     /**
      * 选手主页 player_id选手主键
      * @param id
@@ -52,7 +61,7 @@ public class WxPlayerController {
      * @return
      */
     @PostMapping("file_upload")
-    public ResultVO fileUpload(@RequestParam("id") Integer id,@RequestParam("filepath") String filePath ) {
+    public ResultVO fileUpload(@RequestParam("id") Integer id,@RequestParam("filepath") String filePath ){
         PlayerFile pf=new PlayerFile();
         pf.setFilePath(filePath);
         pf.setPlayerId(id);
@@ -60,7 +69,6 @@ public class WxPlayerController {
         if(playerFile==null){
         }
         return ResultVOUtil.success();
-
     }
     /**
      *  选手信息
@@ -70,15 +78,20 @@ public class WxPlayerController {
     @GetMapping("player_info")
     public ResultVO playerInfo(@RequestParam("id") Integer id) {
 
-        PlayerInfoVO playerInfoVO = new PlayerInfoVO(2, "风清扬", "教研室", "C语言",1);
-        List<String> fileList = new ArrayList<>();
-        fileList.add("http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg");
-        fileList.add("http://b.hiphotos.baidu.com/image/pic/item/359b033b5bb5c9ea5c0e3c23d139b6003bf3b374.jpg");
-        fileList.add("http://img.my.csdn.net/uploads/201407/26/1406383299_1976.jpg");
-        fileList.add("http://img.my.csdn.net/uploads/201407/26/1406383275_3977.jpg");
+        Player player=playerService.findById(id);
+        List<Activity> activityList=activityService.findAll();
+        int a=activityList.size()-1;
+        String uploadTime=activityList.get(a).getUploadTime();
 
-        playerInfoVO.setFileList(fileList);
+        PlayerInfoVO playerInfoVO = new PlayerInfoVO(player.getId(), player.getName(), player.getWorkplace(), player.getCourse(),1);
 
+        List<PlayerFile> fileList =playerService.findFileById(id);
+
+        List<String> list=new ArrayList<>();
+        for(int i=0;i<fileList.size();i++){
+            list.add(fileList.get(i).getFilePath());
+        }
+        playerInfoVO.setFileList(list);
         return ResultVOUtil.success(playerInfoVO);
     }
 }

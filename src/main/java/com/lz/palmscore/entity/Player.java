@@ -22,7 +22,6 @@ public class Player {
   private String password;//选手登录密码
   private Integer activityId;// 活动 id
 
-
   public Player(String pId, String name, Integer order) {
     this.pId = pId;
     this.name = name;

@@ -37,13 +37,14 @@ public class WxPeopleController {
      * @return
      */
     @PostMapping("login")
-    public ResultVO peopleLogin(@RequestParam("type")int type,@RequestParam("account") String account, @RequestParam("password") String password) {
+    public ResultVO peopleLogin(@RequestParam("types")int type,@RequestParam("account") String account, @RequestParam("password") String password) {
 
         Map map = new HashMap();
         //
         if(type==1){//评委
             List<Rater> list=peopleService.rlogin(account,password);
             if(list==null||list.size()<0){
+                return ResultVOUtil.error(111,"账号不存在");
             }
             map.put("type", 1);
             map.put("id", list.get(0).getId());
@@ -53,6 +54,7 @@ public class WxPeopleController {
         if(type==2){
             List<Player> list=peopleService.plogin(account,password);
             if(list==null||list.size()<0){
+                return ResultVOUtil.error(111,"账号不存在");
             }
             map.put("type", 1);
             map.put("id", list.get(0).getId());
@@ -89,7 +91,7 @@ public class WxPeopleController {
      * @return
      */
     @PostMapping("password_edit")
-    public ResultVO password_edit(@RequestParam("types") int type, @RequestParam("id") int id,
+    public ResultVO password_edit(@RequestParam("type") int type, @RequestParam("id") int id,
                                   @RequestParam("password") String password, @RequestParam("rePassword") String rePassword) {
         if (type == 1) { //评委
             Rater rater = peopleService.findById(id);

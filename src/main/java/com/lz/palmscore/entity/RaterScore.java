@@ -1,43 +1,48 @@
 package com.lz.palmscore.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class RaterScore {
-    private int i;
-    private int raterId;
-    private int playerId;
-    private Double score;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
+    private Integer raterId;
+    private Integer playerId;
+    private double score;
 
-    public int getI() {
-        return i;
+    public Integer getId() {
+        return id;
     }
 
-    public void setI(int i) {
-        this.i = i;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getRaterId() {
+    public Integer getRaterId() {
         return raterId;
     }
 
-    public void setRaterId(int raterId) {
+    public void setRaterId(Integer raterId) {
         this.raterId = raterId;
     }
 
-    public int getPlayerId() {
+    public Integer getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(int playerId) {
+    public void setPlayerId(Integer playerId) {
         this.playerId = playerId;
     }
 
-    public Double getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(double score) {
         this.score = score;
     }
 }
