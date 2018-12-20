@@ -60,14 +60,11 @@ public class RaterServiceImpl implements RaterService {
         List<PlayerVO> playerVOList = new ArrayList<>();
         for (Player player : playerList) {
             PlayerVO playerVO = new PlayerVO();
+            playerVO.setId(player.getId());
             playerVO.setActivityName(activity.getName());
             playerVO.setName(player.getName());
             playerVO.setOrder(player.getOrders());
-            if (player.getTotalScore() != 0) {
-                playerVO.setScoreState(1);
-            }else {
-                playerVO.setScoreState(2);
-            }
+
             playerVOList.add(playerVO);
         }
 

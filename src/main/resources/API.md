@@ -214,7 +214,7 @@ playerId 选手主键
 raterId  评委主键
 score    总分
 
-markItems [ {name: 教案  score: 33.5}] 评分项主键和分数
+markItems [ {name: 教案  score: 33.5}] 评分项名称和分数
 ```
 返回  
 ```
@@ -278,6 +278,36 @@ rePassword（修改密码）
     "code": 510,
     "msg": "原密码输入不正确",
     "data": null
+}
+```
+
+###选手详细得分情况
+```
+GET /wx/people/score_info
+```
+参数
+```
+player_id 
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": [
+        {
+            "id": 4,
+            "playerId": 60,
+            "score": 11,
+            "itemName": "教案"
+        },
+        {
+            "id": 5,
+            "playerId": 60,
+            "score": 11,
+            "itemName": "演讲"
+        }
+    ]
 }
 ```
 

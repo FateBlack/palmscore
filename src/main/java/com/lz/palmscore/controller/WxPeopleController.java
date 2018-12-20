@@ -1,7 +1,9 @@
 package com.lz.palmscore.controller;
 
         import com.lz.palmscore.entity.Player;
+        import com.lz.palmscore.entity.PlayerScoreitem;
         import com.lz.palmscore.entity.Rater;
+        import com.lz.palmscore.repository.PlayerScoreitemRepository;
         import com.lz.palmscore.service.PeopleService;
         import com.lz.palmscore.util.ResultVOUtil;
         import com.lz.palmscore.vo.RankVO;
@@ -27,6 +29,8 @@ public class WxPeopleController {
     @Autowired
     PeopleService peopleService;
 
+    @Autowired
+    PlayerScoreitemRepository playerScoreitemRepository;
 
     /**
      * 微信端登陆
@@ -123,12 +127,8 @@ public class WxPeopleController {
      */
     @GetMapping("score_info")
     public ResultVO scoreInfo(@RequestParam("player_id") Integer playerId) {
-
-
-
-
-        return ResultVOUtil.success();
+        List<PlayerScoreitem> playerScoreitems = playerScoreitemRepository.findByPlayerId(playerId);
+        return ResultVOUtil.success(playerScoreitems);
     }
-
 
 }
