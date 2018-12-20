@@ -6,15 +6,15 @@ package com.lz.palmscore.form;
  * 打分列表中打分项
  */
 public class MarkItem {
-    private Integer id;
+    private String name;
     private double score;
 
-    public Integer getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getScore() {

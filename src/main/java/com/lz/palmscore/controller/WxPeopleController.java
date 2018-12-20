@@ -115,4 +115,21 @@ public class WxPeopleController {
         }
         return ResultVOUtil.success();
     }
+
+
+    /**
+     *  选手详细得分情况  评委选手共用
+     * @param playerId
+     * @return
+     */
+    @GetMapping("score_info")
+    public ResultVO scoreInfo(@RequestParam("player_id") Integer playerId) {
+
+
+
+
+        return ResultVOUtil.success();
+    }
+
+
 }

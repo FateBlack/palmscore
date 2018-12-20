@@ -66,6 +66,7 @@ public class WxPlayerController {
         pf.setFilePath(filePath);
         pf.setPlayerId(id);
         PlayerFile playerFile = peopleService.savefile(pf);
+
         if(playerFile==null){
         }
         return ResultVOUtil.success();
