@@ -35,7 +35,7 @@ public interface PeopleService {
 
     List<Player> plogin(String account, String password);
 
-    PlayerFile savefile(PlayerFile pf);
 
     List<Player> findByList(List<Integer> playIdList);
+
 }

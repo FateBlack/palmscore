@@ -61,15 +61,19 @@ public class WxPlayerController {
      * @return
      */
     @PostMapping("file_upload")
-    public ResultVO fileUpload(@RequestParam("id") Integer id,@RequestParam("filepath") String filePath ){
+    public ResultVO fileUpload(@RequestParam("id") Integer id,@RequestParam("filepath") String[] filePath ){
+        List<PlayerFile> playerFileList=new ArrayList<>();
         PlayerFile pf=new PlayerFile();
-        pf.setFilePath(filePath);
-        pf.setPlayerId(id);
-        PlayerFile playerFile = peopleService.savefile(pf);
-
-        if(playerFile==null){
+        for(int i=0;i<filePath.length;i++){
+            pf.setFilePath(filePath[1]);
+            pf.setPlayerId(id);
+            playerFileList.set(i,pf);
         }
-        return ResultVOUtil.success();
+        Boolean b = playerService.savefile(playerFileList);
+        if(b){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error(323,"失败");
     }
     /**
      *  选手信息
