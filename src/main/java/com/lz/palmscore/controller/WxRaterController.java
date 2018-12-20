@@ -54,17 +54,10 @@ public class WxRaterController {
     @GetMapping("index")
     public ResultVO raterIndex(@RequestParam("rater_id") Integer raterId) {
 
-        List<PlayerVO> playerVOList = raterService.listPlayer(raterId);
+        Map map = raterService.listPlayer(raterId);
 
 
-        List<PlayerVO> list = new ArrayList<>();
-        list.add(new PlayerVO(66, "老李", "教师大赛A", 1));
-        list.add(new PlayerVO(77, "老王", "教师大赛B", 2));
-        list.add(new PlayerVO(89, "老赵", "教师大赛C", 5));
 
-        Map map = new HashMap();
-        map.put("list", list);
-//        map.put("activity_password", password);
 
         return ResultVOUtil.success(map);
     }

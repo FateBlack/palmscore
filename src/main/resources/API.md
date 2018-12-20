@@ -6,7 +6,7 @@ POST /wx/people/login
 ```
 account 教工号
 password
-type   1评委   2选手
+types   1评委   2选手
 
 ```
 返回  评委 1 选手 2
@@ -214,7 +214,7 @@ playerId 选手主键
 raterId  评委主键
 score    总分
 
-markItems [ {id: 1  score: 33.5}] 评分项主键和分数
+markItems [ {name: 教案  score: 33.5}] 评分项主键和分数
 ```
 返回  
 ```
@@ -261,7 +261,7 @@ POST /wx/people/password_edit
 ```
 参数
 ```
-type （修改类型 1评委 2选手） 
+types （修改类型 1评委 2选手） 
 id（选手或评委id）
 password（原密码）
 rePassword（修改密码）

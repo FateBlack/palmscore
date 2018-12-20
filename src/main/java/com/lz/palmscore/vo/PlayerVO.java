@@ -22,6 +22,9 @@ public class PlayerVO {
     @JsonProperty("score_state")
     private Integer scoreState;//评分状态 1 已经评分,2未评分
 
+    public PlayerVO() {
+    }
+
     public PlayerVO(Integer id, String name, String activityName, Integer order) {
         this.id = id;
         this.name = name;
