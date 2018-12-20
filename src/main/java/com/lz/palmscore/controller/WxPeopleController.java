@@ -37,15 +37,16 @@ public class WxPeopleController {
      * @return
      */
     @PostMapping("login")
-    public ResultVO peopleLogin(@RequestParam("type")int type,@RequestParam("account") String account, @RequestParam("password") String password) {
+    public ResultVO peopleLogin(@RequestParam("types")Integer type,@RequestParam("account") String account, @RequestParam("password") String password) {
 
         Map map = new HashMap();
         //
         if(type==1){//评委
             List<Rater> list=peopleService.rlogin(account,password);
             if(list==null||list.size()<0){
+                return ResultVOUtil.error(111, "登陆失败");
             }
-            map.put("type", 1);
+            map.put("types", 1);
             map.put("id", list.get(0).getId());
             map.put("groups",list.get(0).getGroups());
             return ResultVOUtil.success(map);
@@ -53,8 +54,9 @@ public class WxPeopleController {
         if(type==2){
             List<Player> list=peopleService.plogin(account,password);
             if(list==null||list.size()<0){
+                return ResultVOUtil.error(111, "登陆失败");
             }
-            map.put("type", 1);
+            map.put("types", 2);
             map.put("id", list.get(0).getId());
             map.put("groups",list.get(0).getGroups());
             return ResultVOUtil.success(map);

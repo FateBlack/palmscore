@@ -6,6 +6,7 @@ POST /wx/people/login
 ```
 account 教工号
 password
+type   1评委   2选手
 
 ```
 返回  评委 1 选手 2
@@ -15,7 +16,7 @@ password
      "msg": "成功",
      "data": {
          "groups": 3,
-         "type" : 1              //1 评委 ，2选手
+         "types" : 1              //1 评委 ，2选手
          "id" : 34               //选手或评委id
      }
  }
@@ -126,6 +127,7 @@ id 选手主键
         "name": "风清扬",
         "workplace": "教研室",
         "course": "C语言",
+        "state": 1        //1运行上传  2不允许
         "file_list": [
             "http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg",
             "http://b.hiphotos.baidu.com/image/pic/item/359b033b5bb5c9ea5c0e3c23d139b6003bf3b374.jpg",

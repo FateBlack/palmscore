@@ -10,9 +10,9 @@ public class PlayerFile {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-     private Integer id;//主键
-     private int playerId;//选手id
-     private String filePath;
+    private Integer id;//主键
+    private int playerId;//选手id
+    private String filePath;
 
     public Integer getId() {
         return id;
