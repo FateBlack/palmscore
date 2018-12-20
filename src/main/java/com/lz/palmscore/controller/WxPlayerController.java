@@ -1,5 +1,6 @@
 package com.lz.palmscore.controller;
 
+import com.lz.palmscore.entity.PlayerFile;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.AcitvityVO;
@@ -52,11 +53,15 @@ public class WxPlayerController {
      */
     @PostMapping("file_upload")
     public ResultVO fileUpload(@RequestParam("id") Integer id,@RequestParam("filepath") String filePath ) {
-
+        PlayerFile pf=new PlayerFile();
+        pf.setFilePath(filePath);
+        pf.setPlayerId(id);
+        PlayerFile playerFile = peopleService.savefile(pf);
+        if(playerFile==null){
+        }
         return ResultVOUtil.success();
+
     }
-
-
     /**
      *  选手信息
      * @param id 选手主键

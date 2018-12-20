@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface PlayerRepository extends JpaRepository<Player, Integer> {
     List<Player> findByGroups(int groups);
+
+    List<Player> findByPIdAndPassword(String pId,String password);
 }
