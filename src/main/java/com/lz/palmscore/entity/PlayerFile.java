@@ -11,7 +11,7 @@ public class PlayerFile {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;//主键
-    private int playerId;//选手id
+    private Integer playerId;//选手id
     private String filePath;
 
     public Integer getId() {
@@ -22,11 +22,11 @@ public class PlayerFile {
         this.id = id;
     }
 
-    public int getPlayerId() {
+    public Integer getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(int playerId) {
+    public void setPlayerId(Integer playerId) {
         this.playerId = playerId;
     }
 

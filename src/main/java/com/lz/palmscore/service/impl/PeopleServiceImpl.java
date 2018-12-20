@@ -191,15 +191,6 @@ public class PeopleServiceImpl implements PeopleService {
         return playerRepository.findAllByPIdAndPassword(account,password);
     }
 
-    /**
-     * 储存选手文件路径
-     * @param pf
-     * @return
-     */
-    @Override
-    public PlayerFile savefile(PlayerFile pf) {
-        return playerFileRepository.save(pf);
-    }
 
     /**
      * 通过选手id批量查询

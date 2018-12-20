@@ -9,4 +9,6 @@ public interface PlayerService {
     Player findById(Integer id);
 
     List<PlayerFile> findFileById(Integer id);
+
+    Boolean savefile(List<PlayerFile> playerFileList);
 }
