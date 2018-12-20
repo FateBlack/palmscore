@@ -208,9 +208,11 @@ POST /wx/people/mark
 ```
 参数
 ```
-playerId  选手主键
-raterId   评委主键
-score 分数
+playerId 选手主键
+raterId  评委主键
+score    总分
+
+markItems [ {id: 1  score: 33.5}] 评分项主键和分数
 ```
 返回  
 ```
