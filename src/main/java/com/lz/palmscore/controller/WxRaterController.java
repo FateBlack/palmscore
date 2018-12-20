@@ -94,6 +94,10 @@ public class WxRaterController {
     public ResultVO mark(@Valid MarkForm MarkForm,
                          BindingResult bindingResult){
 
+        if (bindingResult.hasErrors()){
+
+        }
+
         return ResultVOUtil.success();
     }
 
