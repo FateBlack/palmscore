@@ -1,5 +1,12 @@
 package com.lz.palmscore.controller;
 
+import com.lz.palmscore.entity.Activity;
+import com.lz.palmscore.entity.Player;
+import com.lz.palmscore.entity.RaterScore;
+import com.lz.palmscore.entity.ScoreItem;
+import com.lz.palmscore.service.ActivityService;
+import com.lz.palmscore.service.PeopleService;
+import com.lz.palmscore.service.ScoreService;
 import com.lz.palmscore.form.LoginForm;
 import com.lz.palmscore.form.MarkForm;
 import com.lz.palmscore.util.ResultVOUtil;
@@ -8,6 +15,7 @@ import com.lz.palmscore.vo.PlayerVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +33,15 @@ import java.util.Map;
 @Slf4j
 public class WxRaterController {
 
+    @Autowired
+    PeopleService peopleService;
+
+    @Autowired
+    ScoreService scoreService;
+
+    @Autowired
+    ActivityService activityService;
+
     /**
      * 评委主页 只显示已评分的选手，并给出活动实时评分密码
      * @param id 评委主键
@@ -33,6 +50,13 @@ public class WxRaterController {
     @GetMapping("index")
     public ResultVO raterIndex(@RequestParam("rater_id") Integer id) {
 
+        List<Activity> activityList=activityService.findAll();
+        int i=activityList.size()-1;
+        String password=activityList.get(i).getPassword();
+        List<Integer> playIdList=scoreService.findByRaterId(id);
+
+        List<Player> playerList=peopleService.findByList(playIdList);
+
         List<PlayerVO> list = new ArrayList<>();
         list.add(new PlayerVO(66, "老李", "教师大赛A", 1));
         list.add(new PlayerVO(77, "老王", "教师大赛B", 2));
@@ -40,7 +64,7 @@ public class WxRaterController {
 
         Map map = new HashMap();
         map.put("list", list);
-        map.put("activity_password", 123123);
+        map.put("activity_password", password);
 
         return ResultVOUtil.success(map);
     }
@@ -76,11 +100,12 @@ public class WxRaterController {
     @GetMapping("mark_page")
     public ResultVO markPage() {
 
+        List<ScoreItem> list=peopleService.getAll();
         List<MarkPageVO> markPageVOList = new ArrayList<>();
-        markPageVOList.add(new MarkPageVO(88, "教案", 0.5, 1));
-        markPageVOList.add(new MarkPageVO(33, "现场", 0.3, 2));
-        markPageVOList.add(new MarkPageVO(99, "技术", 0.2, 1));
-
+        for(int i=0;i<list.size();i++){
+            ScoreItem scoreItem=list.get(i);
+            markPageVOList.add(new MarkPageVO(scoreItem.getId(), scoreItem.getName(), scoreItem.getRate(), scoreItem.getFileUpload()));
+        }
         return ResultVOUtil.success(markPageVOList);
     }
 

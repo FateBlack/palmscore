@@ -92,7 +92,6 @@ public class ActivityServiceImpl implements ActivityService {
             namedParameterJdbcTemplate.batchUpdate(sqlR, beanSourcesR);
             namedParameterJdbcTemplate.batchUpdate(sqlS, beanSourcesS);
             activityRepository.save(activity);
-
             flag = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,6 +100,14 @@ public class ActivityServiceImpl implements ActivityService {
         return flag;
     }
 
+    /**
+     * 查询所有activity
+     * @return
+     */
+    @Override
+    public List<Activity> findAll() {
+        return activityRepository.findAll();
+    }
 
 
     /**

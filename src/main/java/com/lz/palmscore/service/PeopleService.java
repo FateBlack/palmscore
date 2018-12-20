@@ -1,9 +1,7 @@
 package com.lz.palmscore.service;
 
-import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.Player;
-import com.lz.palmscore.entity.Rater;
-import com.lz.palmscore.entity.ScoreItem;
+import com.lz.palmscore.entity.*;
+import com.lz.palmscore.vo.MarkPageVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,4 +28,14 @@ public interface PeopleService {
      * @return
      */
     List<List<Player>> drawLots();
+
+    List<ScoreItem> getAll();
+
+    List<Rater> rlogin(String account, String password);
+
+    List<Player> plogin(String account, String password);
+
+    PlayerFile savefile(PlayerFile pf);
+
+    List<Player> findByList(List<Integer> playIdList);
 }

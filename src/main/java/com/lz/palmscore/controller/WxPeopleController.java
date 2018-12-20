@@ -29,7 +29,6 @@ public class WxPeopleController {
     PeopleService peopleService;
 
 
-
     /**
      * 微信端登陆
      *
@@ -38,28 +37,29 @@ public class WxPeopleController {
      * @return
      */
     @PostMapping("login")
-    public ResultVO peopleLogin(@RequestParam("account") String account, @RequestParam("password") String password) {
+    public ResultVO peopleLogin(@RequestParam("type")int type,@RequestParam("account") String account, @RequestParam("password") String password) {
 
         Map map = new HashMap();
         //
-
-        //
-        int type = 666;
-        int id = 999;
-        if (account.equals("a") && password.equals("123")) {
-            type = 1;
-            id = 1;
+        if(type==1){//评委
+            List<Rater> list=peopleService.rlogin(account,password);
+            if(list==null||list.size()<0){
+            }
+            map.put("type", 1);
+            map.put("id", list.get(0).getId());
+            map.put("groups",list.get(0).getGroups());
+            return ResultVOUtil.success(map);
         }
-        if (account.equals("b") && password.equals("123")) {
-            type = 2;
-            id = 2;
+        if(type==2){
+            List<Player> list=peopleService.plogin(account,password);
+            if(list==null||list.size()<0){
+            }
+            map.put("type", 1);
+            map.put("id", list.get(0).getId());
+            map.put("groups",list.get(0).getGroups());
+            return ResultVOUtil.success(map);
         }
-
-        map.put("type", type);
-        map.put("id", id);
-        map.put("groups", 3);
-
-        return ResultVOUtil.success(map);
+        return ResultVOUtil.error(444,"登陆失败");
     }
 
     /**
@@ -89,7 +89,7 @@ public class WxPeopleController {
      * @return
      */
     @PostMapping("password_edit")
-    public ResultVO password_edit(@RequestParam("type") int type, @RequestParam("id") int id,
+    public ResultVO password_edit(@RequestParam("types") int type, @RequestParam("id") int id,
                                   @RequestParam("password") String password, @RequestParam("rePassword") String rePassword) {
         if (type == 1) { //评委
             Rater rater = peopleService.findById(id);
