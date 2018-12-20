@@ -177,7 +177,7 @@ public class PeopleServiceImpl implements PeopleService {
      */
     @Override
     public List<Rater> rlogin(String account, String password) {
-        return raterRepository.findByRIdAndPassword( account, password);
+        return raterRepository.findByRIdAndPassword(account, password);
     }
 
     /**
@@ -188,7 +188,7 @@ public class PeopleServiceImpl implements PeopleService {
      */
     @Override
     public List<Player> plogin(String account, String password) {
-        return playerRepository.findByPIdAndPassword(account,password);
+        return playerRepository.findAllByPIdAndPassword(account,password);
     }
 
     /**

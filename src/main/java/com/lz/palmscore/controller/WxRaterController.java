@@ -6,6 +6,7 @@ import com.lz.palmscore.entity.RaterScore;
 import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.service.PeopleService;
+import com.lz.palmscore.service.RaterService;
 import com.lz.palmscore.service.ScoreService;
 import com.lz.palmscore.form.LoginForm;
 import com.lz.palmscore.form.MarkForm;
@@ -42,20 +43,19 @@ public class WxRaterController {
     @Autowired
     ActivityService activityService;
 
+    @Autowired
+    RaterService raterService;
+
     /**
      * 评委主页 只显示已评分的选手，并给出活动实时评分密码
-     * @param id 评委主键
+     * @param raterId 评委主键
      * @return
      */
     @GetMapping("index")
-    public ResultVO raterIndex(@RequestParam("rater_id") Integer id) {
+    public ResultVO raterIndex(@RequestParam("rater_id") Integer raterId) {
 
-        List<Activity> activityList=activityService.findAll();
-        int i=activityList.size()-1;
-        String password=activityList.get(i).getPassword();
-        List<Integer> playIdList=scoreService.findByRaterId(id);
+        List<PlayerVO> playerVOList = raterService.listPlayer(raterId);
 
-        List<Player> playerList=peopleService.findByList(playIdList);
 
         List<PlayerVO> list = new ArrayList<>();
         list.add(new PlayerVO(66, "老李", "教师大赛A", 1));
@@ -64,7 +64,7 @@ public class WxRaterController {
 
         Map map = new HashMap();
         map.put("list", list);
-        map.put("activity_password", password);
+//        map.put("activity_password", password);
 
         return ResultVOUtil.success(map);
     }
@@ -110,7 +110,7 @@ public class WxRaterController {
     }
 
     /**
-     *评委打分按钮
+     *  评分按钮
      * @param MarkForm
      * @param bindingResult
      * @return
@@ -118,6 +118,11 @@ public class WxRaterController {
     @PostMapping("mark")
     public ResultVO mark(@Valid MarkForm MarkForm,
                          BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()){
+
+        }
+
         return ResultVOUtil.success();
     }
 

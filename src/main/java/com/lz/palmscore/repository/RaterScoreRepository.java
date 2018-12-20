@@ -3,9 +3,11 @@ package com.lz.palmscore.repository;
 import com.lz.palmscore.entity.RaterScore;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 
 public interface RaterScoreRepository extends JpaRepository<RaterScore,Integer> {
-    List<Integer> findPidById(Integer id);
+//    @Query("SELECT player_id FROM rater_score WHERE rater_id= ?1")
+//    List<Integer> findPidById(Integer id);
+
+//    List<RaterScore> findAllByRaterId(Integer raterId);
 
 }

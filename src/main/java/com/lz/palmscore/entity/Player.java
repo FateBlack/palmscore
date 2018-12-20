@@ -21,6 +21,7 @@ public class Player {
   private double totalScore;//总分
   private String password;//选手登录密码
   private Integer activityId;// 活动 id
+  private Integer fileUpload;//是否已上传文件  1:已经 2:没有
 
   public Player(String pId, String name, Integer order) {
     this.pId = pId;
@@ -128,5 +129,13 @@ public class Player {
             ", password='" + password + '\'' +
             ", activityId=" + activityId +
             '}';
+  }
+
+  public Integer getFileUpload() {
+    return fileUpload;
+  }
+
+  public void setFileUpload(Integer fileUpload) {
+    this.fileUpload = fileUpload;
   }
 }
