@@ -96,7 +96,10 @@ POST /wx/player/file_upload
 ```
 参数
 ```
-id 选手主键  filepath 教案路径
+id
+
+filepath[]
+
 ```
 返回  
 ```

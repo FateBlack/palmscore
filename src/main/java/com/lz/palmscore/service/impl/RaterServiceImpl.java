@@ -1,9 +1,10 @@
 package com.lz.palmscore.service.impl;
 
-import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.Player;
-import com.lz.palmscore.entity.RaterScore;
+import com.lz.palmscore.entity.*;
+import com.lz.palmscore.form.MarkForm;
+import com.lz.palmscore.form.MarkItem;
 import com.lz.palmscore.repository.ActivityRepository;
+import com.lz.palmscore.repository.PlayerScoreitemRepository;
 import com.lz.palmscore.repository.RaterScoreRepository;
 import com.lz.palmscore.service.RaterService;
 import com.lz.palmscore.vo.PlayerVO;
@@ -32,6 +33,9 @@ public class RaterServiceImpl implements RaterService {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private PlayerScoreitemRepository playerScoreitemRepository;
     /**
      * 微信端 评委id 查询出该评委下选手
      * @param id
@@ -72,6 +76,29 @@ public class RaterServiceImpl implements RaterService {
         map.put("list", playerVOList);
         map.put("activity_password", activity.getPassword());
         return map;
+    }
+
+    @Override
+    public void mark(MarkForm markForm) {
+
+        Integer playerId = markForm.getPlayerId();
+
+        RaterScore raterScore = new RaterScore();
+        raterScore.setPlayerId(playerId);
+        raterScore.setRaterId(markForm.getRaterId());
+        raterScore.setScore(markForm.getScore());
+
+
+        raterScoreRepository.save(raterScore);
+
+        for (MarkItem markItem : markForm.getMarkItems()) {
+            PlayerScoreitem ps = new PlayerScoreitem();
+            ps.setPlayerId(playerId);
+            ps.setItemName(markItem.getName());
+            ps.setScore(markItem.getScore());
+
+            playerScoreitemRepository.save(ps);
+        }
     }
 
 }

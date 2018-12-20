@@ -1,5 +1,7 @@
 package com.lz.palmscore.service;
 
+import com.lz.palmscore.form.MarkForm;
+
 import java.util.Map;
 
 /**
@@ -8,4 +10,6 @@ import java.util.Map;
 public interface RaterService {
 
     Map listPlayer(Integer id);
+
+    void mark(MarkForm markForm);
 }

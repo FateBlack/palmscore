@@ -56,9 +56,6 @@ public class WxRaterController {
 
         Map map = raterService.listPlayer(raterId);
 
-
-
-
         return ResultVOUtil.success(map);
     }
 
@@ -109,12 +106,14 @@ public class WxRaterController {
      * @return
      */
     @PostMapping("mark")
-    public ResultVO mark(@Valid MarkForm MarkForm,
+    public ResultVO mark(@Valid MarkForm markForm,
                          BindingResult bindingResult){
 
         if (bindingResult.hasErrors()){
 
         }
+
+        raterService.mark(markForm);
 
         return ResultVOUtil.success();
     }

@@ -1,17 +1,22 @@
 package com.lz.palmscore.service.impl;
 
+import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.PlayerFile;
+import com.lz.palmscore.repository.ActivityRepository;
 import com.lz.palmscore.repository.PlayerFileRepository;
 import com.lz.palmscore.repository.PlayerRepository;
 import com.lz.palmscore.service.PlayerService;
-import com.lz.palmscore.vo.RankVO;
+import com.lz.palmscore.vo.AcitvityVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,7 +28,11 @@ public class PlayerServiceImpl implements PlayerService {
     private PlayerFileRepository playerFileRepository;
 
     @Autowired
+    private ActivityRepository activityRepository;
+
+    @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
     /**
      * 通过id查询player
      * @param id
@@ -74,4 +83,52 @@ public class PlayerServiceImpl implements PlayerService {
     public List<Player> findByGroups(Integer groups) {
         return playerRepository.findByGroupsOrderByTotalScore(groups);
     }
+
+    /**
+     * 选手主页
+     * @param playerId
+     * @return
+     */
+    @Override
+    public AcitvityVO index(Integer playerId) {
+        List<Activity> activityList = activityRepository.findAll();
+        Activity activity = activityList.get(activityList.size() - 1);
+
+        Activity activityA = activityList.get(activityList.size() - 1);
+
+        AcitvityVO acitvityVO = new AcitvityVO();
+
+        acitvityVO.setId(activityA.getId());
+        acitvityVO.setName(activityA.getName());
+        acitvityVO.setStartTime(activityA.getStartTime());
+        acitvityVO.setEndTime(activityA.getEndTime());
+        acitvityVO.setUploadTime(activityA.getUploadTime());
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        Date uploadTime = null;
+
+        try {
+            uploadTime = sdf.parse(activity.getUploadTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (uploadTime.before(date)) {
+            acitvityVO.setState(4); //超过截至时间
+
+            return acitvityVO;
+        }
+
+        List<PlayerFile> playerFileList = playerFileRepository.findAllByPlayerId(playerId);
+
+        if (playerFileList == null || playerFileList.isEmpty()) {
+            acitvityVO.setState(2); //文件未上传
+        }else {
+            acitvityVO.setState(1); //文件已上传
+        }
+
+        return acitvityVO;
+    }
+
 }

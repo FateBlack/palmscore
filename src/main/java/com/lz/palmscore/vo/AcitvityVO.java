@@ -25,6 +25,8 @@ public class AcitvityVO {
 
     private Integer state;
 
+    public AcitvityVO() {
+    }
 
     public AcitvityVO(Integer id, String name, String startTime, String endTime, String uploadTime, Integer state) {
         this.id = id;

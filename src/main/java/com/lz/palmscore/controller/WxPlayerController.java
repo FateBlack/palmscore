@@ -3,6 +3,7 @@ package com.lz.palmscore.controller;
 import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.PlayerFile;
+import com.lz.palmscore.form.FileFathForm;
 import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.service.PlayerService;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,46 +36,47 @@ public class WxPlayerController {
 
     @Autowired
     ActivityService activityService;
+
     /**
      * 选手主页 player_id选手主键
-     * @param id
+     *
+     * @param player_id
      * @return
      */
     @GetMapping("index")
-    public ResultVO playerIndex(@RequestParam("player_id") Integer id) {
+    public ResultVO playerIndex(@RequestParam("player_id") Integer playerId) {
 
-        List<AcitvityVO> list = new ArrayList<>();
-        list.add(new AcitvityVO(1, "教师大赛", "2018-12-15", "2018-12-28",
-                "2018-12-14", 1));
+        AcitvityVO acitvityVO = playerService.index(playerId);
+        List<AcitvityVO> acitvityVOList = new ArrayList<>();
+        acitvityVOList.add(acitvityVO);
 
-        list.add(new AcitvityVO(2, "教师大赛B", "2018-12-1", "2018-12-3",
-                "2018-12-14", 2));
-
-        list.add(new AcitvityVO(3, "教师大赛C", "2018-12-15", "2018-12-16",
-                "2018-12-14", 2));
-
-        return ResultVOUtil.success(list);
+        return ResultVOUtil.success(acitvityVOList);
     }
 
     /**
      * 选手文件上传
-     * @param id 选手主键
+     * @param fileFathForm
      * @return
      */
     @PostMapping("file_upload")
-    public ResultVO fileUpload(@RequestParam("id") Integer id,@RequestParam("filepath") String[] filePath ){
-        List<PlayerFile> playerFileList=new ArrayList<>();
-        PlayerFile pf=new PlayerFile();
-        for(int i=0;i<filePath.length;i++){
-            pf.setFilePath(filePath[1]);
-            pf.setPlayerId(id);
-            playerFileList.set(i,pf);
+    public ResultVO fileUpload(@Valid FileFathForm fileFathForm) {
+
+        List<PlayerFile> playerFileList = new ArrayList<>();
+        List<String> filePath = fileFathForm.getFilepath();
+        PlayerFile pf = new PlayerFile();
+
+        for (int i = 0; i < filePath.size(); i++) {
+            pf.setFilePath(filePath.get(i));
+            pf.setPlayerId(fileFathForm.getId());
+
+            playerFileList.add(pf);
         }
+
         Boolean b = playerService.savefile(playerFileList);
-        if(b){
+        if (b) {
             return ResultVOUtil.success();
         }
-        return ResultVOUtil.error(323,"失败");
+        return ResultVOUtil.error(323, "失败");
     }
     /**
      *  选手信息
