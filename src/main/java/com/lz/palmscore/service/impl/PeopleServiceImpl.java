@@ -306,38 +306,38 @@ public class PeopleServiceImpl implements PeopleService {
 
     private Player playerExcelGet(Row row,Player player) {
 
-        // 将列中的内容都设置成String类型格式 row.getCell(要设置的列数，从0开始).setCellType(Cell.CELL_TYPE_STRING);
+        // 将列中的内容都设置成String类型格式 row.getCell(要设置的列数，0).setCellType(Cell.CELL_TYPE_STRING);
         row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
-
         String pId = row.getCell(0).getStringCellValue();
-        if(pId == null || pId.isEmpty()){
-            pId = "0";
-        }
+//        if(pId == null || pId.isEmpty()){
+//            pId = "0";
+//        }
         player.setPId(pId);
 
         String name = row.getCell(1).getStringCellValue();
-        if(name==null || name.isEmpty()){
-            name = "0";
-        }
+//        if(name==null || name.isEmpty()){
+//            name = "0";
+//        }
         player.setName(name);
 
         String workplace = row.getCell(2).getStringCellValue();
-        if(workplace==null|| workplace.isEmpty()){
-            workplace = "0";
-        }
+//        if(workplace==null|| workplace.isEmpty()){
+//            workplace = "0";
+//        }
         player.setWorkplace(workplace);
 
         String course = row.getCell(3).getStringCellValue();
-        if(course==null|| course.isEmpty()){
-            course = "0";
-        }
+//        if(course==null|| course.isEmpty()){
+//            course = "0";
+//        }
         player.setCourse(course);
 
+        row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
         String groupString = row.getCell(5).getStringCellValue();
         if(groupString==null|| groupString.isEmpty()){
-            groupString = "0";
+            groupString = "1";
         }
-        Integer group = 1;
+        Integer group = null;
 
         try {
             group = Integer.parseInt(groupString);

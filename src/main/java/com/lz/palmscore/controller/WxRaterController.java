@@ -7,14 +7,18 @@ import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.service.ScoreService;
+import com.lz.palmscore.form.LoginForm;
+import com.lz.palmscore.form.MarkForm;
 import com.lz.palmscore.util.ResultVOUtil;
 import com.lz.palmscore.vo.MarkPageVO;
 import com.lz.palmscore.vo.PlayerVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindingResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,15 +111,13 @@ public class WxRaterController {
 
     /**
      *
-     * @param playerId  选手主键
-     * @param raterId   评委主键
-     * @param score 分数
+     * @param MarkForm
+     * @param bindingResult
      * @return
      */
     @PostMapping("mark")
-    public ResultVO mark(@RequestParam("player_id") Integer playerId,
-                         @RequestParam("rater_id") Integer raterId,
-                         @RequestParam("score") double score){
+    public ResultVO mark(@Valid MarkForm MarkForm,
+                         BindingResult bindingResult){
 
         return ResultVOUtil.success();
     }

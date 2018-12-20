@@ -46,14 +46,32 @@ public class ActivityServiceImpl implements ActivityService {
 
         Collections.shuffle(raterList);
 
-        List<List<Rater>> list = new ArrayList<>();
-
         Integer groupNum = activity.getGroupNum();
         //TODO 等待删除
 //        int groupNum = 5;
 
-        List<Rater> finalRaters =   groupRater(raterList, groupNum);
 
+        Collections.shuffle(playerList);// 提前进行选手随机抽签
+        List<List<Player>> groupList = new ArrayList<>(); //存储 各组 选手集合
+        List<Player> finalPlayerList = new ArrayList<>();  // 选手随机后存储的集合
+
+        for (int i = 0; i < groupNum; i++) {
+            groupList.add(new ArrayList<>());
+        }
+
+
+        for (Player player : playerList) {
+            int orders = groupList.get(player.getGroups()-1).size() + 1;//根据组中size+1 作为该选手顺序
+            player.setOrders(orders);
+            groupList.get(player.getGroups()-1).add(player);
+        }
+
+        for (int i = 0; i < groupList.size(); i++) {
+            finalPlayerList.addAll(groupList.get(i));
+        }
+
+
+        List<Rater> finalRaters =   groupRater(raterList, groupNum);
 
         String sqlP = "INSERT INTO player(p_id,name,workplace,course,orders,groups,activity_id)" +
                 " VALUES (:pId,:name,:workplace,:course,:orders,:groups,:activityId)";
@@ -66,8 +84,8 @@ public class ActivityServiceImpl implements ActivityService {
 
         Boolean flag = false;
         try {
-            SqlParameterSource[] beanSourcesP = SqlParameterSourceUtils.createBatch(playerList.toArray());
-            SqlParameterSource[] beanSourcesR = SqlParameterSourceUtils.createBatch(raterList.toArray());
+            SqlParameterSource[] beanSourcesP = SqlParameterSourceUtils.createBatch(finalPlayerList.toArray());
+            SqlParameterSource[] beanSourcesR = SqlParameterSourceUtils.createBatch(finalRaters.toArray());
             SqlParameterSource[] beanSourcesS = SqlParameterSourceUtils.createBatch(scoreItemList.toArray());
 
             namedParameterJdbcTemplate.batchUpdate(sqlP, beanSourcesP);
@@ -78,8 +96,6 @@ public class ActivityServiceImpl implements ActivityService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
 
         return flag;
     }
@@ -141,13 +157,13 @@ public class ActivityServiceImpl implements ActivityService {
 
         List<Rater> finalList = new ArrayList<>();
 
-//        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
 //            System.out.println("搞点"+list.get(i));
-//            finalList.addAll(list.get(i));
-//        }
-//
-//
-//        System.out.println("最终" + finalList);
+            finalList.addAll(list.get(i));
+        }
+
+
+        System.out.println("最终" + finalList);
 
         return finalList;
     }
