@@ -1,6 +1,9 @@
 package com.lz.palmscore.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Created by 白 on 2018/12/21.
@@ -9,6 +12,8 @@ import javax.persistence.Entity;
  */
 @Entity
 public class GroupInfo {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private Integer groupName;    //分组名称
     private Integer raterCount;  // 评委数量

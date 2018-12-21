@@ -48,24 +48,39 @@ public class RaterServiceImpl implements RaterService {
     @Override
     public Map listPlayer(Integer id) {
 
+        Map map = new HashMap();
+
+
         List<Activity> activityList = activityRepository.findAll();
         Activity activity = activityList.get(activityList.size() - 1);
 
+        map.put("activity_password", activity.getPassword());
+
         List<RaterScore> raterScoreList = raterScoreRepository.findByRaterId(id);
+
+        if (raterScoreList.size() == 0) {
+            return map;
+        }
+
         List<Integer> itemIds = new ArrayList<>();
         for (RaterScore raterScore : raterScoreList) {
             itemIds.add(raterScore.getPlayerId());
         }
+
+
+        List<Player> playerList = null;
+        List<PlayerVO> playerVOList = null;
 
         String sql = "SELECT  *  FROM player WHERE id IN(:itemIds)";
 
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("itemIds", itemIds);
 
-        List<Player> playerList =
+        playerList =
                 namedParameterJdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Player>(Player.class));
 
-        List<PlayerVO> playerVOList = new ArrayList<>();
+
+        playerVOList = new ArrayList<>();
         for (Player player : playerList) {
             PlayerVO playerVO = new PlayerVO();
             playerVO.setId(player.getId());
@@ -76,9 +91,8 @@ public class RaterServiceImpl implements RaterService {
             playerVOList.add(playerVO);
         }
 
-        Map map = new HashMap();
         map.put("list", playerVOList);
-        map.put("activity_password", activity.getPassword());
+
         return map;
     }
 
