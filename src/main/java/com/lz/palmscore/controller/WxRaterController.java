@@ -61,24 +61,14 @@ public class WxRaterController {
 
     /**
      * 单个评委评分记录页,显示已评分和未评分选手
-     * @param id
+     *
+     * @param raterId
      * @return
      */
     @GetMapping("score_list")
-    public ResultVO scoreList(@RequestParam("rater_id") Integer id) {
+    public ResultVO scoreList(@RequestParam("rater_id") Integer raterId, @RequestParam("groups") Integer groups) {
 
-        List<PlayerVO> list = new ArrayList<>();
-        list.add(new PlayerVO(66, "老李", "教师大赛A", 1,1));
-        list.add(new PlayerVO(77, "老王", "教师大赛B", 2,1));
-
-        list.add(new PlayerVO(12, "飞飞", "教师大赛C", 3,2));
-        list.add(new PlayerVO(45, "白", "教师大赛C", 4,2));
-
-        list.add(new PlayerVO(89, "老赵", "教师大赛C", 5,1));
-
-        Map map = new HashMap();
-        map.put("list", list);
-        map.put("activity_password", 123123);
+        Map map = raterService.scoreList(raterId, groups);
 
         return ResultVOUtil.success(map);
     }
@@ -100,20 +90,21 @@ public class WxRaterController {
     }
 
     /**
-     *  评分按钮
-     * @param MarkForm
+     * 评分按钮
+     *
+     * @param markForm
      * @param bindingResult
      * @return
      */
     @PostMapping("mark")
     public ResultVO mark(@Valid MarkForm markForm,
-                         BindingResult bindingResult){
+                         BindingResult bindingResult,
+                         @RequestParam("groups") Integer groups) {
 
-        if (bindingResult.hasErrors()){
-
+        if (bindingResult.hasErrors()) {
+            return ResultVOUtil.error(233, "分数不能为空");
         }
-
-        raterService.mark(markForm);
+        raterService.mark(markForm, groups);
 
         return ResultVOUtil.success();
     }

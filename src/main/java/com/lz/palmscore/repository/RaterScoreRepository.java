@@ -7,6 +7,8 @@ import java.util.List;
 
 
 public interface RaterScoreRepository extends JpaRepository<RaterScore,Integer> {
-    List<RaterScore> findAllByRaterId(Integer raterId);
+    List<RaterScore> findByRaterId(Integer raterId);
+
+    List<RaterScore> findByPlayerId(Integer playerId);
 
 }

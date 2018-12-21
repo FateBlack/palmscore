@@ -8,12 +8,14 @@ import java.util.List;
  * 打分表单
  */
 public class MarkForm {
-    
+
+
     private Integer playerId;
     private Integer raterId;
-    private double score;
+    private Double score;
 
-    List<MarkItem> markItems;
+    List<String> itemName;  //评分项名称
+    List<Double> scoreItem; // 单个评分项分数
 
     public Integer getPlayerId() {
         return playerId;
@@ -31,19 +33,27 @@ public class MarkForm {
         this.raterId = raterId;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 
-    public List<MarkItem> getMarkItems() {
-        return markItems;
+    public List<Double> getScoreItem() {
+        return scoreItem;
     }
 
-    public void setMarkItems(List<MarkItem> markItems) {
-        this.markItems = markItems;
+    public void setScoreItem(List<Double> scoreItem) {
+        this.scoreItem = scoreItem;
+    }
+
+    public List<String> getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(List<String> itemName) {
+        this.itemName = itemName;
     }
 }

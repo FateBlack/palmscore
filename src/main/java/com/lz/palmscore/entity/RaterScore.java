@@ -12,7 +12,7 @@ public class RaterScore {
     private Integer id;
     private Integer raterId;
     private Integer playerId;
-    private double score;
+    private Double score;
 
     public Integer getId() {
         return id;
@@ -38,11 +38,11 @@ public class RaterScore {
         this.playerId = playerId;
     }
 
-    public double getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 }

@@ -1,9 +1,6 @@
 package com.lz.palmscore.service.impl;
 
-import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.Player;
-import com.lz.palmscore.entity.Rater;
-import com.lz.palmscore.entity.ScoreItem;
+import com.lz.palmscore.entity.*;
 import com.lz.palmscore.repository.ActivityRepository;
 import com.lz.palmscore.repository.PlayerRepository;
 import com.lz.palmscore.repository.RaterRepository;
@@ -17,9 +14,8 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.*;
 
 /**
  * Created by 白 on 2018/12/12.
@@ -71,7 +67,11 @@ public class ActivityServiceImpl implements ActivityService {
         }
 
 
-        List<Rater> finalRaters =   groupRater(raterList, groupNum);
+        Map<String,Object> map =   groupRater(raterList, groupNum);
+
+        List<Rater> finalRaters = (List<Rater>) map.get("finalList");
+        List<GroupInfo> groupInfoList = (List<GroupInfo>) map.get("groupInfoList");
+
 
         String sqlP = "INSERT INTO player(p_id,name,workplace,course,orders,groups,activity_id)" +
                 " VALUES (:pId,:name,:workplace,:course,:orders,:groups,:activityId)";
@@ -82,15 +82,20 @@ public class ActivityServiceImpl implements ActivityService {
         String sqlS = "INSERT INTO score_item(activity_id,name,rate,note,file_upload)" +
                 " VALUES (:activityId,:name,:rate,:note,:fileUpload)";
 
+        String sqlG = "INSERT INTO group_info(group_name,rater_count)" +
+                " VALUES (:groupName,:raterCount)";;
+
         Boolean flag = false;
         try {
             SqlParameterSource[] beanSourcesP = SqlParameterSourceUtils.createBatch(finalPlayerList.toArray());
             SqlParameterSource[] beanSourcesR = SqlParameterSourceUtils.createBatch(finalRaters.toArray());
             SqlParameterSource[] beanSourcesS = SqlParameterSourceUtils.createBatch(scoreItemList.toArray());
+            SqlParameterSource[] beanSourcesG = SqlParameterSourceUtils.createBatch(groupInfoList.toArray());
 
             namedParameterJdbcTemplate.batchUpdate(sqlP, beanSourcesP);
             namedParameterJdbcTemplate.batchUpdate(sqlR, beanSourcesR);
             namedParameterJdbcTemplate.batchUpdate(sqlS, beanSourcesS);
+            namedParameterJdbcTemplate.batchUpdate(sqlG, beanSourcesG);
             activityRepository.save(activity);
             flag = true;
         } catch (Exception e) {
@@ -111,11 +116,11 @@ public class ActivityServiceImpl implements ActivityService {
 
 
     /**
-     * 根据输入分组
+     * 根据输入分组  返回 随机分组后的评委集合 和 各组信息
+     *
      * @return
      */
-    public List<Rater> groupRater(List<Rater> raterList, int groupNum) {
-
+    public Map<String, Object> groupRater(List<Rater> raterList, int groupNum) {
 
         List<List<Rater>> list = new ArrayList<>();
 
@@ -154,18 +159,28 @@ public class ActivityServiceImpl implements ActivityService {
             list.get(i).add(extraList.get(i));
         }
 
+        List<GroupInfo> groupInfoList = new ArrayList<>();//各组信息集合
 
-        List<Rater> finalList = new ArrayList<>();
+        List<Rater> finalList = new ArrayList<>(); //评委最终集合
 
         for (int i = 0; i < list.size(); i++) {
 //            System.out.println("搞点"+list.get(i));
             finalList.addAll(list.get(i));
+
+            GroupInfo groupInfo = new GroupInfo();
+            groupInfo.setGroupName(i + 1);
+            groupInfo.setRaterCount(list.get(i).size());
+            groupInfoList.add(groupInfo);
         }
 
+        Map<String, Object> map = new HashMap();
+        map.put("groupInfoList", groupInfoList); //各组信息
+        map.put("finalList", finalList);
 
         System.out.println("最终" + finalList);
+        System.out.println("各组信息" + groupInfoList);
 
-        return finalList;
+        return map;
     }
 
 

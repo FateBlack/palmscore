@@ -18,7 +18,7 @@ public class Player {
   private String course;//课程
   private Integer orders;//出场顺序
   private Integer groups;//组别
-  private double totalScore;//总分
+  private Double totalScore;//总分
   private String password;//选手登录密码
   private Integer activityId;// 活动 id
   private Integer fileUpload;//是否已上传文件  1:已经 2:没有
@@ -82,11 +82,11 @@ public class Player {
     this.orders = orders;
   }
 
-  public double getTotalScore() {
+  public Double getTotalScore() {
     return totalScore;
   }
 
-  public void setTotalScore(double totalScore) {
+  public void setTotalScore(Double totalScore) {
     this.totalScore = totalScore;
   }
 

@@ -16,4 +16,6 @@ public interface PlayerService {
     List<Player> findByGroups(Integer groups);
 
     AcitvityVO index(Integer playerId);
+
+    Boolean updatefile(List<PlayerFile> playerFileList);
 }

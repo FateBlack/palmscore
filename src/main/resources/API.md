@@ -150,6 +150,7 @@ id 选手主键
 参数
 ```
 rater_id 评委主键
+groups  组别
 ```
 返回  
 ```
@@ -217,7 +218,11 @@ playerId 选手主键
 raterId  评委主键
 score    总分
 
-markItems [ {name: 教案  score: 33.5}] 评分项名称和分数
+itemName ["教案","现场"]   评分项名称
+scoreItem [66，88]    评分项分数
+
+groups 组别
+
 ```
 返回  
 ```
@@ -284,13 +289,14 @@ rePassword（修改密码）
 }
 ```
 
-###选手详细得分情况
+### 评委打分情况 对应选手 情况
 ```
 GET /wx/people/score_info
 ```
 参数
 ```
 player_id 
+rater_id
 ```
 返回  
 ```

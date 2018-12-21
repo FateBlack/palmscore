@@ -14,7 +14,7 @@ public class ScoreItem {
   private Integer id;
   private long activityId;//活动id
   private String name;//评分项
-  private double rate;//占比
+  private Double rate;//占比
   private String note;//备注
   private Integer fileUpload;//是否需要上传文件
 
@@ -46,14 +46,13 @@ public class ScoreItem {
   }
 
 
-  public double getRate() {
+  public Double getRate() {
     return rate;
   }
 
-  public void setRate(double rate) {
+  public void setRate(Double rate) {
     this.rate = rate;
   }
-
 
   public String getNote() {
     return note;

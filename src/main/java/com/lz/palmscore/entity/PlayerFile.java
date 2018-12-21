@@ -37,4 +37,13 @@ public class PlayerFile {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerFile{" +
+                "id=" + id +
+                ", playerId=" + playerId +
+                ", filePath='" + filePath + '\'' +
+                '}';
+    }
 }

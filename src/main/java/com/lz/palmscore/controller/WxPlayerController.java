@@ -40,7 +40,7 @@ public class WxPlayerController {
     /**
      * 选手主页 player_id选手主键
      *
-     * @param player_id
+     * @param playerId
      * @return
      */
     @GetMapping("index")
@@ -61,11 +61,13 @@ public class WxPlayerController {
     @PostMapping("file_upload")
     public ResultVO fileUpload(@Valid FileFathForm fileFathForm) {
 
+
         List<PlayerFile> playerFileList = new ArrayList<>();
         List<String> filePath = fileFathForm.getFilepath();
-        PlayerFile pf = new PlayerFile();
+
 
         for (int i = 0; i < filePath.size(); i++) {
+            PlayerFile pf = new PlayerFile();
             pf.setFilePath(filePath.get(i));
             pf.setPlayerId(fileFathForm.getId());
 
@@ -78,6 +80,36 @@ public class WxPlayerController {
         }
         return ResultVOUtil.error(323, "失败");
     }
+
+
+    /**
+     * 选手文件修改
+     * @param fileFathForm
+     * @return
+     */
+    @PostMapping("file_update")
+    public ResultVO fileUpdate(@Valid FileFathForm fileFathForm) {
+
+
+        List<PlayerFile> playerFileList = new ArrayList<>();
+        List<String> filePath = fileFathForm.getFilepath();
+
+
+        for (int i = 0; i < filePath.size(); i++) {
+            PlayerFile pf = new PlayerFile();
+            pf.setFilePath(filePath.get(i));
+            pf.setPlayerId(fileFathForm.getId());
+
+            playerFileList.add(pf);
+        }
+
+        Boolean b = playerService.updatefile(playerFileList);
+        if (b) {
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error(323, "失败");
+    }
+
     /**
      *  选手信息
      * @param id 选手主键

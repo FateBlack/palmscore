@@ -13,11 +13,14 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
@@ -58,15 +61,24 @@ public class PlayerServiceImpl implements PlayerService {
      * @param playerFileList
      * @return
      */
+    @Transactional
     @Override
     public Boolean savefile(List<PlayerFile> playerFileList) {
 
         String sql = "INSERT INTO player_file(player_id,file_path)" +
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
+
+        Player player = new Player();
+        player.setId(playerFileList.get(0).getPlayerId());
+        player.setFileUpload(1);
+
         try{
             SqlParameterSource[] beanSources = SqlParameterSourceUtils.createBatch(playerFileList.toArray());
             namedParameterJdbcTemplate.batchUpdate(sql,beanSources);
+
+            playerRepository.save(player);
+
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
@@ -120,15 +132,40 @@ public class PlayerServiceImpl implements PlayerService {
             return acitvityVO;
         }
 
-        List<PlayerFile> playerFileList = playerFileRepository.findAllByPlayerId(playerId);
+        Player player = playerRepository.findById(playerId).get();
+        Integer file_upload = player.getFileUpload();
 
-        if (playerFileList == null || playerFileList.isEmpty()) {
+        if (file_upload == 2) {
             acitvityVO.setState(2); //文件未上传
-        }else {
+        } else {
             acitvityVO.setState(1); //文件已上传
         }
 
         return acitvityVO;
+    }
+
+    @Transactional
+    @Override
+    public Boolean updatefile(List<PlayerFile> playerFileList) {
+
+        List<Integer> playerIds = new ArrayList<>();
+        for (PlayerFile playerFile : playerFileList) {
+            playerIds.add(playerFile.getPlayerId());
+        }
+
+        playerFileRepository.deletePlayerFilesByPlayerId(playerIds);
+
+        String sql = "INSERT INTO player_file(player_id,file_path)" +
+                " VALUES (:playerId,:filePath)";
+        Boolean flag = false;
+        try{
+            SqlParameterSource[] beanSources = SqlParameterSourceUtils.createBatch(playerFileList.toArray());
+            namedParameterJdbcTemplate.batchUpdate(sql,beanSources);
+            flag = true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return flag;
     }
 
 }
