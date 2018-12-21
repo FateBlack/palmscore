@@ -23,10 +23,10 @@ public class Player {
   private Integer activityId;// 活动 id
   private Integer fileUpload;//是否已上传文件  1:已经 2:没有
 
-  public Player(String pId, String name, Integer order) {
+  public Player(String pId, String name, Integer orders) {
     this.pId = pId;
     this.name = name;
-    this.orders = order;
+    this.orders = orders;
   }
 
   public Player() {

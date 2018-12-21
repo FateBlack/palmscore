@@ -27,7 +27,7 @@ public interface PeopleService {
      * 抽签
      * @return
      */
-    List<List<Player>> drawLots();
+    /*List<List<Player>> drawLots();*/
 
     List<ScoreItem> getAll();
 
@@ -38,4 +38,5 @@ public interface PeopleService {
 
     List<Player> findByList(List<Integer> playIdList);
 
+    List<Player> drawlots();
 }

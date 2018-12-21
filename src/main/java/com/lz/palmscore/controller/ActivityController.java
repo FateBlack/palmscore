@@ -105,11 +105,9 @@ public class ActivityController  {
      * @return
      */
     @GetMapping("activity_show")
-    public ModelAndView show() {
+    public ResultVO show() {
         List<Activity> activityList = activityRepository.findAll();
-        Map map = new HashMap();
-        map.put("list", activityList);
-        return new ModelAndView("admin/myActivity");
+        return ResultVOUtil.success(activityList);
     }
 
     /**

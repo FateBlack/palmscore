@@ -26,40 +26,29 @@
     <script src="assets/js/iscroll.js"></script>
     <script src="assets/js/app.js"></script>
 
-    <!--<script type="text/javascript">-->
+    <script>
+        window.onload= function () {
+            $.ajax({
+                url: '../admin/activity_show',
+                type : 'GET',
+                success : function(res) {
+                    var code = res.code;
+                    if(code==0){
+                        datalist = res.data;
+                        console.log(datalist)
+                        var data={
+                            datalist:datalist
+                        };
+                        var html = template('temp1', data);
+                        document.getElementById('main').innerHTML = html;
+                    }else{
+                        alert(res.msg);
+                    }
+                }
+            });
+        }
 
-        <!--var datalist=[]; //数据给该数组，方便遍历和删除操作-->
-        <!--$(function(){-->
-            <!--$.ajax({-->
-                <!--type:'GET',-->
-                <!--dataType: "json",-->
-                <!--url:"../admin/activity_show",-->
-            <!--success:function(res){-->
-                <!--alert("加载数据");-->
-                <!--if(res.code=="0"){-->
-                    <!--var code = res.code;-->
-                    <!--if(code==0) {-->
-                        <!--// console.log(res.data);-->
-                        <!--datalist = res.data;-->
-                        <!--var data = {-->
-                            <!--datalist: datalist-->
-                        <!--};-->
-                        <!--var html = template('temp1', data);-->
-                        <!--document.getElementById('change').innerHTML = html;-->
-                    <!--}-->
-                <!--}else{-->
-                    <!--alert("网络状况差");-->
-                <!--}-->
-            <!--},-->
-            <!--error:function(){-->
-<!--//            $("#test").html("发生错误:"+jqXHR.status);-->
-                <!--alert("网络状况差");-->
-            <!--}-->
-
-        <!--});-->
-    <!--</script>-->
-
-
+    </script>
 </head>
 <body data-type="index">
 <header class="am-topbar am-topbar-inverse admin-header">
@@ -108,36 +97,6 @@
                         <span>首页</span>
                     </a>
                 </li>
-
-
-                <!--<li class="tpl-left-nav-item">-->
-                <!--<a href="javascript:;" class="nav-link tpl-left-nav-link-list">-->
-                <!--<i class="am-icon-table"></i>-->
-                <!--<span>我的活动</span>-->
-                <!--<i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>-->
-                <!--</a>-->
-                <!--<ul class="tpl-left-nav-sub-menu">-->
-                <!--<li>-->
-                <!--<a href="activity.html">-->
-                <!--<i class="am-icon-angle-right"></i>-->
-                <!--<span>活动规则设置</span>-->
-                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
-                <!--</a>-->
-
-                <!--<a href="judge.html">-->
-                <!--<i class="am-icon-angle-right"></i>-->
-                <!--<span>活动评委设置</span>-->
-                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
-                <!--</a>-->
-                <!--<a href="competitor.html">-->
-                <!--<i class="am-icon-angle-right"></i>-->
-                <!--<span>活动选手设置</span>-->
-                <!--&lt;!&ndash;<i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>&ndash;&gt;-->
-                <!--</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-
 
                 <li class="tpl-left-nav-item">
                     <a href="myActivity.html" class="nav-link active">
@@ -189,14 +148,14 @@
                                 <th>操作</th>
                             </tr>
                             </thead>
-                            <tbody id="change">
-
-
-                                <tr th:each="m : ${list}">
-                                    <td th:text="${m.name}"></td>
-                                    <td th:text="${m.starttime}"></td>
-                                    <td th:text="${m.endtime}"></td>
-                                    <td th:text="${m.uploadtime}"></td>
+                            <tbody id="main">
+                            <script type="text/template" id="temp1">
+                                {{each datalist}}
+                                <tr id='{{$index}}'>
+                                    <td>{{$value.name}}</td>
+                                    <td>{{$value.startTime}}</td>
+                                    <td>{{$value.endTime}}</td>
+                                    <td>{{$value.uploadTime}}</td>
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs" >
@@ -205,7 +164,8 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                                {{/each}}
+                            </script>
                             </tbody>
                         </table>
                     </form>
@@ -218,35 +178,6 @@
         </div>
     </div>
 </div>
-
-
-<script>
-
-
-    function initData() {
-
-        $.ajax({
-            url: 'activity_show',
-            type : 'GET',
-            success : function(res) {
-                var code = res.code;
-                if(code==0){
-                    // console.log(res.data);
-                    datalist = res.data;
-                    var data={
-                        datalist:datalist
-                    };
-                    var html = template('temp1', data);
-                    document.getElementById('change').innerHTML = html;
-                }else{
-                    alert(res.msg);
-                }
-            }
-        });
-    }
-
-
-</script>
 
 </body>
 

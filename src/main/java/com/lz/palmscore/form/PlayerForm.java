@@ -19,7 +19,7 @@ public class PlayerForm {
     @NotEmpty(message = "课程必填")
     private String course;//课程
 
-    private Integer order;//出场顺序
+    private Integer orders;//出场顺序
 
     private Integer groups;//所属组
 
@@ -76,11 +76,11 @@ public class PlayerForm {
         this.groups = groups;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrders() {
+        return orders;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrders(Integer orders) {
+        this.orders = orders;
     }
 }
