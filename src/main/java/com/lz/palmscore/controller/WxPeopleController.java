@@ -127,13 +127,17 @@ public class WxPeopleController {
 
 
     /**
-     *  选手详细得分情况  评委选手共用
+     * 选手详细得分情况  评委方面
+     *
      * @param playerId
      * @return
      */
     @GetMapping("score_info")
-    public ResultVO scoreInfo(@RequestParam("player_id") Integer playerId) {
-        List<PlayerScoreitem> playerScoreitems = playerScoreitemRepository.findByPlayerId(playerId);
+    public ResultVO scoreInfo(@RequestParam("player_id") Integer playerId,
+                              @RequestParam("rater_id") Integer raterId) {
+
+        List<PlayerScoreitem> playerScoreitems =
+                playerScoreitemRepository.findByPlayerIdAndRaterId(playerId, raterId);
         return ResultVOUtil.success(playerScoreitems);
     }
 
