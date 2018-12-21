@@ -1,11 +1,10 @@
 package com.lz.palmscore.service.impl;
 
-import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.Player;
-import com.lz.palmscore.entity.PlayerFile;
+import com.lz.palmscore.entity.*;
 import com.lz.palmscore.repository.ActivityRepository;
 import com.lz.palmscore.repository.PlayerFileRepository;
 import com.lz.palmscore.repository.PlayerRepository;
+import com.lz.palmscore.repository.ScoreItemRepository;
 import com.lz.palmscore.service.PlayerService;
 import com.lz.palmscore.vo.AcitvityVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private ScoreItemRepository scoreItemRepository;
 
     /**
      * 通过id查询player
@@ -166,6 +168,28 @@ public class PlayerServiceImpl implements PlayerService {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    @Override
+    public List<PlayerScoreitem> scoreInfo(Integer player_id) {
+
+        Player player = playerRepository.findById(player_id).get();
+        List<ScoreItem> scoreItemList = scoreItemRepository.findAll();
+
+
+        List<PlayerScoreitem> playerScoreitems = new ArrayList<>();
+
+        Double totalScore = player.getTotalScore();
+        for (ScoreItem scoreItem : scoreItemList) {
+            PlayerScoreitem ps = new PlayerScoreitem();
+            Double score = scoreItem.getRate() / totalScore;
+            ps.setScore(score);
+
+            playerScoreitems.add(ps);
+        }
+
+
+        return playerScoreitems;
     }
 
 }

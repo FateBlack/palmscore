@@ -320,3 +320,33 @@ rater_id
 }
 ```
 
+### 选手打分情况
+```
+GET /wx/player/score_info
+```
+参数
+```
+player_id 
+
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": [
+        {
+            "id": 4,
+            "playerId": 60,
+            "score": 11,
+            "itemName": "教案"
+        },
+        {
+            "id": 5,
+            "playerId": 60,
+            "score": 11,
+            "itemName": "演讲"
+        }
+    ]
+}
+```
