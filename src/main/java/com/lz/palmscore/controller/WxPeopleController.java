@@ -36,10 +36,8 @@ public class WxPeopleController {
     @Autowired
     PlayerService playerService;
 
-
     /**
      * 微信端登陆
-     *
      * @param account
      * @param password
      * @return
@@ -104,14 +102,14 @@ public class WxPeopleController {
                                   @RequestParam("password") String password, @RequestParam("rePassword") String rePassword) {
         if (type == 1) { //评委
             Rater rater = peopleService.findById(id);
-            String realPas = rater.getPassword();
+                String realPas = rater.getPassword();
+                //if (realPas==password) {//这种不对啊啊啊啊啊啊啊！！！！！
+                if (!realPas.equals(password)) {//原始密码不相等
+                    return ResultVOUtil.error(510, "原密码输入不正确");
+                }
+                rater.setPassword(rePassword);
+                Rater rater1 = peopleService.updateById(rater);
 
-            //if (realPas==password) {//这种不对啊啊啊啊啊啊啊！！！！！
-              if (!realPas.equals(password)) {//原始密码不相等
-                  return ResultVOUtil.error(510,"原密码输入不正确");
-            }
-            rater.setPassword(rePassword);
-            Rater rater1 = peopleService.updateById(rater);
         }
         if (type == 2) {//选手
             Player player = peopleService.findById2(id);

@@ -249,7 +249,7 @@ public class PeopleController {
         playerList.get(index).setName(playerForm.getName());
         playerList.get(index).setWorkplace(playerForm.getWorkplace());
         playerList.get(index).setCourse(playerForm.getCourse());
-        playerList.get(index).setOrders(playerForm.getOrder());
+        playerList.get(index).setOrders(playerForm.getOrders());
         playerList.get(index).setGroups(playerForm.getGroups());
 
         session.setAttribute("playerList",playerList);
@@ -261,12 +261,12 @@ public class PeopleController {
      * 抽签
      * @return
      */
-    @GetMapping("draw_lots")
+    @GetMapping("drawlots")
     public ResultVO drawLots() {
+      /*  peopleService.drawLots();*/
+        List<Player> list=peopleService.drawlots();
 
-        peopleService.drawLots();
-
-        return ResultVOUtil.success();
+        return ResultVOUtil.success(list);
     }
 
 }

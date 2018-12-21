@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -121,102 +120,12 @@
                                 <table class="am-table am-table-bordered am-table-striped am-table-compact">
                                     <thead>
                                     <tr>
+                                        <th>所在组</th>
                                         <th>姓名</th>
                                         <th>出场顺序</th>
                                     </tr>
                                     </thead>
-                                    <tbody >
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr> <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr> <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>张三</td>
-                                        <td>5</td>
-                                    </tr>
-
+                                    <tbody id="tbody-result" >
 
                                     </tbody>
                                 </table>
@@ -239,11 +148,35 @@
 <script>
    function show(){
        document.getElementById('animate').style.display="block";
+       $.ajax({
+           type:'GET',
+           dataType: "json",
+           url:"../people/drawlots",
+           success:function(res){
+               if(res.code=="0"){
+                   var str = "";
+                   var datalist= res.data;
+                   console.log(datalist)
+                   console.log(datalist.length)
+                   var tbody=document.getElementById("tbody-result");
+                   for (var i=0;i<datalist.length;i++) {
+                       str += "<tr>" +
+                           "<td>" + datalist[i].groups + "</td>" +
+                           "<td>" + datalist[i].name + "</td>" +
+                           "<td>" + datalist[i].orders + "</td>" +
+                           "</tr>";
+                   }
+                   tbody.innerHTML = str;
+               }
+           },
+           error:function(){
+               alert("添加失败");
+           }
+       });
        setInterval(function(){
            document.getElementById('animate').style.display="none"
            document.getElementById('showtable').style.display="flex";
-       },3000)
-
+       },3000);
    }
 
 </script>

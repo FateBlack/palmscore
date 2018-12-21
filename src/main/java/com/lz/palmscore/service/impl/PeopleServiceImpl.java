@@ -140,6 +140,11 @@ public class PeopleServiceImpl implements PeopleService {
      * @return
      */
     @Override
+    public List<Player> drawlots() {
+        return playerRepository.findAll();
+    }
+
+  /*  @Override
     public List<List<Player>> drawLots() {
 
         List<List<Player>> playerList = new ArrayList<>();
@@ -157,7 +162,7 @@ public class PeopleServiceImpl implements PeopleService {
         }
 
         return playerList;
-    }
+    }*/
 
     /**
      *
@@ -203,6 +208,8 @@ public class PeopleServiceImpl implements PeopleService {
         SqlParameterSource[] list = SqlParameterSourceUtils.createBatch(playIdList.toArray());
         return null;
     }
+
+
 
 
     /**
