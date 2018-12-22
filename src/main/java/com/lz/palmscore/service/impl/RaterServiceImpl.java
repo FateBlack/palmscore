@@ -141,6 +141,7 @@ public class RaterServiceImpl implements RaterService {
         List<GroupInfo> groupInfoList = groupInfoRepository.findByGroupName(groups);
         Integer raterCount = groupInfoList.get(0).getRaterCount();
 
+        //判断是否所有评委已经打分完毕
         List<RaterScore> raterScoreList = raterScoreRepository.findByPlayerId(playerId);
         if (raterScoreList == null || raterScoreList.isEmpty()) {
             return;

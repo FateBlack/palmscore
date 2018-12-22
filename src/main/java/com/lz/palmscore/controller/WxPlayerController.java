@@ -58,6 +58,10 @@ public class WxPlayerController {
     }
 
 
+    /**
+     * 选手文件目录 返回所需内容
+     * @return
+     */
     @GetMapping("file_page")
     public ResultVO filePage() {
 
@@ -148,7 +152,9 @@ public class WxPlayerController {
 
         List<String> list=new ArrayList<>();
         for(int i=0;i<fileList.size();i++){
-            list.add(fileList.get(i).getFilePath());
+            StringBuffer filePath = new StringBuffer("https://static.flowhandsome.cn/");
+            filePath.append(fileList.get(i).getFilePath());
+            list.add(filePath.toString());
         }
         playerInfoVO.setFileList(list);
         return ResultVOUtil.success(playerInfoVO);
