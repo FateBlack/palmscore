@@ -50,7 +50,7 @@ public class WxPeopleController {
         //
         if(type==1){//评委
             List<Rater> list=peopleService.rlogin(account,password);
-            if(list==null||list.size()<0){
+            if (list == null || list.isEmpty()) {
                 return ResultVOUtil.error(111, "登陆失败");
             }
             map.put("types", 1);
@@ -60,7 +60,7 @@ public class WxPeopleController {
         }
         if(type==2){
             List<Player> list=peopleService.plogin(account,password);
-            if(list==null||list.size()<0){
+            if(list==null||list.isEmpty()){
                 return ResultVOUtil.error(111, "登陆失败");
             }
             map.put("types", 2);

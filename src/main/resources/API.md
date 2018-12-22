@@ -95,16 +95,21 @@ rater_id  评委主键id
     POST /wx/player/file_page
 ```
 参数 暂无
+```
 
 ```
 返回  
 ```
 {
-   "code": 0,
-   "msg": "成功",
-   "data":null
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "items": [
+            "ppt",
+            "教案"
+        ]
+    }
 }
-
 ```
 
 ### 选手文件上传

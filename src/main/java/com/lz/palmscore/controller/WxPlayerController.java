@@ -1,10 +1,8 @@
 package com.lz.palmscore.controller;
 
-import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.Player;
-import com.lz.palmscore.entity.PlayerFile;
-import com.lz.palmscore.entity.PlayerScoreitem;
+import com.lz.palmscore.entity.*;
 import com.lz.palmscore.form.FileFathForm;
+import com.lz.palmscore.repository.ScoreItemRepository;
 import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.service.PlayerService;
@@ -18,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 白 on 2018/12/16.
@@ -38,6 +38,9 @@ public class WxPlayerController {
     @Autowired
     ActivityService activityService;
 
+    @Autowired
+    ScoreItemRepository scoreItemRepository;
+
     /**
      * 选手主页 player_id选手主键
      *
@@ -52,6 +55,21 @@ public class WxPlayerController {
         acitvityVOList.add(acitvityVO);
 
         return ResultVOUtil.success(acitvityVOList);
+    }
+
+
+    @GetMapping("file_page")
+    public ResultVO filePage() {
+
+        List<ScoreItem> list = scoreItemRepository.findByFileUpload(1);
+        List<String> resultList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            resultList.add(list.get(i).getName());
+        }
+
+        Map map = new HashMap();
+        map.put("items", resultList);
+        return ResultVOUtil.success(map);
     }
 
     /**

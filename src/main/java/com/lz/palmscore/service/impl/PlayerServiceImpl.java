@@ -69,6 +69,8 @@ public class PlayerServiceImpl implements PlayerService {
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
 
+        System.out.println("文件上传 选手 id: " + playerFileList.get(0).getPlayerId());
+
         Player player = playerRepository.findById(playerFileList.get(0).getPlayerId()).get();
         player.setFileUpload(1);
 
