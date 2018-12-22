@@ -16,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -71,8 +69,7 @@ public class PlayerServiceImpl implements PlayerService {
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
 
-        Player player = new Player();
-        player.setId(playerFileList.get(0).getPlayerId());
+        Player player = playerRepository.findById(playerFileList.get(0).getPlayerId()).get();
         player.setFileUpload(1);
 
         try{
@@ -80,7 +77,6 @@ public class PlayerServiceImpl implements PlayerService {
             namedParameterJdbcTemplate.batchUpdate(sql,beanSources);
 
             playerRepository.save(player);
-
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
@@ -95,7 +91,16 @@ public class PlayerServiceImpl implements PlayerService {
      */
     @Override
     public List<Player> findByGroups(Integer groups) {
-        return playerRepository.findByGroupsOrderByTotalScore(groups);
+        List<Player> playerList = playerRepository.findByGroupsAndTotalScoreNotNull(groups);
+
+        Collections.sort(playerList, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o2.getTotalScore().compareTo(o1.getTotalScore());
+            }
+        });
+        return playerList;
+
     }
 
     /**

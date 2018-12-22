@@ -43,7 +43,8 @@ public class WxPeopleController {
      * @return
      */
     @PostMapping("login")
-    public ResultVO peopleLogin(@RequestParam("types")Integer type,@RequestParam("account") String account, @RequestParam("password") String password) {
+    public ResultVO peopleLogin(@RequestParam("types")Integer type,@RequestParam("account") String account,
+                                @RequestParam("password") String password) {
 
         Map map = new HashMap();
         //
@@ -80,11 +81,19 @@ public class WxPeopleController {
         List<RankVO> rankList = new ArrayList<>();
         List<Player> playerList = playerService.findByGroups(groups);
 
-        int i=playerList.size();
-        for(int a=i-1,b=1;a>=0;a--,b++){
-            rankList.add(new RankVO(playerList.get(a).getOrders(), playerList.get(a).getName(), playerList.get(a).getTotalScore(), b));
+        try {
+            int i=playerList.size();
+            for(int a=i-1,b=1;a>=0;a--,b++){
+                rankList.add(new RankVO(playerList.get(a).getOrders(), playerList.get(a).getName(), playerList.get(a).getTotalScore(), b));
+
+            }
+            return ResultVOUtil.error(233, "评分报错");
+
+        } catch (Exception e) {
 
         }
+
+
         return ResultVOUtil.success(rankList);
     }
 

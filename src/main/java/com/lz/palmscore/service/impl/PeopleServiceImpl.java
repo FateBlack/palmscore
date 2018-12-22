@@ -193,7 +193,7 @@ public class PeopleServiceImpl implements PeopleService {
      */
     @Override
     public List<Player> plogin(String account, String password) {
-        return playerRepository.findAllByPIdAndPassword(account,password);
+        return playerRepository.findByPIdAndPassword(account,password);
     }
 
 
