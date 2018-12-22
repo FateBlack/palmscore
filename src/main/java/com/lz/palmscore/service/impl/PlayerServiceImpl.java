@@ -69,8 +69,6 @@ public class PlayerServiceImpl implements PlayerService {
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
 
-        System.out.println("文件上传 选手 id: " + playerFileList.get(0).getPlayerId());
-
         Player player = playerRepository.findById(playerFileList.get(0).getPlayerId()).get();
         player.setFileUpload(1);
 
@@ -157,17 +155,16 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public Boolean updatefile(List<PlayerFile> playerFileList) {
 
-        List<Integer> playerIds = new ArrayList<>();
-        for (PlayerFile playerFile : playerFileList) {
-            playerIds.add(playerFile.getPlayerId());
-        }
 
-        playerFileRepository.deletePlayerFilesByPlayerId(playerIds);
+        System.out.println("删除文件 id:" + playerFileList.get(0).getPlayerId());
 
         String sql = "INSERT INTO player_file(player_id,file_path)" +
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
         try{
+
+            playerFileRepository.deleteBatch(playerFileList.get(0).getPlayerId());
+
             SqlParameterSource[] beanSources = SqlParameterSourceUtils.createBatch(playerFileList.toArray());
             namedParameterJdbcTemplate.batchUpdate(sql,beanSources);
             flag = true;
