@@ -90,9 +90,46 @@ rater_id  评委主键id
 
 ```
 
+### 选手文件目录
+```
+    POST /wx/player/file_page
+```
+参数 暂无
+
+```
+返回  
+```
+{
+   "code": 0,
+   "msg": "成功",
+   "data":null
+}
+
+```
+
 ### 选手文件上传
 ```
 POST /wx/player/file_upload
+```
+参数
+```
+id
+
+filepath[]
+
+```
+返回  
+```
+{
+   "code": 0,
+   "msg": "成功",
+   "data":null
+}
+
+```
+### 选手文件修改
+```
+POST /wx/player/file_update
 ```
 参数
 ```
@@ -110,6 +147,7 @@ filepath[]
 }
 
 ```
+   
 
 
 ### 选手个人参赛信息
