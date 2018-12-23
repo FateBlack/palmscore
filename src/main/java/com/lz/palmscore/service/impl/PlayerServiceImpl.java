@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -186,6 +187,10 @@ public class PlayerServiceImpl implements PlayerService {
         for (ScoreItem scoreItem : scoreItemList) {
             PlayerScoreitem ps = new PlayerScoreitem();
             Double score = scoreItem.getRate() / totalScore;
+
+            BigDecimal b = new BigDecimal(score);
+            score = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
             ps.setScore(score);
 
             playerScoreitems.add(ps);
