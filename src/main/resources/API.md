@@ -43,7 +43,7 @@ player_id 选手主键
             "startTime": "2018-12-15",
             "endTime": "2018-12-28",
             "uploadTime": "2018-12-14",
-            "state": 1                  //1:已上传 ，2:未上传，3:已结束 4:已超过截至时间
+            "state": 1                  //1:已上传 ，2:未上传，3:已结束 
         },
         {
             "id": 2,
@@ -90,9 +90,51 @@ rater_id  评委主键id
 
 ```
 
+### 选手文件目录
+```
+    POST /wx/player/file_page
+```
+参数 暂无
+```
+
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "items": [
+            "ppt",
+            "教案"
+        ]
+    }
+}
+```
+
 ### 选手文件上传
 ```
 POST /wx/player/file_upload
+```
+参数
+```
+id
+
+filepath[]
+
+```
+返回  
+```
+{
+   "code": 0,
+   "msg": "成功",
+   "data":null
+}
+
+```
+### 选手文件修改
+```
+POST /wx/player/file_update
 ```
 参数
 ```
@@ -110,6 +152,7 @@ filepath[]
 }
 
 ```
+   
 
 
 ### 选手个人参赛信息
@@ -320,3 +363,33 @@ rater_id
 }
 ```
 
+### 选手打分情况
+```
+GET /wx/player/score_info
+```
+参数
+```
+player_id 
+
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": [
+        {
+            "id": 4,
+            "playerId": 60,
+            "score": 11,
+            "itemName": "教案"
+        },
+        {
+            "id": 5,
+            "playerId": 60,
+            "score": 11,
+            "itemName": "演讲"
+        }
+    ]
+}
+```

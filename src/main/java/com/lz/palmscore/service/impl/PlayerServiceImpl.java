@@ -1,11 +1,10 @@
 package com.lz.palmscore.service.impl;
 
-import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.Player;
-import com.lz.palmscore.entity.PlayerFile;
+import com.lz.palmscore.entity.*;
 import com.lz.palmscore.repository.ActivityRepository;
 import com.lz.palmscore.repository.PlayerFileRepository;
 import com.lz.palmscore.repository.PlayerRepository;
+import com.lz.palmscore.repository.ScoreItemRepository;
 import com.lz.palmscore.service.PlayerService;
 import com.lz.palmscore.vo.AcitvityVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,10 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -35,6 +33,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private ScoreItemRepository scoreItemRepository;
 
     /**
      * 通过id查询player
@@ -69,8 +70,7 @@ public class PlayerServiceImpl implements PlayerService {
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
 
-        Player player = new Player();
-        player.setId(playerFileList.get(0).getPlayerId());
+        Player player = playerRepository.findById(playerFileList.get(0).getPlayerId()).get();
         player.setFileUpload(1);
 
         try{
@@ -78,7 +78,6 @@ public class PlayerServiceImpl implements PlayerService {
             namedParameterJdbcTemplate.batchUpdate(sql,beanSources);
 
             playerRepository.save(player);
-
             flag = true;
         }catch (Exception e){
             e.printStackTrace();
@@ -93,7 +92,16 @@ public class PlayerServiceImpl implements PlayerService {
      */
     @Override
     public List<Player> findByGroups(Integer groups) {
-        return playerRepository.findByGroupsOrderByTotalScore(groups);
+        List<Player> playerList = playerRepository.findByGroupsAndTotalScoreNotNull(groups);
+
+        Collections.sort(playerList, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o2.getTotalScore().compareTo(o1.getTotalScore());
+            }
+        });
+        return playerList;
+
     }
 
     /**
@@ -118,17 +126,16 @@ public class PlayerServiceImpl implements PlayerService {
 
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        Date uploadTime = null;
+        Date endTime = null;
 
         try {
-            uploadTime = sdf.parse(activity.getUploadTime());
+            endTime = sdf.parse(activity.getEndTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if (uploadTime.before(date)) {
-            acitvityVO.setState(4); //超过截至时间
-
+        if (endTime.before(date)) {
+            acitvityVO.setState(3); //活动已结束
             return acitvityVO;
         }
 
@@ -148,17 +155,16 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public Boolean updatefile(List<PlayerFile> playerFileList) {
 
-        List<Integer> playerIds = new ArrayList<>();
-        for (PlayerFile playerFile : playerFileList) {
-            playerIds.add(playerFile.getPlayerId());
-        }
 
-        playerFileRepository.deletePlayerFilesByPlayerId(playerIds);
+        System.out.println("删除文件 id:" + playerFileList.get(0).getPlayerId());
 
         String sql = "INSERT INTO player_file(player_id,file_path)" +
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
         try{
+
+            playerFileRepository.deleteBatch(playerFileList.get(0).getPlayerId());
+
             SqlParameterSource[] beanSources = SqlParameterSourceUtils.createBatch(playerFileList.toArray());
             namedParameterJdbcTemplate.batchUpdate(sql,beanSources);
             flag = true;
@@ -166,6 +172,32 @@ public class PlayerServiceImpl implements PlayerService {
             e.printStackTrace();
         }
         return flag;
+    }
+
+    @Override
+    public List<PlayerScoreitem> scoreInfo(Integer player_id) {
+
+        Player player = playerRepository.findById(player_id).get();
+        List<ScoreItem> scoreItemList = scoreItemRepository.findAll();
+
+
+        List<PlayerScoreitem> playerScoreitems = new ArrayList<>();
+
+        Double totalScore = player.getTotalScore();
+        for (ScoreItem scoreItem : scoreItemList) {
+            PlayerScoreitem ps = new PlayerScoreitem();
+            Double score = scoreItem.getRate() / totalScore;
+
+            BigDecimal b = new BigDecimal(score);
+            score = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+            ps.setScore(score);
+
+            playerScoreitems.add(ps);
+        }
+
+
+        return playerScoreitems;
     }
 
 }

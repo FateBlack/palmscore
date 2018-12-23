@@ -43,13 +43,14 @@ public class WxPeopleController {
      * @return
      */
     @PostMapping("login")
-    public ResultVO peopleLogin(@RequestParam("types")Integer type,@RequestParam("account") String account, @RequestParam("password") String password) {
+    public ResultVO peopleLogin(@RequestParam("types")Integer type,@RequestParam("account") String account,
+                                @RequestParam("password") String password) {
 
         Map map = new HashMap();
         //
         if(type==1){//评委
             List<Rater> list=peopleService.rlogin(account,password);
-            if(list==null||list.size()<0){
+            if (list == null || list.isEmpty()) {
                 return ResultVOUtil.error(111, "登陆失败");
             }
             map.put("types", 1);
@@ -59,7 +60,7 @@ public class WxPeopleController {
         }
         if(type==2){
             List<Player> list=peopleService.plogin(account,password);
-            if(list==null||list.size()<0){
+            if(list==null||list.isEmpty()){
                 return ResultVOUtil.error(111, "登陆失败");
             }
             map.put("types", 2);
@@ -80,11 +81,19 @@ public class WxPeopleController {
         List<RankVO> rankList = new ArrayList<>();
         List<Player> playerList = playerService.findByGroups(groups);
 
-        int i=playerList.size();
-        for(int a=i-1,b=1;a>=0;a--,b++){
-            rankList.add(new RankVO(playerList.get(a).getOrders(), playerList.get(a).getName(), playerList.get(a).getTotalScore(), b));
+        try {
+            int i=playerList.size();
+            for(int a=i-1,b=1;a>=0;a--,b++){
+                rankList.add(new RankVO(playerList.get(a).getOrders(), playerList.get(a).getName(), playerList.get(a).getTotalScore(), b));
+
+            }
+            return ResultVOUtil.error(233, "评分报错");
+
+        } catch (Exception e) {
 
         }
+
+
         return ResultVOUtil.success(rankList);
     }
 
@@ -125,12 +134,17 @@ public class WxPeopleController {
 
 
     /**
+     * 选手详细得分情况  评委方面
+     *
      * @param playerId
-     * @return     *  选手详细得分情况  评委选手共用
+     * @return
      */
     @GetMapping("score_info")
-    public ResultVO scoreInfo(@RequestParam("player_id") Integer playerId) {
-        List<PlayerScoreitem> playerScoreitems = playerScoreitemRepository.findByPlayerId(playerId);
+    public ResultVO scoreInfo(@RequestParam("player_id") Integer playerId,
+                              @RequestParam("rater_id") Integer raterId) {
+
+        List<PlayerScoreitem> playerScoreitems =
+                playerScoreitemRepository.findByPlayerIdAndRaterId(playerId, raterId);
         return ResultVOUtil.success(playerScoreitems);
     }
 

@@ -1,9 +1,8 @@
 package com.lz.palmscore.controller;
 
-import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.Player;
-import com.lz.palmscore.entity.PlayerFile;
+import com.lz.palmscore.entity.*;
 import com.lz.palmscore.form.FileFathForm;
+import com.lz.palmscore.repository.ScoreItemRepository;
 import com.lz.palmscore.service.ActivityService;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.service.PlayerService;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 白 on 2018/12/16.
@@ -37,6 +38,9 @@ public class WxPlayerController {
     @Autowired
     ActivityService activityService;
 
+    @Autowired
+    ScoreItemRepository scoreItemRepository;
+
     /**
      * 选手主页 player_id选手主键
      *
@@ -51,6 +55,25 @@ public class WxPlayerController {
         acitvityVOList.add(acitvityVO);
 
         return ResultVOUtil.success(acitvityVOList);
+    }
+
+
+    /**
+     * 选手文件目录 返回所需内容
+     * @return
+     */
+    @GetMapping("file_page")
+    public ResultVO filePage() {
+
+        List<ScoreItem> list = scoreItemRepository.findByFileUpload(1);
+        List<String> resultList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            resultList.add(list.get(i).getName());
+        }
+
+        Map map = new HashMap();
+        map.put("items", resultList);
+        return ResultVOUtil.success(map);
     }
 
     /**
@@ -129,9 +152,24 @@ public class WxPlayerController {
 
         List<String> list=new ArrayList<>();
         for(int i=0;i<fileList.size();i++){
-            list.add(fileList.get(i).getFilePath());
+            StringBuffer filePath = new StringBuffer("https://static.flowhandsome.cn/");
+            filePath.append(fileList.get(i).getFilePath());
+            list.add(filePath.toString());
         }
         playerInfoVO.setFileList(list);
         return ResultVOUtil.success(playerInfoVO);
+    }
+
+    /**
+     * 选手 分数详情
+     * @param player_id
+     * @return
+     */
+    @GetMapping("score_info")
+    public ResultVO scoreInfo(@RequestParam("player_id") Integer player_id) {
+
+        List<PlayerScoreitem> playerScoreitems = playerService.scoreInfo(player_id);
+
+        return ResultVOUtil.success(playerScoreitems);
     }
 }
