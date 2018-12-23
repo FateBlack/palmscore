@@ -125,17 +125,16 @@ public class PlayerServiceImpl implements PlayerService {
 
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
-        Date uploadTime = null;
+        Date endTime = null;
 
         try {
-            uploadTime = sdf.parse(activity.getUploadTime());
+            endTime = sdf.parse(activity.getEndTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if (uploadTime.before(date)) {
-            acitvityVO.setState(4); //超过截至时间
-
+        if (endTime.before(date)) {
+            acitvityVO.setState(3); //活动已结束
             return acitvityVO;
         }
 
