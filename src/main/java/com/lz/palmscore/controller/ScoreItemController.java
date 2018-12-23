@@ -104,7 +104,9 @@ public class ScoreItemController {
         System.out.println(index);
         List<ScoreItem> list= (List<ScoreItem>) session.getAttribute("list");
         list.get(index).setName(scoreItemForm.getName());
+/*
         list.get(index).setNote(scoreItemForm.getNote());
+*/
         list.get(index).setRate(scoreItemForm.getRate());
         list.get(index).setFileUpload(scoreItemForm.getFileUpload());
         session.setAttribute("list",list);

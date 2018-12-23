@@ -1,20 +1,15 @@
 package com.lz.palmscore.service.impl;
 
 import com.lz.palmscore.entity.*;
-import com.lz.palmscore.repository.ActivityRepository;
-import com.lz.palmscore.repository.PlayerRepository;
-import com.lz.palmscore.repository.RaterRepository;
-import com.lz.palmscore.repository.ScoreItemRepository;
+import com.lz.palmscore.repository.*;
 import com.lz.palmscore.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.*;
 
 /**
@@ -29,6 +24,27 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private PlayerScoreitemRepository playerScoreitemRepository;
+
+    @Autowired
+    private RaterRepository raterRepository;
+
+    @Autowired
+    private PlayerRepository playerRepository;
+
+    @Autowired
+    private GroupInfoRepository groupInfoRepository;
+
+    @Autowired
+    private PlayerFileRepository playerFileRepository;
+
+    @Autowired
+    private RaterScoreRepository raterScoreRepository;
+
+    @Autowired
+    ScoreItemRepository scoreItemRepository;
 
     @Override
     public Activity add(Activity ac) {
@@ -113,6 +129,31 @@ public class ActivityServiceImpl implements ActivityService {
     public List<Activity> findAll() {
         return activityRepository.findAll();
     }
+
+    /**
+     * 通过id删除所有活动
+     * @param id
+     * @return
+     */
+    @Transactional
+    @Override
+    public boolean alldelete(Integer id) {
+        boolean flag=false;
+    try{
+        activityRepository.deleteAll();
+        raterRepository.deleteAll();
+        playerFileRepository.deleteAll();
+        raterRepository.deleteAll();
+        playerScoreitemRepository.deleteAll();
+        scoreItemRepository.deleteAll();
+        raterScoreRepository.deleteAll();
+        playerRepository.deleteAll();
+        groupInfoRepository.deleteAll();
+        flag=true;
+    }catch (Exception e){
+    }
+    return flag;
+}
 
 
     /**

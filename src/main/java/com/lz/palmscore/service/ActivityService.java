@@ -17,4 +17,8 @@ public interface ActivityService{
     boolean allInsert(Activity activity, List<ScoreItem> scoreItemList, List<Rater> raterList, List<Player> playerList);
 
     List<Activity> findAll();
+
+    boolean alldelete(Integer id);
+
+
 }

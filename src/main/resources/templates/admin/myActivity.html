@@ -159,7 +159,7 @@
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs" >
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" style="background-color: #fff"><span class="am-icon-trash-o"></span> 删除</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="deleteAc('{{$index}}')"  style="background-color: #fff"><span class="am-icon-trash-o"></span> 删除</button>
                                             </div>
                                         </div>
                                     </td>
@@ -178,7 +178,37 @@
         </div>
     </div>
 </div>
+    <script>
+        function deleteAc(index){
+            var key = parseInt(index);//数组索引
+            $.ajax({
+                type:'POST',
+                dataType: "json",
+                url:"../admin/activity_delete",
+                data:{
+                    index: index
+                },
+                success:function(res){
+                    if (res.code == 0) {
+                        alert("删除成功");
+                     /*   datalist.splice(key, 1);//从索引key开始，删 1 个元素
+                        var data={
+                            datalist:datalist
+                        };
+                        var html = template('temp1', data);
+                        document.getElementById('main').innerHTML = html;*/
 
+                    }else {
+                        alert("删除失败");
+                    }
+                },
+                error:function(){
+                    alert("删除失败");
+                }
+            });
+        };
+
+    </script>
 </body>
 
 </html>
