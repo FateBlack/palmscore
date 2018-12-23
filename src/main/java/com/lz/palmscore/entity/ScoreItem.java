@@ -77,7 +77,6 @@ public class ScoreItem {
             ", activityId=" + activityId +
             ", name='" + name + '\'' +
             ", rate=" + rate +
-            ", note='" + note + '\'' +
             ", fileUpload=" + fileUpload +
             '}';
   }

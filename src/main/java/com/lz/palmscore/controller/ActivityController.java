@@ -42,9 +42,6 @@ public class ActivityController  {
     ActivityService activityService;
 
 
-    @Autowired
-    ActivityRepository activityRepository;
-
     /**
      * 活动添加 仅添加
      * @param activityForm
@@ -60,7 +57,6 @@ public class ActivityController  {
             log.error("[添加活动]格式错误");
             return ResultVOUtil.error(ActivityEnum.ACTIVITY_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
-
         Activity activity = ActivityForm2ActivityConventer.conventer(activityForm);
 
         if (activity == null) {
@@ -73,7 +69,6 @@ public class ActivityController  {
         session.setAttribute("activity",activity);
         return ResultVOUtil.success();
     }
-
     /**
      * 默认值创建活动
      * @param session
@@ -98,18 +93,15 @@ public class ActivityController  {
         session.setAttribute("activityId",activityNew.getId());
         return  new ModelAndView("admin/activity");
     }
-
-
     /**
      * 显示所有活动
      * @return
      */
     @GetMapping("activity_show")
     public ResultVO show() {
-        List<Activity> activityList = activityRepository.findAll();
+        List<Activity> activityList = activityService.findAll();
         return ResultVOUtil.success(activityList);
     }
-
     /**
      * 添加密码
      * @param password
@@ -130,8 +122,6 @@ public class ActivityController  {
         session.setAttribute("activity",activity);
         return ResultVOUtil.success();
     }
-
-
     /**
      * 所有活动及 评委 选手数据最终加入数据库
      * @param session
@@ -144,22 +134,29 @@ public class ActivityController  {
         List<ScoreItem> scoreItemList = (List<ScoreItem>) session.getAttribute("list");
         List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
         List<Player> playerList = (List<Player>) session.getAttribute("playerList");
-
         Integer activityId = activity.getId();
         for (Player player : playerList) {
             player.setActivityId(activityId);
         }
-
         for (Rater rater : raterList) {
             rater.setActivityId(activityId);
         }
-
         activityService.allInsert(activity, scoreItemList, raterList, playerList);
 
         return ResultVOUtil.success();
     }
 
-
-
-
+    /**
+     * 删除所有数据
+     * @param id
+     * @return
+     */
+    @PostMapping("activity_delete")
+    public ResultVO deleteActivity(@RequestParam("index") Integer id) {
+        Boolean flag = activityService.alldelete(id);
+        if (flag) {
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error(222,"删除失败");
+    }
 }

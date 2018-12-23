@@ -216,13 +216,13 @@
                                                             <input type="text" id="judge-num" placeholder="">
                                                         </div>
                                                     </div>
-                                                    <div class="am-form-group">
+                                                   <!-- <div class="am-form-group">
                                                         <label for="rejudge-home"
                                                                class="am-u-sm-3 am-form-label">备注</label>
                                                         <div class="am-u-sm-9">
                                                             <input type="text" id="judge-home" value="无" placeholder="">
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                     <div class="am-form-group">
                                                         <label for="user-intro" class="am-u-sm-3 am-form-label">是否参赛者上传</label>
                                                         <div class="am-u-sm-9" style="display: flex;flex-direction: row">
@@ -252,7 +252,7 @@
                                         <tr>
                                             <th>评分项</th>
                                             <th>占比</th>
-                                            <th>备注</th>
+                                           <!-- <th>备注</th>-->
                                             <th>是否参赛者上传</th>
                                             <th>操作</th>
                                         </tr>
@@ -263,7 +263,7 @@
                                         <tr id='{{$index}}'>
                                             <td>{{$value.name}}</td>
                                             <td>{{$value.rate}}</td>
-                                            <td>{{$value.note}}</td>
+                                            <!--<td>{{$value.note}}</td>-->
                                             <td>{{$value.fileUpload}}</td>
                                             <td>
                                                 <div class="am-btn-toolbar">
@@ -301,13 +301,13 @@
                                                                                 <input type="text" id="rejudge-num" value="" placeholder="">
                                                                             </div>
                                                                         </div>
-                                                                        <div class="am-form-group">
+                                                                      <!--  <div class="am-form-group">
                                                                             <label for="rejudge-home"
                                                                                    class="am-u-sm-3 am-form-label">备注</label>
                                                                             <div class="am-u-sm-9">
                                                                                 <input type="text" id="rejudge-home" value="" placeholder="">
                                                                             </div>
-                                                                        </div>
+                                                                        </div>-->
                                                                         <div class="am-form-group">
                                                                             <div class="am-form-group">
                                                                                 <label for="user-intro" class="am-u-sm-3 am-form-label">是否参赛者上传</label>
@@ -370,13 +370,6 @@
                                     <div class="am-u-sm-9">
                                         <div class="am-form-group am-form-select">
                                             <input type="text" id="groupNum" value="" placeholder="请填入数字，例如 1,2,3...">
-                                           <!-- <select class="">
-                                                <option value="">1</option>
-                                                <option value="">2</option>
-                                                <option value="">3</option>
-                                                <option value="">4</option>
-                                                <option value="">5</option>
-                                            </select>-->
                                         </div>
                                     </div>
                                 </div>
@@ -441,7 +434,7 @@
             data:{
                 name:$("#judge-name").val(),
                 rate:$("#judge-num").val(),
-                note:$("#judge-home").val(),
+                note:"11",
                 fileUpload:$('input[name="doc-radio-1"]:checked').val(),
             },
             success:function(res){
@@ -520,10 +513,8 @@
      //   $("#judge-name").val(a.name);
         $("#rejudge-name").attr("value",a.name);
         $("#rejudge-num").attr("value",a.rate);
-        $("#rejudge-home").attr("value",a.note);
+       // $("#rejudge-home").attr("value",a.note);
         $("#index").attr("value",index);
-
-    //    document.getElementById("").setAttribute("rejudge-name",a.name);
         console.log(a);
 
     }
@@ -539,7 +530,7 @@
                 index:$("#index").val(),
                 name:$("#rejudge-name").val(),
                 rate:$("#rejudge-num").val(),
-                note:$("#rejudge-home").val(),
+                note:"11",
                 fileUpload:$('input[name="doc-radio-1"]:checked').val(),
             },
             success:function(res){
@@ -580,7 +571,14 @@
 <script>
     //添加活动
     $("#next").click(function(){
-
+        var sum=0;
+        for(var i=0;i<datalist.length;i++){
+            sum+=datalist[i].rate
+        }
+        if(sum!=1){
+            alert("评分项比率和要为一！！");
+            return false;
+        }
         $.ajax({
             type:'POST',
             dataType: "json",

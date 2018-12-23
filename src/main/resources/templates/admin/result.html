@@ -19,6 +19,31 @@
     <script src="assets/js/echarts.min.js"></script>
 
     <script src="assets/js/template-web.js"></script>
+    <script>
+        window.onload= function () {
+            $.ajax({
+                url: '../admin/result_show',
+                type : 'GET',
+                success : function(res) {
+                    var code = res.code;
+                    if(code==0){
+                        datalist = res.data;
+                        console.log(datalist)
+                        var data={
+                            datalist:datalist
+                        };
+                        var html = template('temp1', data);
+                        document.getElementById('main').innerHTML = html;
+                    }else{
+                        alert(res.msg);
+                    }
+                }
+            });
+        }
+
+    </script>
+
+
 </head>
 
 <body data-type="index">
@@ -119,7 +144,7 @@
                                         <tr>
                                             <th>选手</th>
                                             <th>姓名</th>
-                                            <th>一号评委</th>
+                                        <!--    <th>一号评委</th>
                                             <th>二号评委</th>
                                             <th>三号评委</th>
                                             <th>四号评委</th>
@@ -129,7 +154,7 @@
                                             <th>八号评委</th>
                                             <th>九号评委</th>
                                             <th>十号评委</th>
-                                            <th>十一号评委</th>
+                                            <th>十一号评委</th>-->
                                             <th>教案得分</th>
                                             <th>听课得分</th>
                                             <th>最终得分</th>

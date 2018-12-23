@@ -14,8 +14,7 @@ public class ScoreItemForm {
     @NotNull(message = "比率不能为空")
     private double rate;
 
-    /** 备注**/
-    @NotEmpty(message = "备注为空~")
+   /** 备注**/
     private String note;
 
     /**是否上传**/
