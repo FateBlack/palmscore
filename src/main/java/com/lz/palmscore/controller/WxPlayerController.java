@@ -152,9 +152,13 @@ public class WxPlayerController {
 
         List<String> list=new ArrayList<>();
         for(int i=0;i<fileList.size();i++){
-            StringBuffer filePath = new StringBuffer("https://static.flowhandsome.cn/");
-            filePath.append(fileList.get(i).getFilePath());
-            list.add(filePath.toString());
+
+
+//            StringBuffer filePath = new StringBuffer("https://static.flowhandsome.cn/");
+//            filePath.append(fileList.get(i).getFilePath());
+//            list.add(filePath.toString());
+
+            list.add(fileList.get(i).getFilePath());
         }
         playerInfoVO.setFileList(list);
         return ResultVOUtil.success(playerInfoVO);
