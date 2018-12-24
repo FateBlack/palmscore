@@ -89,7 +89,7 @@
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="../admin/result" class="nav-link ">
+                    <a href="result.html" class="nav-link ">
                         <i class="am-icon-comments-o"></i>
                         <span>结果通知</span>
                     </a>
@@ -152,6 +152,8 @@
            type:'GET',
            dataType: "json",
            url:"../people/drawlots",
+           cache:false,
+           ifModified :true,
            success:function(res){
                if(res.code=="0"){
                    var str = "";

@@ -80,7 +80,7 @@
     </dependencies>
 
     <build>
-        <finalName>palmscore</finalName>
+        <finalName>score</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

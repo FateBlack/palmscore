@@ -115,7 +115,7 @@
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="../admin/result" class="nav-link active">
+                    <a href="result.html" class="nav-link active">
                         <i class="am-icon-comments-o"></i>
                         <span>结果通知</span>
                     </a>
@@ -161,13 +161,25 @@
                                             <th>最终得分</th>
                                         </tr>
                                         </thead>
-                                        <tbody >
-                                           <tr th:each="player:${alllist}">
-                                               <td th:text="${player.groups}"></td>
-                                               <td th:text="${player.rank}"></td>
-                                               <td th:text="${player.name}"></td>
-                                               <td th:text="${player.totalScore}"></td>
-                                           </tr>
+                                        <tbody id="main">
+                                           <!--<tr th:each="player:${alllist}">-->
+                                               <!--<td th:text="${player.groups}"></td>-->
+                                               <!--<td th:text="${player.rank}"></td>-->
+                                               <!--<td th:text="${player.name}"></td>-->
+                                               <!--<td th:text="${player.totalScore}"></td>-->
+                                           <!--</tr>-->
+                                           <script type="text/template" id="temp1">
+                                               {{each datalist}}
+                                                   <tr>
+                                                       <td>{{$value.groups}}</td>
+                                                       <td>{{$value.rank}}</td>
+                                                       <td>{{$value.name}}</td>
+                                                       <td>{{$value.totalScore}}</td>
+                                                   </tr>
+                                               {{/each}}
+                                           </script>
+
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -185,175 +197,33 @@
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/iscroll.js"></script>
 <script src="assets/js/app.js"></script>
+
 <script>
-
-    var datalist=[];
-    $(function() {
-        var startDate = new Date(2014, 11, 20);
-        var endDate = new Date(2014, 11, 25);
-        var $alert = $('#my-alert');
-        $('#my-start').datepicker().
-        on('changeDate.datepicker.amui', function(event) {
-            if (event.date.valueOf() > endDate.valueOf()) {
-                $alert.find('p').text('开始日期应小于结束日期！').end().show();
-            } else {
-                $alert.hide();
-                startDate = new Date(event.date);
-                $('#my-startDate').text($('#my-start').data('date'));
-            }
-            $(this).datepicker('close');
-        });
-
-        $('#my-end').datepicker().
-        on('changeDate.datepicker.amui', function(event) {
-            if (event.date.valueOf() < startDate.valueOf()) {
-                $alert.find('p').text('结束日期应大于开始日期！').end().show();
-            } else {
-                $alert.hide();
-                endDate = new Date(event.date);
-                $('#my-endDate').text($('#my-end').data('date'));
-            }
-            $(this).datepicker('close');
-        });
-    });
-    //新增评分内容
-    function closeM(e) {
-        // $("#reclosemodal").click(function(e){
-
+    var datalist = [];
+    window.onload = bron;
+    function bron() {
         $.ajax({
-            type:'POST',
-            dataType: "json",
-            url:"../score_item/score_item_add",
-            data:{
-                name:$("#judge-name").val(),
-                rate:$("#judge-num").val(),
-                note:$("#judge-home").val(),
-                fileUpload:$('input[name="doc-radio-1"]:checked').val(),
-            },
-            success:function(res){
-                alert("添加成功");
-                if(res.code=="0"){
-                    console.log(res);
-                    datalist=res.data;
+            url: '../admin/result',
+            type: 'GET',
+            cache:false,
+            ifModified :true,
+            success : function(res) {
+                var code = res.code;
+                if(code==0){
+                    datalist = res.data;
+                    console.log(datalist)
                     var data={
                         datalist:datalist
                     };
-                    var html = template('temp1',data);
+                    var html = template('temp1', data);
                     document.getElementById('main').innerHTML = html;
-                    /* var sum="";
-                     if(datalist.length==1){
-                     sum=datalist[0].name+"*"+ datalist[0].rate;
-                     }else{*/
-                    var sum=datalist[0].name+"*"+ datalist[0].rate;
-                    for (var i = 1; i<datalist.length; i++) {
-                        sum=sum + "+"+datalist[i].name+"×"+ datalist[i].rate;
-                    }
-                    document.getElementById('spanFirst').innerHTML = sum;
-                    console.log(sum)
-
-                }else {
-                    alert("失败；额~");
+                }else{
+                    alert(res.msg);
                 }
-            },
-            error:function(){
-//            $("#test").html("发生错误:"+jqXHR.status);
-                alert("添加失败");
             }
         });
-
-        $('#doc-modal-1').modal('close')
-    };
-
-    //删除订单
-    function deleteS(index){
-        var key = parseInt(index);//数组索引
-        $.ajax({
-            type:'POST',
-            dataType: "json",
-            url:"../score_item/score_item_delete",
-            data:{
-                index: index
-            },
-            success:function(res){
-
-                if (res.code == 0) {
-                    alert("删除成功");
-                    datalist.splice(key, 1);//从索引key开始，删 1 个元素
-                    var data={
-                        datalist:datalist
-                    };
-                    var html = template('temp1',data);
-                    document.getElementById('main').innerHTML = html;
-                    var sum=datalist[0].name+"*"+ datalist[0].rate;
-                    for (var i = 1; i<datalist.length; i++) {
-                        sum=sum + "+"+datalist[i].name+"×"+ datalist[i].rate;
-                    }
-                    document.getElementById('spanFirst').innerHTML = sum;
-
-                }else {
-                    alert("删除失败")
-                }
-            },
-            error:function(){
-                alert("删除失败");
-            }
-        });
-    };
-    //修改评分内容
-    function recloseM(e) {
-
-        // $("#reclosemodal").click(function(e){
-        e.preventDefault();
-        $.ajax({
-            type:'POST',
-            dataType: "json",
-            url:"../score_item/score_item_add",
-            data:{
-                name:$("#rejudge-name").val(),
-                rate:$("#rejudge-num").val(),
-                note:$("#rejudge-home").val(),
-            },
-            success:function(data){
-                alert("添加成功");
-                window.location.href="/admin/activity";
-            },
-            error:function(){
-//            $("#test").html("发生错误:"+jqXHR.status);
-                alert("添加失败");
-            }
-        });
-        //   $('#doc-modal-2').modal('close')
-    };
-
-    function text(){
-        var $date1=$('#activityEndTime').val();
-        console.log($date1)
     }
-</script>
-<script>
-    $("#next").click(function(e){
-        $.ajax({
-            type:'POST',
-            dataType: "json",
-            url:"../admin/activity_add",
-            data:{
-                name:$("#user-name").val(),
-                startTime:$("#startTime").val(),
-                endTime:$("#endTime").val(),
-                uploadTime:$("#activityEndTime").val(),
-                scoreRule:$("#user-intro").val(),
-                //      fileUpload:$("#password").val(),
-            },
-            success:function(data){
-                alert("添加成功");
-                window.location.href="/admin/judge.html";
-            },
-            error:function(){
-//            $("#test").html("发生错误:"+jqXHR.status);
-                alert("添加失败");
-            }
-        });
-    })
+
 </script>
 </body>
 

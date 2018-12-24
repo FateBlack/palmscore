@@ -167,7 +167,8 @@ public class RaterServiceImpl implements RaterService {
             Player player = new Player();
             player.setId(playerId);
             player.setTotalScore(totalScore);
-            playerRepository.save(player);
+
+            playerRepository.addTotalScore(totalScore,playerId);
         }
 
     }

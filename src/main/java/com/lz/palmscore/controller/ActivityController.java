@@ -178,9 +178,8 @@ public class ActivityController  {
      * @return
      */
     @GetMapping("result")
-    public ModelAndView result(Map<String,Object> map) {
+    public ResultVO result() {
         List<RankVO> list=peopleService.result();
-        map.put("alllist", list);
-        return new ModelAndView("admin/result");
+        return ResultVOUtil.success(list);
     }
 }

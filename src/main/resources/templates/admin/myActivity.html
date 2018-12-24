@@ -95,7 +95,7 @@
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="../admin/result" class="nav-link ">
+                    <a href="result.html" class="nav-link ">
                         <i class="am-icon-comments-o"></i>
                         <span>结果通知</span>
                     </a>
@@ -164,6 +164,8 @@
         $.ajax({
             url: '../admin/activity_show',
             type: 'GET',
+            cache:false,
+            ifModified :true,
             success : function(res) {
                 var code = res.code;
                 if(code==0){
@@ -190,6 +192,8 @@
                 type:'POST',
                 dataType: "json",
                 url:"../admin/create_id",
+                cache:false,
+                ifModified :true,
                 success:function(res){
                     if (res.code == 0) {
 
@@ -215,6 +219,8 @@
                 data:{
                     index: index
                 },
+                cache:false,
+                ifModified :true,
                 success:function(res){
                     if (res.code == 0) {
                         alert("删除成功");
