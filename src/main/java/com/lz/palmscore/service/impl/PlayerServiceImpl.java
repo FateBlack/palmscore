@@ -156,9 +156,6 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public Boolean updatefile(List<PlayerFile> playerFileList) {
 
-
-        System.out.println("删除文件 id:" + playerFileList.get(0).getPlayerId());
-
         String sql = "INSERT INTO player_file(player_id,file_path)" +
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
@@ -187,10 +184,11 @@ public class PlayerServiceImpl implements PlayerService {
         Double totalScore = player.getTotalScore();
         for (ScoreItem scoreItem : scoreItemList) {
             PlayerScoreitem ps = new PlayerScoreitem();
-            Double score = scoreItem.getRate() / totalScore;
+
+            Double score =   totalScore/scoreItem.getRate();
 
             BigDecimal b = new BigDecimal(score);
-            score = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            score = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
 
             ps.setScore(score);
 

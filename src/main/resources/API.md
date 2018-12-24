@@ -18,6 +18,7 @@ types   1评委   2选手
          "groups": 3,
          "types" : 1              //1 评委 ，2选手
          "id" : 34               //选手或评委id
+         "activity_id": 66       //活动id
      }
  }
 ```
@@ -37,7 +38,8 @@ player_id 选手主键
     "code": 0,
     "msg": "成功",
     "data": [
-        {
+        {-14",
+                     "state": 2
             "id": 1,                //活动主键
             "name": "教师大赛",
             "startTime": "2018-12-15",
@@ -50,8 +52,7 @@ player_id 选手主键
             "name": "教师大赛B",
             "startTime": "2018-12-1",
             "endTime": "2018-12-3",
-            "uploadTime": "2018-12-14",
-            "state": 2
+            "uploadTime": "2018-12
         }
     ]
 }

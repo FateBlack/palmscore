@@ -205,7 +205,6 @@ public class ActivityServiceImpl implements ActivityService {
         List<Rater> finalList = new ArrayList<>(); //评委最终集合
 
         for (int i = 0; i < list.size(); i++) {
-//            System.out.println("搞点"+list.get(i));
             finalList.addAll(list.get(i));
 
             GroupInfo groupInfo = new GroupInfo();
@@ -218,8 +217,6 @@ public class ActivityServiceImpl implements ActivityService {
         map.put("groupInfoList", groupInfoList); //各组信息
         map.put("finalList", finalList);
 
-        System.out.println("最终" + finalList);
-        System.out.println("各组信息" + groupInfoList);
 
         return map;
     }

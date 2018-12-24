@@ -53,7 +53,6 @@ public class ScoreItemController {
         ScoreItem scoreItem=ScoreItemForm2ScoreItemConventer.conventer(scoreItemForm);
         Integer id= (Integer) session.getAttribute("activityId");
         scoreItem.setActivityId(id);
-        System.out.println(scoreItem.toString());
         if (scoreItem==null){
             log.error("[评分项]添加错误");
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR);
@@ -79,7 +78,6 @@ public class ScoreItemController {
            }
        }*/
        list.remove(index);
-       System.out.println(list.size());
         session.setAttribute("list",list);
         return  ResultVOUtil.success();
     }
@@ -101,7 +99,6 @@ public class ScoreItemController {
           //  log.error("[修改]格式错误");
             return ResultVOUtil.error(ScoreItemEnum.SCOREITEM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
-        System.out.println(index);
         List<ScoreItem> list= (List<ScoreItem>) session.getAttribute("list");
         list.get(index).setName(scoreItemForm.getName());
 /*

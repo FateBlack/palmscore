@@ -56,6 +56,7 @@ public class WxPeopleController {
             map.put("types", 1);
             map.put("id", list.get(0).getId());
             map.put("groups",list.get(0).getGroups());
+            map.put("activity_id", list.get(0).getActivityId());
             return ResultVOUtil.success(map);
         }
         if(type==2){
@@ -66,6 +67,7 @@ public class WxPeopleController {
             map.put("types", 2);
             map.put("id", list.get(0).getId());
             map.put("groups",list.get(0).getGroups());
+            map.put("activity_id", list.get(0).getActivityId());
             return ResultVOUtil.success(map);
         }
         return ResultVOUtil.error(444,"登陆失败");
