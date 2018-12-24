@@ -93,6 +93,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<Player> findByGroups(Integer groups) {
         List<Player> playerList = playerRepository.findByGroupsAndTotalScoreNotNull(groups);
+       // List<Player> playerList = playerRepository.findoByGroupsAndTotalScoreNotNull(groups);
 
         Collections.sort(playerList, new Comparator<Player>() {
             @Override

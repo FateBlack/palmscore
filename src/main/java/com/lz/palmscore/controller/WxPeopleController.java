@@ -85,12 +85,10 @@ public class WxPeopleController {
             int i=playerList.size();
             for(int a=i-1,b=1;a>=0;a--,b++){
                 rankList.add(new RankVO(playerList.get(a).getOrders(), playerList.get(a).getName(), playerList.get(a).getTotalScore(), b));
-
             }
-            return ResultVOUtil.error(233, "评分报错");
 
         } catch (Exception e) {
-
+            return ResultVOUtil.error(233, "评分报错");
         }
 
 

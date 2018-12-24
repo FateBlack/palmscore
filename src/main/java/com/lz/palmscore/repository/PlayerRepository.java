@@ -19,6 +19,9 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
     List<Player> findByGroupsAndTotalScoreNotNull(Integer groups);
 
+/*
+    List<Player> findByGroupsAndTotalScoreIsNotNullAndOrderByTotalScore(Integer grouos);
+*/
 
 //    @Modifying
 //    @Query("update Player w set w.file_upload = :upload where w.id = :id")
