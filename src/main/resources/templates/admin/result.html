@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -19,29 +19,29 @@
     <script src="assets/js/echarts.min.js"></script>
 
     <script src="assets/js/template-web.js"></script>
-    <script>
-        window.onload= function () {
-            $.ajax({
-                url: '../admin/result_show',
-                type : 'GET',
-                success : function(res) {
-                    var code = res.code;
-                    if(code==0){
-                        datalist = res.data;
-                        console.log(datalist)
-                        var data={
-                            datalist:datalist
-                        };
-                        var html = template('temp1', data);
-                        document.getElementById('main').innerHTML = html;
-                    }else{
-                        alert(res.msg);
-                    }
-                }
-            });
-        }
+    <!--<script>-->
+        <!--window.onload= function () {-->
+            <!--$.ajax({-->
+                <!--url: '../admin/result_show',-->
+                <!--type : 'GET',-->
+                <!--success : function(res) {-->
+                    <!--var code = res.code;-->
+                    <!--if(code==0){-->
+                        <!--datalist = res.data;-->
+                        <!--console.log(datalist)-->
+                        <!--var data={-->
+                            <!--datalist:datalist-->
+                        <!--};-->
+                        <!--var html = template('temp1', data);-->
+                        <!--document.getElementById('main').innerHTML = html;-->
+                    <!--}else{-->
+                        <!--alert(res.msg);-->
+                    <!--}-->
+                <!--}-->
+            <!--});-->
+        <!--}-->
 
-    </script>
+    <!--</script>-->
 
 
 </head>
@@ -97,7 +97,7 @@
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="competitor.html" class="nav-link">
+                    <a href="myActivity.html" class="nav-link">
                         <i class="am-icon-calendar-minus-o"></i>
                         <span>我的活动</span>
                     </a>
@@ -115,7 +115,7 @@
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="result.html" class="nav-link active">
+                    <a href="../admin/result" class="nav-link active">
                         <i class="am-icon-comments-o"></i>
                         <span>结果通知</span>
                     </a>
@@ -142,7 +142,8 @@
                                     <table class="am-table am-table-bordered am-table-striped am-table-compact">
                                         <thead>
                                         <tr>
-                                            <th>选手</th>
+                                            <th>组别</th>
+                                            <th>当前排名</th>
                                             <th>姓名</th>
                                         <!--    <th>一号评委</th>
                                             <th>二号评委</th>
@@ -155,31 +156,17 @@
                                             <th>九号评委</th>
                                             <th>十号评委</th>
                                             <th>十一号评委</th>-->
-                                            <th>教案得分</th>
-                                            <th>听课得分</th>
+                                            <!--<th>教案得分</th>-->
+                                            <!--<th>听课得分</th>-->
                                             <th>最终得分</th>
-                                            <th>当前排名</th>
                                         </tr>
                                         </thead>
                                         <tbody >
-                                           <tr>
-                                              <td>5</td>
-                                               <td>张三</td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td></td>
-                                               <td>1</td>
+                                           <tr th:each="player:${alllist}">
+                                               <td th:text="${player.groups}"></td>
+                                               <td th:text="${player.rank}"></td>
+                                               <td th:text="${player.name}"></td>
+                                               <td th:text="${player.totalScore}"></td>
                                            </tr>
                                         </tbody>
                                     </table>

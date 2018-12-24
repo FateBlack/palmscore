@@ -15,17 +15,21 @@ import com.lz.palmscore.form.PlayerForm;
 import com.lz.palmscore.form.RaterForm;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.util.ResultVOUtil;
+import com.lz.palmscore.vo.RankVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  评委 和 选手
@@ -269,4 +273,15 @@ public class PeopleController {
         return ResultVOUtil.success(list);
     }
 
+
+//    /**
+//     * 管理元端排名显示
+//     * @return
+//     */
+//    @GetMapping("result")
+//    public ModelAndView result(Map<String,Object> map) {
+//        List<RankVO> list=peopleService.result();
+//        map.put("alllist", list);
+//        return new ModelAndView("admin/result");
+//    }
 }

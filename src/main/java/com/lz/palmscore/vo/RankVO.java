@@ -10,12 +10,16 @@ public class RankVO {
     private String name;//选手姓名
     private double totalScore;//总分
     private Integer rank;//排名
+    private Integer groups;//组
 
     public RankVO(Integer orders, String name, double totalScore, Integer rank) {
         this.orders = orders;
         this.name = name;
         this.totalScore = totalScore;
         this.rank = rank;
+    }
+
+    public RankVO() {
     }
 
     public String getName() {
@@ -48,5 +52,13 @@ public class RankVO {
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+    public Integer getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Integer groups) {
+        this.groups = groups;
     }
 }

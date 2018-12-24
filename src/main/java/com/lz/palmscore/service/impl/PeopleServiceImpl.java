@@ -4,6 +4,7 @@ import com.lz.palmscore.entity.*;
 import com.lz.palmscore.repository.*;
 import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.vo.MarkPageVO;
+import com.lz.palmscore.vo.RankVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -144,25 +146,46 @@ public class PeopleServiceImpl implements PeopleService {
         return playerRepository.findAll();
     }
 
-  /*  @Override
-    public List<List<Player>> drawLots() {
-
-        List<List<Player>> playerList = new ArrayList<>();
-
+    @Override
+    public List<RankVO> result() {
         List<Activity> activityList = activityRepository.findAll();
+        if (activityList == null || activityList.isEmpty()) {
+            return null;
+        }
         Integer groupNum = activityList.get(0).getGroupNum();
 
-        try {
-            for (int i = 1; i <= groupNum; i++) {
-                List<Player> list = playerRepository.findByGroups(i);
-                playerList.add(list);
+//        List<Player> playerList = playerRepository.findAll();
+
+        List<RankVO> allList = new ArrayList<>();
+
+        for (int i = 1; i <= groupNum; i++) {
+            List<Player> playerList = playerRepository.findByGroupsAndTotalScoreNotNull(i);
+            Collections.sort(playerList, new Comparator<Player>() {
+                @Override
+                public int compare(Player o1, Player o2) {
+                    return o2.getTotalScore().compareTo(o1.getTotalScore());
+                }
+            });
+
+            List<RankVO> rankVOList = new ArrayList<>();
+
+            for (int j=0;j<playerList.size();j++) {
+                Player p = playerList.get(j);
+
+                RankVO rankVO = new RankVO();
+                rankVO.setGroups(i);
+                rankVO.setRank(j+1);
+                rankVO.setName(p.getName());
+                rankVO.setTotalScore(p.getTotalScore());
+                rankVOList.add(rankVO);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            allList.addAll(rankVOList);
         }
 
-        return playerList;
-    }*/
+        return allList;
+    }
+
 
     /**
      *
