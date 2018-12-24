@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/echarts.min.js"></script>
-
+    <style>
+        .tab tr th {font-size:18px;}
+    </style>
     <script src="assets/js/template-web.js"></script>
 </head>
 
@@ -117,7 +119,7 @@
 
                         <div class="am-form-group">
                             <div class="am-u-sm-12">
-                                <table class="am-table am-table-bordered am-table-striped am-table-compact">
+                                <table class="am-table am-table-bordered am-table-striped am-table-compact tab">
                                     <thead>
                                     <tr>
                                         <th>所在组</th>
@@ -125,8 +127,19 @@
                                         <th>出场顺序</th>
                                     </tr>
                                     </thead>
+<!--
                                     <tbody id="tbody-result" >
-
+-->
+                                    <tbody id="main">
+                                    <script type="text/template" id="temp1">
+                                        {{each datalist}}
+                                        <tr>
+                                            <th>{{$value.groups}}</th>
+                                            <th>{{$value.name}}</th>
+                                            <th>{{$value.orders}}</th>
+                                        </tr>
+                                        {{/each}}
+                                    </script>
                                     </tbody>
                                 </table>
                             </div>
@@ -147,6 +160,8 @@
 
 <script>
    function show(){
+       var datalist = [];
+
        document.getElementById('animate').style.display="block";
        $.ajax({
            type:'GET',
@@ -156,19 +171,26 @@
            ifModified :true,
            success:function(res){
                if(res.code=="0"){
+/*
                    var str = "";
-                   var datalist= res.data;
-                   console.log(datalist)
+*/
+                    datalist= res.data;
+                   var data={
+                       datalist:datalist
+                   };
+                   var html = template('temp1', data);
+                   document.getElementById('main').innerHTML = html;
+                  /* console.log(datalist)
                    console.log(datalist.length)
                    var tbody=document.getElementById("tbody-result");
                    for (var i=0;i<datalist.length;i++) {
                        str += "<tr>" +
-                           "<td>" + datalist[i].groups + "</td>" +
-                           "<td>" + datalist[i].name + "</td>" +
-                           "<td>" + datalist[i].orders + "</td>" +
+                           "<td class='tab'>" + datalist[i].groups + "</td>" +
+                           "<td class='tab'>" + datalist[i].name + "</td>" +
+                           "<td class='tab'>" + datalist[i].orders + "</td>" +
                            "</tr>";
                    }
-                   tbody.innerHTML = str;
+                   tbody.innerHTML = str;*/
                }
            },
            error:function(){

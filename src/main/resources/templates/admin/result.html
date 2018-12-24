@@ -17,8 +17,11 @@
     <link rel="stylesheet" href="assets/css/admin.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/echarts.min.js"></script>
-
     <script src="assets/js/template-web.js"></script>
+    <style>
+        .tab tr th {font-size:22px;}
+    </style>
+
     <!--<script>-->
         <!--window.onload= function () {-->
             <!--$.ajax({-->
@@ -139,35 +142,17 @@
 
                             <div class="am-form-group">
                                 <div class="am-u-sm-12">
-                                    <table class="am-table am-table-bordered am-table-striped am-table-compact">
+                                    <table class="am-table am-table-bordered am-table-striped am-table-compact tab">
                                         <thead>
                                         <tr>
                                             <th>组别</th>
                                             <th>当前排名</th>
                                             <th>姓名</th>
-                                        <!--    <th>一号评委</th>
-                                            <th>二号评委</th>
-                                            <th>三号评委</th>
-                                            <th>四号评委</th>
-                                            <th>五号评委</th>
-                                            <th>六号评委</th>
-                                            <th>七号评委</th>
-                                            <th>八号评委</th>
-                                            <th>九号评委</th>
-                                            <th>十号评委</th>
-                                            <th>十一号评委</th>-->
-                                            <!--<th>教案得分</th>-->
-                                            <!--<th>听课得分</th>-->
+
                                             <th>最终得分</th>
                                         </tr>
                                         </thead>
                                         <tbody id="main">
-                                           <!--<tr th:each="player:${alllist}">-->
-                                               <!--<td th:text="${player.groups}"></td>-->
-                                               <!--<td th:text="${player.rank}"></td>-->
-                                               <!--<td th:text="${player.name}"></td>-->
-                                               <!--<td th:text="${player.totalScore}"></td>-->
-                                           <!--</tr>-->
                                            <script type="text/template" id="temp1">
                                                {{each datalist}}
                                                    <tr>
