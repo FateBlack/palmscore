@@ -10,7 +10,9 @@ import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.form.ActivityForm;
 import com.lz.palmscore.repository.ActivityRepository;
 import com.lz.palmscore.service.ActivityService;
+import com.lz.palmscore.service.PeopleService;
 import com.lz.palmscore.util.ResultVOUtil;
+import com.lz.palmscore.vo.RankVO;
 import com.lz.palmscore.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,9 @@ public class ActivityController  {
 
     @Autowired
     ActivityService activityService;
+
+    @Autowired
+    PeopleService peopleService;
 
 
     /**
@@ -74,8 +79,8 @@ public class ActivityController  {
      * @param session
      * @return
      */
-    @GetMapping("create_id")
-    public ModelAndView createId(HttpSession session) {
+    @PostMapping("create_id")
+    public ResultVO createId(HttpSession session) {
 
         log.info("进入活动");
         Activity activity=new Activity();
@@ -91,8 +96,14 @@ public class ActivityController  {
             System.out.println("嗯哼？错了");
         }
         session.setAttribute("activityId",activityNew.getId());
-        return  new ModelAndView("admin/activity");
+        return ResultVOUtil.success();
     }
+
+    @GetMapping("activity")
+    public ModelAndView activity() {
+        return new ModelAndView("admin/activity");
+    }
+
     /**
      * 显示所有活动
      * @return
@@ -100,6 +111,8 @@ public class ActivityController  {
     @GetMapping("activity_show")
     public ResultVO show() {
         List<Activity> activityList = activityService.findAll();
+        System.out.println("活动列表"+activityList);
+
         return ResultVOUtil.success(activityList);
     }
     /**
@@ -158,5 +171,16 @@ public class ActivityController  {
             return ResultVOUtil.success();
         }
         return ResultVOUtil.error(222,"删除失败");
+    }
+
+    /**
+     * 管理元端排名显示
+     * @return
+     */
+    @GetMapping("result")
+    public ModelAndView result(Map<String,Object> map) {
+        List<RankVO> list=peopleService.result();
+        map.put("alllist", list);
+        return new ModelAndView("admin/result");
     }
 }

@@ -26,29 +26,7 @@
     <script src="assets/js/iscroll.js"></script>
     <script src="assets/js/app.js"></script>
 
-    <script>
-        window.onload= function () {
-            $.ajax({
-                url: '../admin/activity_show',
-                type : 'GET',
-                success : function(res) {
-                    var code = res.code;
-                    if(code==0){
-                        datalist = res.data;
-                        console.log(datalist)
-                        var data={
-                            datalist:datalist
-                        };
-                        var html = template('temp1', data);
-                        document.getElementById('main').innerHTML = html;
-                    }else{
-                        alert(res.msg);
-                    }
-                }
-            });
-        }
 
-    </script>
 </head>
 <body data-type="index">
 <header class="am-topbar am-topbar-inverse admin-header">
@@ -117,7 +95,7 @@
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="result.html" class="nav-link ">
+                    <a href="../admin/result" class="nav-link ">
                         <i class="am-icon-comments-o"></i>
                         <span>结果通知</span>
                     </a>
@@ -135,9 +113,9 @@
         <div class="tpl-content-scope">
             <h2 style="color:#686868;margin-left:10px;">我的活动</h2>
             <div class="note note-info">
-               <a  class="am-btn am-btn-primary" href="/admin/create_id" style="color: white;margin-left: 40px;"> <span class="am-icon-plus"></span>  新建活动</a>
+               <a  class="am-btn am-btn-primary" onclick="create()" href="#" style="color: white;margin-left: 40px;"> <span class="am-icon-plus"></span>  新建活动</a>
                 <div style="margin-top:50px;display:flex;justify-content: center">
-                    <form class="am-forpxm-form-horizontal am-u-md-9">
+                    <form class="am-forpxm-form-horizontal am-u-md-9" onsubmit="return false">
                         <table class="am-table am-table-bordered am-table-striped am-table-compact" >
                             <thead>
                             <tr>
@@ -170,15 +148,64 @@
                         </table>
                     </form>
                 </div>
-                <div style="text-align: center;margin-top:150px;">
-                    <h3 style="color:rgb(50, 197, 210)">还没有创建活动哦，快去创建一个活动吧！</h3>
-                    <img style="width:250px;height: 250px;" src="./assets/images/cry.jpg">
-                </div>
+                <!--<div style="text-align: center;margin-top:150px;">-->
+                    <!--<h3 style="color:rgb(50, 197, 210)">还没有创建活动哦，快去创建一个活动吧！</h3>-->
+                    <!--<img style="width:250px;height: 250px;" src="./assets/images/cry.jpg">-->
+                <!--</div>-->
             </div>
         </div>
     </div>
 </div>
+<script>
+
+    var datalist = [];
+    window.onload = bron;
+    function bron() {
+        $.ajax({
+            url: '../admin/activity_show',
+            type: 'GET',
+            success : function(res) {
+                var code = res.code;
+                if(code==0){
+                    datalist = res.data;
+                    console.log(datalist)
+                    var data={
+                        datalist:datalist
+                    };
+                    var html = template('temp1', data);
+                    document.getElementById('main').innerHTML = html;
+                }else{
+                    alert(res.msg);
+                }
+            }
+        });
+    }
+
+</script>
     <script>
+
+        function create() {
+
+            $.ajax({
+                type:'POST',
+                dataType: "json",
+                url:"../admin/create_id",
+                success:function(res){
+                    if (res.code == 0) {
+
+                        alert("创建成功");
+                        window.location.href="/admin/activity";
+                    }else {
+                        alert("创建失败");
+                    }
+                },
+                error:function(){
+                    alert("删除失败");
+                }
+            });
+
+        }
+
         function deleteAc(index){
             var key = parseInt(index);//数组索引
             $.ajax({
@@ -191,13 +218,12 @@
                 success:function(res){
                     if (res.code == 0) {
                         alert("删除成功");
-                     /*   datalist.splice(key, 1);//从索引key开始，删 1 个元素
+                        datalist.splice(key, 1);//从索引key开始，删 1 个元素
                         var data={
                             datalist:datalist
                         };
                         var html = template('temp1', data);
-                        document.getElementById('main').innerHTML = html;*/
-
+                        document.getElementById('main').innerHTML = html;
                     }else {
                         alert("删除失败");
                     }

@@ -2,6 +2,7 @@ package com.lz.palmscore.service;
 
 import com.lz.palmscore.entity.*;
 import com.lz.palmscore.vo.MarkPageVO;
+import com.lz.palmscore.vo.RankVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -39,4 +40,6 @@ public interface PeopleService {
     List<Player> findByList(List<Integer> playIdList);
 
     List<Player> drawlots();
+
+    List<RankVO> result();
 }
