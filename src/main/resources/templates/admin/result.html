@@ -45,7 +45,12 @@
         <!--}-->
 
     <!--</script>-->
-
+<style>
+    tr{
+        font-weight: bold;
+        font-size: 25px;
+    }
+</style>
 
 </head>
 
@@ -138,31 +143,44 @@
             <div class="note note-info">
                 <div class="am-g tpl-amazeui-form">
                     <div class="am-u-sm-12 am-u-md-12">
+                        <button onclick="test()" >刷新</button>
                         <form class="am-form am-form-horizontal" id="form1"  onsubmit="return false" >
 
                             <div class="am-form-group">
                                 <div class="am-u-sm-12">
-                                    <table class="am-table am-table-bordered am-table-striped am-table-compact tab">
+                                    <table class="am-table am-table-bordered am-table-striped am-table-compact">
                                         <thead>
-                                        <tr>
-                                            <th>组别</th>
-                                            <th>当前排名</th>
-                                            <th>姓名</th>
-
-                                            <th>最终得分</th>
-                                        </tr>
+                                        <!--<tr>-->
+                                            <!--<th>组别</th>-->
+                                            <!--<th>当前排名</th>-->
+                                            <!--<th>姓名</th>-->
+                                            <!--<th>一号评委</th>-->
+                                            <!--<th>二号评委</th>-->
+                                            <!--<th>三号评委</th>-->
+                                            <!--<th>四号评委</th>-->
+                                            <!--<th>五号评委</th>-->
+                                            <!--<th>六号评委</th>-->
+                                            <!--<th>七号评委</th>-->
+                                            <!--<th>八号评委</th>-->
+                                            <!--<th>九号评委</th>-->
+                                            <!--<th>十号评委</th>-->
+                                            <!--<th>十一号评委</th>-->
+                                            <!--<th>教案得分</th>-->
+                                            <!--<th>听课得分</th>-->
+                                            <!--<th>最终得分</th>-->
+                                        <!--</tr>-->
                                         </thead>
                                         <tbody id="main">
-                                           <script type="text/template" id="temp1">
-                                               {{each datalist}}
-                                                   <tr>
-                                                       <td>{{$value.groups}}</td>
-                                                       <td>{{$value.rank}}</td>
-                                                       <td>{{$value.name}}</td>
-                                                       <td>{{$value.totalScore}}</td>
-                                                   </tr>
-                                               {{/each}}
-                                           </script>
+                                           <!--<script type="text/template" id="temp1">-->
+                                               <!--{{each datalist}}-->
+                                                   <!--<tr>-->
+                                                       <!--<td>{{$value.groups}}</td>-->
+                                                       <!--<td>{{$value.rank}}</td>-->
+                                                       <!--<td>{{$value.name}}</td>-->
+                                                       <!--<td>{{$value.totalScore}}</td>-->
+                                                   <!--</tr>-->
+                                               <!--{{/each}}-->
+                                           <!--</script>-->
 
 
                                         </tbody>
@@ -170,6 +188,7 @@
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -184,9 +203,64 @@
 <script src="assets/js/app.js"></script>
 
 <script>
-    var datalist = [];
-    window.onload = bron;
-    function bron() {
+    // var datalist = [];
+    // window.onload = bron;
+    // function bron() {
+    //     $.ajax({
+    //         url: '../admin/result',
+    //         type: 'GET',
+    //         cache:false,
+    //         ifModified :true,
+    //         success : function(res) {
+    //             var code = res.code;
+    //             if(code==0){
+    //                 datalist = res.data;
+    //                 console.log(datalist)
+    //                 var data={
+    //                     datalist:datalist
+    //                 };
+    //                 var html = template('temp1', data);
+    //                 document.getElementById('main').innerHTML = html;
+    //             }else{
+    //                 alert(res.msg);
+    //             }
+    //         }
+    //     });
+    // }
+
+
+    // var datalist = [];
+    // window.onload = bron;
+    // function bron() {
+    //     $.ajax({
+    //         url: '../admin/result',
+    //         type: 'GET',
+    //         cache:false,
+    //         ifModified :true,
+    //         success : function(res) {
+    //             var code = res.code;
+    //             if(code==0){
+    //                 datalist = res.data;
+    //                 console.log(datalist)
+    //                 var data={
+    //                     datalist:datalist
+    //                 };
+    //                 var html = template('temp1', data);
+    //                 document.getElementById('main').innerHTML = html;
+    //             }else{
+    //                 alert(res.msg);
+    //             }
+    //         }
+    //     });
+    // }
+
+
+    function test() {
+
+          // document.getElementById("main").inn
+
+        document.getElementById("main").innerHTML="<tr> </tr>";
+
         $.ajax({
             url: '../admin/result',
             type: 'GET',
@@ -195,19 +269,42 @@
             success : function(res) {
                 var code = res.code;
                 if(code==0){
-                    datalist = res.data;
-                    console.log(datalist)
-                    var data={
-                        datalist:datalist
-                    };
-                    var html = template('temp1', data);
-                    document.getElementById('main').innerHTML = html;
+                    var all = res.data;
+                    show_result(all);
+
                 }else{
                     alert(res.msg);
                 }
             }
         });
+
     }
+
+
+    function show_result(all) {
+        var str = "";
+
+        for (var i=0;i<all.length;i++){
+            str = str+"<tr>"
+            for (var j=0;j<all[i].length;j++){
+                str = str +"<td>"+ all[i][j]+"</td>"
+            }
+            str = str+"</tr>"
+        }
+
+
+        // for (var i=0;i<all[0].length;i++){
+        //     str = str+"<tr>"
+        //     for (var j=0;j<all.length;j++){
+        //         str = str +"<td>"+ all[j][i]+"</td>"
+        //     }
+        //     str = str+"</tr>"
+        // }
+
+        document.getElementById("main").innerHTML = str;
+    }
+
+
 
 </script>
 </body>

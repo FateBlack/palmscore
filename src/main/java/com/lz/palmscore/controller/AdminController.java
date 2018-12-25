@@ -110,9 +110,6 @@ public class AdminController {
         int id = admin.getId();
         Admin a = adminService.getPassById(id);
         String realPas = a.getPassword();
-        System.out.println("数据库密码--" + realPas);
-        System.out.println("输入原密码--" + password);
-        System.out.println("现在密码---" + rePassword);
         if (realPas.equals(password)) {//密码填写正确
             admin.setPassword(rePassword);
             Admin admin1 = adminService.edit(admin);

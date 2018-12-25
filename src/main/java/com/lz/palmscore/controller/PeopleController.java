@@ -121,7 +121,6 @@ public class PeopleController {
             if (type.equals("rater")) {
                 List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
                 raterList.remove(index);
-                System.out.println(raterList.size());
                 session.setAttribute("raterList",raterList);
             }
 
@@ -217,7 +216,6 @@ public class PeopleController {
         List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
 
 
-        System.out.println(raterList);
 
 
 

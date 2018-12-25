@@ -3,8 +3,6 @@ package com.lz.palmscore.service.impl;
 import com.lz.palmscore.entity.*;
 import com.lz.palmscore.repository.*;
 import com.lz.palmscore.service.PeopleService;
-import com.lz.palmscore.vo.MarkPageVO;
-import com.lz.palmscore.vo.RankVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -19,6 +17,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,6 +47,9 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private RaterScoreRepository raterScoreRepository;
 
     @Override
     public List<Rater> batchInputRater(String fileName, MultipartFile file) throws Exception {
@@ -146,44 +148,153 @@ public class PeopleServiceImpl implements PeopleService {
         return playerRepository.findAll();
     }
 
+//    @Override
+////    public List<RankVO> result() {
+////        List<Activity> activityList = activityRepository.findAll();
+////        if (activityList == null || activityList.isEmpty()) {
+////            return null;
+////        }
+////        Integer groupNum = activityList.get(0).getGroupNum();
+////
+//////        List<Player> playerList = playerRepository.findAll();
+////
+////        List<RankVO> allList = new ArrayList<>();
+////
+////        for (int i = 1; i <= groupNum; i++) {
+////            List<Player> playerList = playerRepository.findByGroupsAndTotalScoreNotNull(i);
+////            Collections.sort(playerList, new Comparator<Player>() {
+////                @Override
+////                public int compare(Player o1, Player o2) {
+////                    return o2.getTotalScore().compareTo(o1.getTotalScore());
+////                }
+////            });
+////
+////            List<RankVO> rankVOList = new ArrayList<>();
+////
+////            for (int j=0;j<playerList.size();j++) {
+////                Player p = playerList.get(j);
+////
+////                RankVO rankVO = new RankVO();
+////                rankVO.setGroups(i);
+////                rankVO.setRank(j+1);
+////                rankVO.setName(p.getName());
+////                rankVO.setTotalScore(p.getTotalScore());
+////                rankVOList.add(rankVO);
+////            }
+////
+////            allList.addAll(rankVOList);
+////        }
+////
+////        return allList;
+////    }
+
+
+    /**
+     *   PC 端结果通知
+     * @return
+     */
     @Override
-    public List<RankVO> result() {
-        List<Activity> activityList = activityRepository.findAll();
-        if (activityList == null || activityList.isEmpty()) {
-            return null;
+    public List<List<String>> result() {
+
+        List<List<String>> finalList = new ArrayList<>();
+
+
+        //总分
+        List<String> z = new ArrayList<>();
+        z.add("最后得分");
+
+
+
+        //第一行
+        List<String> a = new ArrayList();
+        a.add("评委号\\选手 ");
+
+        List<Player> playerList = playerRepository.findAll();
+        for (Player player : playerList) {
+            //加入 选手名 ， 总分 ， 排名
+            a.add(player.getName());
+            z.add(String.valueOf(player.getTotalScore()));
         }
-        Integer groupNum = activityList.get(0).getGroupNum();
+        finalList.add(a);
 
-//        List<Player> playerList = playerRepository.findAll();
+        //评委打分
+        List<Rater> raterList = raterRepository.findAll();
+        for (int i = 0; i < raterList.size(); i++) {
 
-        List<RankVO> allList = new ArrayList<>();
+            List<String> b = new ArrayList<>();
+            b.add(String.valueOf(i + 1));
 
-        for (int i = 1; i <= groupNum; i++) {
-            List<Player> playerList = playerRepository.findByGroupsAndTotalScoreNotNull(i);
-            Collections.sort(playerList, new Comparator<Player>() {
-                @Override
-                public int compare(Player o1, Player o2) {
-                    return o2.getTotalScore().compareTo(o1.getTotalScore());
+            List<RaterScore> raterScoreList = raterScoreRepository.findByRaterId(raterList.get(i).getId());
+            for (RaterScore raterScore : raterScoreList) {
+                b.add(String.valueOf(raterScore.getScore()));
+            }
+            finalList.add(b);
+        }
+
+        List<ScoreItem> scoreItemList = scoreItemRepository.findAll();
+
+        // 评分项
+        for (ScoreItem scoreItem : scoreItemList) {
+            List<String> c = new ArrayList<>();
+            c.add(scoreItem.getName());
+
+            Double rate = scoreItem.getRate();
+
+            for (Player player : playerList) {
+                Double totalScore = player.getTotalScore();
+
+                if (totalScore != null && totalScore != 0) {
+                    Double score = totalScore * scoreItem.getRate();
+                    BigDecimal b = new BigDecimal(score);
+                    score = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+                    c.add(String.valueOf(score));
+                }else {
+                    c.add(null);
                 }
-            });
 
-            List<RankVO> rankVOList = new ArrayList<>();
 
-            for (int j=0;j<playerList.size();j++) {
-                Player p = playerList.get(j);
-
-                RankVO rankVO = new RankVO();
-                rankVO.setGroups(i);
-                rankVO.setRank(j+1);
-                rankVO.setName(p.getName());
-                rankVO.setTotalScore(p.getTotalScore());
-                rankVOList.add(rankVO);
             }
 
-            allList.addAll(rankVOList);
+            finalList.add(c);
         }
 
-        return allList;
+
+        finalList.add(z);
+
+
+
+        // 开始 添加排名
+        List<String> rankList = new ArrayList<>();
+        rankList.add("当前排名");
+
+        //先按照分数排名 放入名次
+        Collections.sort(playerList, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o2.getTotalScore().compareTo(o1.getTotalScore());
+            }
+        });
+
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).setRank(i + 1);
+        }
+
+        //再按照 顺序排名 复原
+        Collections.sort(playerList, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o1.getOrders().compareTo(o2.getOrders());
+            }
+        });
+
+        for (Player p : playerList) {
+            rankList.add(String.valueOf(p.getRank()));
+        }
+
+        finalList.add(rankList);
+
+        return finalList;
     }
 
 

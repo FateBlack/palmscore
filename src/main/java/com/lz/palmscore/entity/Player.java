@@ -23,6 +23,8 @@ public class Player {
   private Integer activityId;// 活动 id
   private Integer fileUpload;//是否已上传文件  1:已经 2:没有
 
+  private Integer rank;
+
   public Player(String pId, String name, Integer orders) {
     this.pId = pId;
     this.name = name;
@@ -137,5 +139,13 @@ public class Player {
 
   public void setFileUpload(Integer fileUpload) {
     this.fileUpload = fileUpload;
+  }
+
+  public Integer getRank() {
+    return rank;
+  }
+
+  public void setRank(Integer rank) {
+    this.rank = rank;
   }
 }

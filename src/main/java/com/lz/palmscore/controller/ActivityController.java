@@ -70,7 +70,6 @@ public class ActivityController  {
         }
         Integer id= (Integer) session.getAttribute("activityId");
         activity.setId(id);
-        System.out.println("第一次添加"+activity.toString());
         session.setAttribute("activity",activity);
         return ResultVOUtil.success();
     }
@@ -93,7 +92,7 @@ public class ActivityController  {
         activity.setGroupNum(1);
         Activity activityNew=activityService.add(activity);
         if (activityNew==null){
-            System.out.println("嗯哼？错了");
+            return ResultVOUtil.error(233, "创建活动失败");
         }
         session.setAttribute("activityId",activityNew.getId());
         return ResultVOUtil.success();
@@ -111,7 +110,6 @@ public class ActivityController  {
     @GetMapping("activity_show")
     public ResultVO show() {
         List<Activity> activityList = activityService.findAll();
-        System.out.println("活动列表"+activityList);
 
         return ResultVOUtil.success(activityList);
     }
@@ -125,12 +123,11 @@ public class ActivityController  {
     public ResultVO addPassword(@RequestParam String password,
                                 HttpSession session){
         Activity activity= (Activity) session.getAttribute("activity");
-        System.out.println(password);
+
         if (password == null || password.length() <= 0) {
             return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(), ActivityEnum.PASSWORD_NULL.getMessage());
         }
         activity.setPassword(password);
-        System.out.println("添加密码后~"+activity.toString());
 
         session.setAttribute("activity",activity);
         return ResultVOUtil.success();
@@ -179,7 +176,7 @@ public class ActivityController  {
      */
     @GetMapping("result")
     public ResultVO result() {
-        List<RankVO> list=peopleService.result();
+        List<List<String>> list = peopleService.result();
         return ResultVOUtil.success(list);
     }
 }
