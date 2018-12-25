@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -187,6 +189,10 @@ public class PeopleServiceImpl implements PeopleService {
 ////    }
 
 
+    /**
+     *   PC 端结果通知
+     * @return
+     */
     @Override
     public List<List<String>> result() {
 
@@ -196,9 +202,7 @@ public class PeopleServiceImpl implements PeopleService {
         //总分
         List<String> z = new ArrayList<>();
         z.add("最后得分");
-        //排名
-        List<String> orderList = new ArrayList<>();
-        orderList.add("当前排名");
+
 
 
         //第一行
@@ -210,7 +214,6 @@ public class PeopleServiceImpl implements PeopleService {
             //加入 选手名 ， 总分 ， 排名
             a.add(player.getName());
             z.add(String.valueOf(player.getTotalScore()));
-            orderList.add(String.valueOf(player.getOrders()));
         }
         finalList.add(a);
 
@@ -241,7 +244,7 @@ public class PeopleServiceImpl implements PeopleService {
                 Double totalScore = player.getTotalScore();
 
                 if (totalScore != null && totalScore != 0) {
-                    Double score = totalScore / scoreItem.getRate();
+                    Double score = totalScore * scoreItem.getRate();
                     BigDecimal b = new BigDecimal(score);
                     score = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
 
@@ -256,9 +259,40 @@ public class PeopleServiceImpl implements PeopleService {
             finalList.add(c);
         }
 
-        finalList.add(z);
-        finalList.add(orderList);
 
+        finalList.add(z);
+
+
+
+        // 开始 添加排名
+        List<String> rankList = new ArrayList<>();
+        rankList.add("当前排名");
+
+        //先按照分数排名 放入名次
+        Collections.sort(playerList, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o2.getTotalScore().compareTo(o1.getTotalScore());
+            }
+        });
+
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).setRank(i + 1);
+        }
+
+        //再按照 顺序排名 复原
+        Collections.sort(playerList, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o1.getOrders().compareTo(o2.getOrders());
+            }
+        });
+
+        for (Player p : playerList) {
+            rankList.add(String.valueOf(p.getRank()));
+        }
+
+        finalList.add(rankList);
 
         return finalList;
     }

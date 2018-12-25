@@ -185,7 +185,7 @@ public class PlayerServiceImpl implements PlayerService {
         for (ScoreItem scoreItem : scoreItemList) {
             PlayerScoreitem ps = new PlayerScoreitem();
 
-            Double score =   totalScore/scoreItem.getRate();
+            Double score =   totalScore*scoreItem.getRate();
 
             BigDecimal b = new BigDecimal(score);
             score = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
