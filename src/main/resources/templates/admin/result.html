@@ -139,7 +139,7 @@
     </div>
     <div class="tpl-content-wrapper">
         <div class="tpl-content-scope">
-            <h2 style="color:#686868;margin-left:10px;">计算机学院 2018年教师教学大赛</h2>
+           <center> <h1 style="color:#686868">计算机与信息工程学院教师教学大赛</h1></center>
             <div class="note note-info">
                 <div class="am-g tpl-amazeui-form">
                     <div class="am-u-sm-12 am-u-md-12">
@@ -281,22 +281,22 @@
     function show_result(all) {
         var str = "";
 
-        // for (var i=0;i<all.length;i++){
-        //     str = str+"<tr>"
-        //     for (var j=0;j<all[i].length;j++){
-        //         str = str +"<td>"+ all[i][j]+"</td>"
-        //     }
-        //     str = str+"</tr>"
-        // }
-
-
-        for (var i=0;i<all[0].length;i++){
+        for (var i=0;i<all.length;i++){
             str = str+"<tr>"
-            for (var j=0;j<all.length;j++){
-                str = str +"<td>"+ all[j][i]+"</td>"
+            for (var j=0;j<all[i].length;j++){
+                str = str +"<td>"+ all[i][j]+"</td>"
             }
             str = str+"</tr>"
         }
+
+
+        // for (var i=0;i<all[0].length;i++){
+        //     str = str+"<tr>"
+        //     for (var j=0;j<all.length;j++){
+        //         str = str +"<td>"+ all[j][i]+"</td>"
+        //     }
+        //     str = str+"</tr>"
+        // }
 
         document.getElementById("main").innerHTML = str;
     }
