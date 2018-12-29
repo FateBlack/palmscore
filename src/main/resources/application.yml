@@ -5,20 +5,19 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
     username: root
-#    password: kira
+    password: kira
 #   url: jdbc:mysql://127.0.0.1/score?characterEncoding=utf-8&useSSL=false
-    password: 123456
-    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&useSSL=false
+#    password: 3fdd349205bdf58c
+    url: jdbc:mysql://localhost:3306/score?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: false
 
-
   thymeleaf:
     cache: false # 开发时关闭缓存,不然没法看到实时页面
-    mode: LEGACYHTML5 # 用非严格的 HTML
-#    mode: HTML
+#    mode: LEGACYHTML5 # 用非严格的 HTML
+    mode: HTML
     encoding: UTF-8
-#    prefix: classpath:/admin
+    prefix: classpath:/templates/
     servlet:
       content-type: text/html
     suffix: .html
@@ -29,7 +28,7 @@ spring:
       max-request-size: 5Mb #一次请求限制大小
       enabled: true
   mvc:
-    static-path-pattern: /**
+    static-path-pattern: /static/**    #设置静态资源路径
 
   resources:
-    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/#,classpath:/templates/admin/#
+    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/

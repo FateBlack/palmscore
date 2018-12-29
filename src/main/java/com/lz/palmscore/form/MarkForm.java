@@ -8,8 +8,6 @@ import java.util.List;
  * 打分表单
  */
 public class MarkForm {
-
-
     private Integer playerId;
     private Integer raterId;
     private Double score;

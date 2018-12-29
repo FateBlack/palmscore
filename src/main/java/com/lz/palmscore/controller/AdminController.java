@@ -33,15 +33,7 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    /**
-     * 进入登陆界面
-     *
-     * @return
-     */
-    @GetMapping({"/login", "/"})
-    public ModelAndView login() {
-        return new ModelAndView("admin/login");
-    }
+
 
     /**
      * 管理员登陆
@@ -74,25 +66,6 @@ public class AdminController {
         return ResultVOUtil.success();
     }
 
-
-    /**
-     * 进入管理员主页
-     *
-     * @param session
-     * @param map
-     * @return
-     */
-    @GetMapping("/index")
-    public ModelAndView index(HttpSession session, Map<String, Object> map) {
-
-        Admin admin = (Admin) session.getAttribute("admin");
-        if (admin == null) {
-            log.info("[进入管理员主页]session中不存在管理员信息");
-            return new ModelAndView("admin/login");
-        }
-        map.put("admin", admin);
-        return new ModelAndView("admin/index");
-    }
 
     /**
      * 修改密码
