@@ -27,7 +27,7 @@ public class WebConfigurer  implements WebMvcConfigurer {
         //拦截所有 前缀 admin 的请求，除了 login 和 register 和静态资源
 
         registry.addInterceptor(addInterceptor)
-                .addPathPatterns("/admin/**")
+                .addPathPatterns("/admin/**","/score_item/**","/people/**")
                 .excludePathPatterns("/admin/login","/admin/admin_login","/static/**");
     }
 }

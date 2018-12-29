@@ -53,7 +53,7 @@
                 </a>
             </li>
             <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
-                <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                <a class="am-dropdown-toggle tpl-header-list-link" onclick="logout()" href="#">
                     退出登录
                 </a>
             </li>
@@ -501,6 +501,28 @@
                 }
             });
         }
+
+
+
+    function logout() {
+        $.ajax({
+            type:'POST',
+            dataType: "json",
+            url:"../admin/logout",
+            success:function(res){
+                if (res.code == 0) {
+                    alert("成功退出");
+                    window.location.href="/admin/login";
+                }else {
+                    alert("退出登陆失败");
+                }
+            },
+            error:function(){
+                alert("退出登陆失败");
+            }
+        });
+
+    }
 </script>
 
 

@@ -1,6 +1,7 @@
 package com.lz.palmscore.controller;
 
 import com.lz.palmscore.entity.Admin;
+import com.lz.palmscore.entity.Rater;
 import com.lz.palmscore.enums.AdminEnum;
 import com.lz.palmscore.exception.AdminException;
 import com.lz.palmscore.form.LoginForm;
@@ -19,6 +20,8 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,4 +99,19 @@ public class AdminController {
         }//密码错误
         return ResultVOUtil.error(AdminEnum.PASSWORD_ERROR.getCode(), AdminEnum.PASSWORD_ERROR.getMessage());
     }
+
+
+    /**
+     * 用户登出 销毁session
+     * @param session
+     * @return
+     */
+    @PostMapping("/logout")
+    public ResultVO logout(HttpSession session) {
+
+        session.invalidate();
+
+        return ResultVOUtil.success();
+    }
+
 }
