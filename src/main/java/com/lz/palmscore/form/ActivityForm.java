@@ -5,28 +5,28 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by 白 on 2018/12/12.
- */
-public class ActivityForm {
+    /**
+     * Created by 白 on 2018/12/12.
+     */
+    public class ActivityForm {
 
-    @NotEmpty(message = "活动名必填")
-    private String name;//活动名
+        @NotEmpty(message = "活动名必填")
+        private String name;//活动名
 
-    @NotEmpty(message = "开始日期必填")
-    private String startTime;//开始日期
+        @NotEmpty(message = "开始日期必填")
+        private String startTime;//开始日期
 
-    @NotEmpty(message = "结束日期必填")
-    private String endTime;//结束日期
+        @NotEmpty(message = "结束日期必填")
+        private String endTime;//结束日期
 
-    @NotEmpty(message = "提交截止时间必填")
-    private String uploadTime;//提交截止时间
+        @NotEmpty(message = "提交截止时间必填")
+        private String uploadTime;//提交截止时间
 
-    @NotEmpty(message = "评分细则必填")
-    private String scoreRule;//评分细则
+        @NotEmpty(message = "评分细则必填")
+        private String scoreRule;//评分细则
 
-    @NotNull(message = "参赛组数必填")
-    private Integer groupNum;
+        @NotNull(message = "参赛组数必填")
+        private Integer groupNum;
 
 
     public Integer getGroupNum() {
