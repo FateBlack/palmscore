@@ -1,6 +1,7 @@
 package com.lz.palmscore.controller;
 
 import com.lz.palmscore.entity.Admin;
+import com.lz.palmscore.entity.Rater;
 import com.lz.palmscore.enums.AdminEnum;
 import com.lz.palmscore.exception.AdminException;
 import com.lz.palmscore.form.LoginForm;
@@ -19,6 +20,8 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,15 +36,7 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    /**
-     * 进入登陆界面
-     *
-     * @return
-     */
-    @GetMapping({"/login", "/"})
-    public ModelAndView login() {
-        return new ModelAndView("admin/login");
-    }
+
 
     /**
      * 管理员登陆
@@ -76,25 +71,6 @@ public class AdminController {
 
 
     /**
-     * 进入管理员主页
-     *
-     * @param session
-     * @param map
-     * @return
-     */
-    @GetMapping("/index")
-    public ModelAndView index(HttpSession session, Map<String, Object> map) {
-
-        Admin admin = (Admin) session.getAttribute("admin");
-        if (admin == null) {
-            log.info("[进入管理员主页]session中不存在管理员信息");
-            return new ModelAndView("admin/login");
-        }
-        map.put("admin", admin);
-        return new ModelAndView("admin/index");
-    }
-
-    /**
      * 修改密码
      *
      * @param password
@@ -123,4 +99,19 @@ public class AdminController {
         }//密码错误
         return ResultVOUtil.error(AdminEnum.PASSWORD_ERROR.getCode(), AdminEnum.PASSWORD_ERROR.getMessage());
     }
+
+
+    /**
+     * 用户登出 销毁session
+     * @param session
+     * @return
+     */
+    @PostMapping("/logout")
+    public ResultVO logout(HttpSession session) {
+
+        session.invalidate();
+
+        return ResultVOUtil.success();
+    }
+
 }

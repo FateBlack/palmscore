@@ -8,18 +8,19 @@
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="icon" type="image/png" href="assets/i/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-    <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
-    <link rel="stylesheet" href="assets/css/admin.css">
-    <link rel="stylesheet" href="assets/css/app.css">
-    <script src="assets/js/echarts.min.js"></script>
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="/static/assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="/static/assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="/static/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/admin.css">
+    <link rel="stylesheet" href="/static/assets/css/app.css">
+    <script src="/static/assets/js/echarts.min.js"></script>
+    <script src="/static/assets/js/template-web.js"></script>
     <style>
         .tab tr th {font-size:18px;}
     </style>
-    <script src="assets/js/template-web.js"></script>
+
 </head>
 
 <body data-type="index">
@@ -27,7 +28,7 @@
     <div class="am-topbar-brand">
         <div class="am-topbar-brand">
             <a href="javascript:;" class="tpl-logo">
-                <img style="width:60px;height:60px;" src="assets/images/xiaohui.png" alt="">
+                <img style="width:60px;height:60px;" src="/static/assets/images/xiaohui.png" alt="">
             </a>
             <label style="color: rgb(50, 197, 210);">教务评分后台管理系统</label>
         </div>
@@ -51,7 +52,7 @@
                 </a>
             </li>
             <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
-                <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                <a class="am-dropdown-toggle tpl-header-list-link" onclick="logout()" href="#">
                     退出登录
                 </a>
             </li>
@@ -67,37 +68,38 @@
         <div class="tpl-left-nav-list">
             <ul class="tpl-left-nav-menu">
                 <li class="tpl-left-nav-item">
-                    <a href="index.html" class="nav-link">
+                    <a href="index" class="nav-link active">
                         <i class="am-icon-home"></i>
                         <span>首页</span>
                     </a>
                 </li>
+
                 <li class="tpl-left-nav-item">
-                    <a href="myActivity.html" class="nav-link ">
+                    <a href="myActivity" class="nav-link ">
                         <i class="am-icon-calendar-minus-o"></i>
                         <span>我的活动</span>
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="drawlots.html" class="nav-link active">
+                    <a href="drawlots" class="nav-link ">
                         <i class="am-icon-hand-peace-o"></i>
                         <span>抽签</span>
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="countdown.html" class="nav-link ">
+                    <a href="countdown" class="nav-link ">
                         <i class="am-icon-clock-o"></i>
                         <span>倒计时</span>
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="result.html" class="nav-link ">
+                    <a href="result" class="nav-link ">
                         <i class="am-icon-comments-o"></i>
                         <span>结果通知</span>
                     </a>
                 </li>
                 <li class="tpl-left-nav-item">
-                    <a href="repassword.html" class="nav-link tpl-left-nav-link-list">
+                    <a href="repassword" class="nav-link tpl-left-nav-link-list">
                         <i class="am-icon-key"></i>
                         <span>修改密码</span>
                     </a>
@@ -111,7 +113,7 @@
             <div class="note note-info" >
                 <button  class="am-btn am-btn-success" onclick="show()">抽签</button>
                 <div id="animate" style="display: none;text-align: center">
-                    <img src="./assets/images/animate.gif">
+                    <img src="/static/assets/images/animate.gif">
                 </div>
             <div class="am-g tpl-amazeui-form" id="showtable" style="justify-content: center;display: none">
                 <div class="am-u-sm-4 am-u-md-4">
@@ -152,11 +154,11 @@
     </div>
 </div>
 </div>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/iscroll.js"></script>
-<script src="assets/js/app.js"></script>
+<script src="/static/assets/js/jquery.min.js"></script>
+<script src="/static/assets/js/jquery.min.js"></script>
+<script src="/static/assets/js/amazeui.min.js"></script>
+<script src="/static/assets/js/iscroll.js"></script>
+<script src="/static/assets/js/app.js"></script>
 
 <script>
    function show(){
@@ -201,6 +203,28 @@
            document.getElementById('animate').style.display="none"
            document.getElementById('showtable').style.display="flex";
        },3000);
+   }
+
+
+
+   function logout() {
+       $.ajax({
+           type:'POST',
+           dataType: "json",
+           url:"../admin/logout",
+           success:function(res){
+               if (res.code == 0) {
+                   alert("成功退出");
+                   window.location.href="/admin/login";
+               }else {
+                   alert("退出登陆失败");
+               }
+           },
+           error:function(){
+               alert("退出登陆失败");
+           }
+       });
+
    }
 
 </script>

@@ -115,9 +115,16 @@ public class RaterServiceImpl implements RaterService {
 
         raterScoreRepository.save(raterScore);
 
-        int length = markForm.getScoreItem().size();
+
+        System.out.println("打印"+markForm.getScoreItem());
+        System.out.println("打印" + markForm.getItemName());
+        System.out.println("打印"+markForm.getPlayerId());
+        System.out.println("打印4"+markForm.getScore());
+
+        Integer length = markForm.getScoreItem().size();
 
         List<PlayerScoreitem> playerScoreitemList = new ArrayList<>();
+
         for (int i = 0; i < length; i++) {
             PlayerScoreitem ps = new PlayerScoreitem();
             ps.setRaterId(raterId);

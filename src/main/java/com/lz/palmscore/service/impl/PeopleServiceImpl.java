@@ -270,9 +270,21 @@ public class PeopleServiceImpl implements PeopleService {
 
         //先按照分数排名 放入名次
         Collections.sort(playerList, new Comparator<Player>() {
+
             @Override
             public int compare(Player o1, Player o2) {
-                return o2.getTotalScore().compareTo(o1.getTotalScore());
+                Double x = o1.getTotalScore();
+                Double y = o2.getTotalScore();
+
+                if (x == null) {
+                    x = 0D;
+                }
+
+                if (y == null) {
+                    y = 0D;
+
+                }
+                return y.compareTo(x);
             }
         });
 

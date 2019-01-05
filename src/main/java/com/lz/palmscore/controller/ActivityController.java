@@ -98,11 +98,6 @@ public class ActivityController  {
         return ResultVOUtil.success();
     }
 
-    @GetMapping("activity")
-    public ModelAndView activity() {
-        return new ModelAndView("admin/activity");
-    }
-
     /**
      * 显示所有活动
      * @return
@@ -174,7 +169,7 @@ public class ActivityController  {
      * 管理元端排名显示
      * @return
      */
-    @GetMapping("result")
+    @GetMapping("get_result")
     public ResultVO result() {
         List<List<String>> list = peopleService.result();
         return ResultVOUtil.success(list);
