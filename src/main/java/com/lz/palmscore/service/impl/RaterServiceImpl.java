@@ -36,9 +36,6 @@ public class RaterServiceImpl implements RaterService {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    private PlayerScoreitemRepository playerScoreitemRepository;
-
-    @Autowired
     private GroupInfoRepository groupInfoRepository;
     /**
      * 微信端 评委id 查询出该评委下已打分选手
@@ -148,6 +145,7 @@ public class RaterServiceImpl implements RaterService {
         if (raterScoreList == null || raterScoreList.isEmpty()) {
             return;
         }
+
 
         if (raterScoreList.size() == raterCount) {
 
