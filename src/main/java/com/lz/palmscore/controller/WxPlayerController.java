@@ -146,7 +146,7 @@ public class WxPlayerController {
         int a=activityList.size()-1;
         String uploadTime=activityList.get(a).getUploadTime();
 
-        PlayerInfoVO playerInfoVO = new PlayerInfoVO(player.getId(), player.getName(), player.getWorkplace(), player.getCourse(),1);
+        PlayerInfoVO playerInfoVO = new PlayerInfoVO(player.getId(), player.getName(), player.getWorkplace(), player.getCourse(),1,player.getJob());
 
         List<PlayerFile> fileList =playerService.findFileById(id);
 

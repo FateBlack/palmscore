@@ -77,4 +77,9 @@ public class RedirectController {
         return new ModelAndView("admin/judge");
     }
 
+    @GetMapping("/rejudge")
+    public ModelAndView rejudge() {
+        return new ModelAndView("admin/rejudge");
+    }
+
 }

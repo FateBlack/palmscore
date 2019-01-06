@@ -15,6 +15,7 @@ public class Player {
   private String pId;//选手教工号
   private String name;//选手姓名
   private String workplace;//单位
+  private String job;//职位
   private String course;//课程
   private Integer orders;//出场顺序
   private Integer groups;//组别
@@ -51,6 +52,13 @@ public class Player {
     this.pId = pId;
   }
 
+  public String getJob() {
+    return job;
+  }
+
+  public void setJob(String job) {
+    this.job = job;
+  }
 
   public String getName() {
     return name;

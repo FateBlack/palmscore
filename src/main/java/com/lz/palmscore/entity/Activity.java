@@ -18,6 +18,7 @@ public class Activity {
   private String scoreRule;//评分细则
   private Integer groupNum;//组数
   private String password;
+  private Double extraRate;//占比
 
   public String getPassword() {
     return password;
@@ -85,6 +86,14 @@ public class Activity {
 
   public void setScoreRule(String scoreRule) {
     this.scoreRule = scoreRule;
+  }
+
+  public Double getExtraRate() {
+    return extraRate;
+  }
+
+  public void setExtraRate(Double extraRate) {
+    this.extraRate = extraRate;
   }
 
   @Override

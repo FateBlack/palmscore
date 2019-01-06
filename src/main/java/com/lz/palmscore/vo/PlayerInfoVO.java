@@ -14,19 +14,19 @@ public class PlayerInfoVO {
     private String workplace;//单位
     private String course;//课程
     private Integer state;//是否截至上传
-
+    private String job;
 
 
     @JsonProperty("file_list")
     private List<String> fileList; //文件集合
 
-    public PlayerInfoVO(Integer id, String name, String workplace, String course, Integer state) {
+    public PlayerInfoVO(Integer id, String name, String workplace, String course, Integer state,String job) {
         this.id = id;
         this.name = name;
         this.workplace = workplace;
         this.course = course;
         this.state = state;
-
+        this.job=job;
     }
 
     public Integer getState() {
@@ -75,5 +75,13 @@ public class PlayerInfoVO {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
     }
 }
