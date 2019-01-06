@@ -120,26 +120,14 @@ public class WxRaterController {
      */
       @PostMapping("mark_one")
     public ResultVO markOne(@Valid MarkOneForm markOneForm,
-                            BindingResult bindingResult){
+                            BindingResult bindingResult) {
           if (bindingResult.hasErrors()) {
               return ResultVOUtil.error(233, "分数不能为空");
           }
           raterService.markone(markOneForm);
           return ResultVOUtil.success();
-
-
-    @Autowired
-    private PlayerScoreitemRepository playerScoreitemRepository;
-
-    @GetMapping("test")
-    public ResultVO mark() {
-
-        List<PlayerScoreitem> list = playerScoreitemRepository.searchByRaterIdGroupByPlayerId(288);
-        System.out.println(list);
-
-        return ResultVOUtil.success();
-    }
-
       }
+
+
 
 }

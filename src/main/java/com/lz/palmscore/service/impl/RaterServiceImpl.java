@@ -46,8 +46,6 @@ public class RaterServiceImpl implements RaterService {
     @Autowired
     private RaterScoreDao raterScoreDao;
 
-    @Autowired
-    private PlayerScoreitemRepository playerScoreitemRepository;
     /**
      * 微信端 评委id 查询出该评委下已打分选手
      * @param id
