@@ -45,4 +45,14 @@ public class RaterScore {
     public void setScore(Double score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "RaterScore{" +
+                "id=" + id +
+                ", raterId=" + raterId +
+                ", playerId=" + playerId +
+                ", score=" + score +
+                '}';
+    }
 }
