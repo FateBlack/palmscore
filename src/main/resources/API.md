@@ -175,6 +175,7 @@ id 选手主键
         "workplace": "教研室",
         "course": "C语言",
         "state": 1        //1运行上传  2不允许
+        "job": "讲师",
         "file_list": [
             "http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg",
             "http://b.hiphotos.baidu.com/image/pic/item/359b033b5bb5c9ea5c0e3c23d139b6003bf3b374.jpg",
