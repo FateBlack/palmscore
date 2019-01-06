@@ -39,4 +39,6 @@ public interface PeopleService {
     List<Player> drawlots();
 
     List<List<String>> result();
+
+    List<Rater> reDrawlots();
 }

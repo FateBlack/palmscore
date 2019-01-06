@@ -142,7 +142,7 @@ public class PeopleServiceImpl implements PeopleService {
 
 
     /**
-     * 抽签  实际上在创建活动时就已经随机排序，此处无需随机
+     * 选手抽签  实际上在创建活动时就已经随机排序，此处无需随机
      * @return
      */
     @Override
@@ -150,6 +150,15 @@ public class PeopleServiceImpl implements PeopleService {
         return playerRepository.findAll();
     }
 
+    /**
+     *
+     * 评委抽签
+     * @return
+     */
+    @Override
+    public List<Rater> reDrawlots() {
+        return raterRepository.findAll();
+    }
 
     /**
      *   PC 端结果通知
@@ -270,6 +279,7 @@ public class PeopleServiceImpl implements PeopleService {
 
         return finalList;
     }
+
 
 
     /**

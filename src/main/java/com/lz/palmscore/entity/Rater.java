@@ -105,8 +105,7 @@ public class Rater {
             ", activityId=" + activityId +
             ", groups=" + groups +
             ", password='" + password + '\'' +
+            ", category=" + category +
             '}';
   }
-
-
 }
