@@ -18,6 +18,7 @@ public class Rater {
   private long activityId;//所属活动id
   private Integer groups;//所属组别
   private String password;//评委登录密码
+  private Integer category;// 评委类型,默认1:普通评委，3:额外评委
 
   public String getPassword() {
     return password;
@@ -85,6 +86,14 @@ public class Rater {
     this.activityId = activityId;
   }
 
+  public Integer getCategory() {
+    return category;
+  }
+
+  public void setCategory(Integer category) {
+    this.category = category;
+  }
+
   @Override
   public String toString() {
     return "Rater{" +
@@ -99,13 +108,5 @@ public class Rater {
             '}';
   }
 
-  public Rater(String rId, String name, String workplace, String job) {
-    this.rId = rId;
-    this.name = name;
-    this.workplace = workplace;
-    this.job = job;
-  }
 
-  public Rater() {
-  }
 }

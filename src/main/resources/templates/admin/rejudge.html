@@ -369,7 +369,7 @@
         var formData = new FormData();
 
         formData.append("file",$("#upfile")[0].files[0]);
-        formData.append("type","raterFile");
+        formData.append("type","extraRaterFile");
         $.ajax({
             url : '../people/batch_input',
             type : 'POST',
