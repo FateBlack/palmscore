@@ -5,6 +5,7 @@ import com.lz.palmscore.entity.Activity;
 import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.RaterScore;
 import com.lz.palmscore.entity.ScoreItem;
+import com.lz.palmscore.form.MarkOneForm;
 import com.lz.palmscore.repository.RaterRepository;
 import com.lz.palmscore.repository.RaterScoreRepository;
 import com.lz.palmscore.service.ActivityService;
@@ -96,7 +97,6 @@ public class WxRaterController {
 
     /**
      * 评分按钮
-     *
      * @param markForm
      * @param bindingResult
      * @return
@@ -113,19 +113,18 @@ public class WxRaterController {
 
         return ResultVOUtil.success();
     }
+    /**
+     * 单个评委仅打分教案
+     */
+      @PostMapping("mark_one")
+    public ResultVO markOne(@Valid MarkOneForm markOneForm,
+                            BindingResult bindingResult){
+          if (bindingResult.hasErrors()) {
+              return ResultVOUtil.error(233, "分数不能为空");
+          }
+          raterService.markone(markOneForm);
+          return ResultVOUtil.success();
 
-
-//    @Autowired
-//    private RaterScoreDao raterScoreDao;
-//
-//    @GetMapping("test")
-//    public ResultVO mark() {
-//
-//        List<RaterScore> list = raterScoreDao.searchAllByPlayerIdAndCategory();
-//        System.out.println(list);
-//
-//        return ResultVOUtil.success();
-//    }
-
+      }
 
 }

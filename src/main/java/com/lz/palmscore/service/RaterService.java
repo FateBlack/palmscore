@@ -1,6 +1,7 @@
 package com.lz.palmscore.service;
 
 import com.lz.palmscore.form.MarkForm;
+import com.lz.palmscore.form.MarkOneForm;
 import com.lz.palmscore.vo.PlayerVO;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface RaterService {
     void mark(MarkForm markForm,Integer groups);
 
     Map scoreList(Integer raterId, Integer groups);
+
+    void markone(MarkOneForm markOneForm);
 }

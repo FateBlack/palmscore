@@ -1,8 +1,10 @@
 package com.lz.palmscore.service.impl;
 
+import com.lz.palmscore.dao.RaterScoreDao;
 import com.lz.palmscore.entity.*;
 import com.lz.palmscore.form.MarkForm;
 import com.lz.palmscore.form.MarkItem;
+import com.lz.palmscore.form.MarkOneForm;
 import com.lz.palmscore.repository.*;
 import com.lz.palmscore.service.RaterService;
 import com.lz.palmscore.vo.PlayerVO;
@@ -37,6 +39,12 @@ public class RaterServiceImpl implements RaterService {
 
     @Autowired
     private GroupInfoRepository groupInfoRepository;
+
+    @Autowired
+    private  PlayerScoreitemRepository playerScoreitemRepository;
+
+    @Autowired
+    private RaterScoreDao raterScoreDao;
     /**
      * 微信端 评委id 查询出该评委下已打分选手
      * @param id
@@ -146,9 +154,10 @@ public class RaterServiceImpl implements RaterService {
             return;
         }
 
-
         if (raterScoreList.size() == raterCount) {
 
+            //取出评委的分
+            raterScoreList=raterScoreDao.searchAllByPlayerIdAndCategory(playerId,1);
             //排序
             Collections.sort(raterScoreList, new Comparator<RaterScore>() {
                 @Override
@@ -157,13 +166,38 @@ public class RaterServiceImpl implements RaterService {
                 }
 
             });
-            Double sum = 0D;
 
+            Double sum = 0D;
             for (int i = 1; i < raterScoreList.size() - 1; i++) {
                 sum = sum + raterScoreList.get(i).getScore();
             }
+            Double score = sum / (raterScoreList.size() - 2);
+            Double totalScore=score;
 
-            Double totalScore = sum / (raterScoreList.size() - 2);
+            //取出额外评委的分
+            List<RaterScore> extraRaterScoreList=raterScoreDao.searchAllByPlayerIdAndCategory(playerId,3);
+
+            if (extraRaterScoreList!=null){
+                //排序
+                Collections.sort(extraRaterScoreList, new Comparator<RaterScore>() {
+                    @Override
+                    public int compare(RaterScore o1, RaterScore o2) {
+                        return o1.getScore().compareTo(o2.getScore());
+                    }
+                });
+                Double sum1 = 0D;
+
+                for (int i = 1; i < extraRaterScoreList.size() - 1; i++) {
+                    sum1 = sum1+ extraRaterScoreList.get(i).getScore();
+                }
+                Double extraRaterScore = sum / (extraRaterScoreList.size() - 2);
+
+                //取出额外评委所占比率
+                List<Activity> activityList=activityRepository.findAll();
+                Double rate=activityList.get(0).getExtraRate();
+                 totalScore=score*(1-rate)+extraRaterScore*rate;
+            }
+
             Player player = new Player();
             player.setId(playerId);
             player.setTotalScore(totalScore);
@@ -229,6 +263,22 @@ public class RaterServiceImpl implements RaterService {
         map.put("activity_password", activity.getPassword());
 
         return map;
+    }
+
+    /**
+     *添加一个教案得分
+     * @param markOneForm
+     */
+    @Override
+    public void markone(MarkOneForm markOneForm) {
+        PlayerScoreitem playerScoreitem=new PlayerScoreitem();
+
+        playerScoreitem.setScore(markOneForm.getScore());
+        playerScoreitem.setPlayerId(markOneForm.getPlayerId());
+        playerScoreitem.setRaterId(markOneForm.getRaterId());
+        playerScoreitem.setItemName(markOneForm.getItemName());
+
+        playerScoreitemRepository.save(playerScoreitem);
     }
 
 }

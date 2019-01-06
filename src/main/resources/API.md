@@ -263,10 +263,23 @@ playerId 选手主键
 raterId  评委主键
 score    总分
 
-itemName ["教案","现场"]   评分项名称
+itemName ["演讲","现场"]   评分项名称
 scoreItem [66，88]    评分项分数
-
 groups 组别
+
+```
+
+
+###评委提前评分按钮
+```
+POST /wx/people/mark_one
+```
+参数
+```
+playerId 选手主键
+raterId  评委主键
+score    所评分数
+itemName 评分项名称
 
 ```
 返回  
