@@ -14,11 +14,11 @@
     <meta name="apple-mobile-web-app-title" content="Amaze UI" />
     <link rel="stylesheet" href="/static/assets/css/amazeui.min.css" />
     <link rel="stylesheet" href="/static/assets/css/admin.css">
-    <link rel="stylesheet" href="/static/assets/css/app.css">
+    <link rel="stylesheet" href="/static/assets/css/app.">
     <script src="/static/assets/js/echarts.min.js"></script>
     <script src="/static/assets/js/template-web.js"></script>
     <style>
-        .tab tr th {font-size:18px;}
+        .tab tr th {font-size:18px;}css
     </style>
 
 </head>
@@ -87,6 +87,7 @@
                         <span>添加优秀教师评委</span>
                     </a>
                 </li>
+
                 <li class="tpl-left-nav-item">
                     <a href="reDrawlots" class="nav-link ">
                         <i class="am-icon-hand-peace-o"></i>
@@ -100,7 +101,6 @@
                         <span>选手出场顺序抽签</span>
                     </a>
                 </li>
-
                 <li class="tpl-left-nav-item">
                     <a href="countdown" class="nav-link ">
                         <i class="am-icon-clock-o"></i>
@@ -124,7 +124,7 @@
     </div>
     <div class="tpl-content-wrapper" >
         <div class="tpl-content-scope">
-            <h2 style="color:#686868;margin-left:10px;">选手出场顺序抽签</h2>
+            <h2 style="color:#686868;margin-left:10px;">评委分组抽签</h2>
             <div class="note note-info" >
                 <button  class="am-btn am-btn-success" onclick="show()">开始抽签</button>
                 <div id="animate" style="display: none;text-align: center">
@@ -140,20 +140,16 @@
                                     <thead>
                                     <tr>
                                         <th>所在组</th>
-                                        <th>选手姓名</th>
-                                        <th>出场顺序</th>
+                                        <th>评委姓名</th>
                                     </tr>
                                     </thead>
-<!--
-                                    <tbody id="tbody-result" >
--->
+                                <!--<tbody id="tbody-result" >-->
                                     <tbody id="main">
                                     <script type="text/template" id="temp1">
                                         {{each datalist}}
                                         <tr>
                                             <th>{{$value.groups}}</th>
                                             <th>{{$value.name}}</th>
-                                            <th>{{$value.orders}}</th>
                                         </tr>
                                         {{/each}}
                                     </script>
@@ -183,31 +179,18 @@
        $.ajax({
            type:'GET',
            dataType: "json",
-           url:"../people/drawlots",
+           url:"../people/reDrawlots",
            cache:false,
            ifModified :true,
            success:function(res){
                if(res.code=="0"){
-/*
-                   var str = "";
-*/
+
                     datalist= res.data;
                    var data={
                        datalist:datalist
                    };
                    var html = template('temp1', data);
                    document.getElementById('main').innerHTML = html;
-                  /* console.log(datalist)
-                   console.log(datalist.length)
-                   var tbody=document.getElementById("tbody-result");
-                   for (var i=0;i<datalist.length;i++) {
-                       str += "<tr>" +
-                           "<td class='tab'>" + datalist[i].groups + "</td>" +
-                           "<td class='tab'>" + datalist[i].name + "</td>" +
-                           "<td class='tab'>" + datalist[i].orders + "</td>" +
-                           "</tr>";
-                   }
-                   tbody.innerHTML = str;*/
                }
            },
            error:function(){

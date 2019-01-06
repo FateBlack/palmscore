@@ -120,11 +120,19 @@
                 </li>
 
                 <li class="tpl-left-nav-item">
-                    <a href="drawlots" class="nav-link ">
+                    <a href="reDrawlots" class="nav-link ">
                         <i class="am-icon-hand-peace-o"></i>
-                        <span>抽签</span>
+                        <span>评委分组抽签</span>
                     </a>
                 </li>
+
+                <li class="tpl-left-nav-item">
+                    <a href="drawlots" class="nav-link ">
+                        <i class="am-icon-hand-peace-o"></i>
+                        <span>选手出场顺序抽签</span>
+                    </a>
+                </li>
+
                 <li class="tpl-left-nav-item">
                     <a href="countdown" class="nav-link ">
                         <i class="am-icon-clock-o"></i>
@@ -159,37 +167,10 @@
                                 <div class="am-u-sm-12">
                                     <table class="am-table am-table-bordered am-table-striped am-table-compact">
                                         <thead>
-                                        <!--<tr>-->
-                                            <!--<th>组别</th>-->
-                                            <!--<th>当前排名</th>-->
-                                            <!--<th>姓名</th>-->
-                                            <!--<th>一号评委</th>-->
-                                            <!--<th>二号评委</th>-->
-                                            <!--<th>三号评委</th>-->
-                                            <!--<th>四号评委</th>-->
-                                            <!--<th>五号评委</th>-->
-                                            <!--<th>六号评委</th>-->
-                                            <!--<th>七号评委</th>-->
-                                            <!--<th>八号评委</th>-->
-                                            <!--<th>九号评委</th>-->
-                                            <!--<th>十号评委</th>-->
-                                            <!--<th>十一号评委</th>-->
-                                            <!--<th>教案得分</th>-->
-                                            <!--<th>听课得分</th>-->
-                                            <!--<th>最终得分</th>-->
-                                        <!--</tr>-->
+
                                         </thead>
                                         <tbody id="main">
-                                           <!--<script type="text/template" id="temp1">-->
-                                               <!--{{each datalist}}-->
-                                                   <!--<tr>-->
-                                                       <!--<td>{{$value.groups}}</td>-->
-                                                       <!--<td>{{$value.rank}}</td>-->
-                                                       <!--<td>{{$value.name}}</td>-->
-                                                       <!--<td>{{$value.totalScore}}</td>-->
-                                                   <!--</tr>-->
-                                               <!--{{/each}}-->
-                                           <!--</script>-->
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -264,8 +245,6 @@
 
     function test() {
 
-          // document.getElementById("main").inn
-
         document.getElementById("main").innerHTML="<tr> </tr>";
 
         $.ajax({
@@ -328,7 +307,6 @@
                 alert("退出登陆失败");
             }
         });
-
     }
 
 

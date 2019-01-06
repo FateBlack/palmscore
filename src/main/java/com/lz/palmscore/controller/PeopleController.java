@@ -136,18 +136,22 @@ public class PeopleController {
                 raterList.remove(index);
                 session.setAttribute("raterList",raterList);
             }
+            if (type.equals("extraRater")) {
+                List<Rater> raterList = (List<Rater>) session.getAttribute("extraRaterList");
+                System.out.println("删除额外选手");
+                raterList.remove(index);
+                session.setAttribute("extraRaterList",raterList);
+            }
 
             if (type.equals("player")) {
                 List<Player> playerList = (List<Player>) session.getAttribute("playerList");
                 playerList.remove(index);
                 session.setAttribute("playerList",playerList);
             }
-
         } catch (Exception e) {
             log.error("[删除评委或选手]索引越界,index={}", index);
             e.printStackTrace();
         }
-
         return ResultVOUtil.success();
     }
 
@@ -159,7 +163,7 @@ public class PeopleController {
      * @return
      */
     @PostMapping("add_rater")
-    public ResultVO add(@Valid RaterForm raterForm, BindingResult bindingResult, HttpSession session) {
+    public ResultVO add(@RequestParam("category") Integer category,@Valid RaterForm raterForm, BindingResult bindingResult, HttpSession session) {
 
 
         if (bindingResult.hasErrors()) {
@@ -167,17 +171,28 @@ public class PeopleController {
         }
 
         Rater rater = RaterForm2RaterConverter.conventer(raterForm);
-
-        List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
-
-        log.info("测试, raterList={}", raterList);
-
-        if (raterList == null) {
-            raterList = new ArrayList<>();
+        List<Rater> raterList=null;
+        if(category==1){
+            raterList = (List<Rater>) session.getAttribute("raterList");
+            if (raterList == null) {
+                raterList = new ArrayList<>();
+            }
+            System.out.println("评委");
+            rater.setCategory(1);
+            raterList.add(rater);
+            session.setAttribute("raterList",raterList);
         }
-
-        raterList.add(rater);
-        session.setAttribute("raterList",raterList);
+        if (category==3){
+            raterList = (List<Rater>) session.getAttribute("extraRaterList");
+            if (raterList == null) {
+                raterList = new ArrayList<>();
+            }
+            System.out.println("额外评委");
+            rater.setCategory(3);
+            log.info(rater.toString());
+            raterList.add(rater);
+            session.setAttribute("extraRaterList",raterList);
+        }
         return ResultVOUtil.success(raterList);
     }
 
@@ -220,6 +235,7 @@ public class PeopleController {
      */
     @PostMapping("rater_edit")
     public ResultVO raterEdit(@RequestParam int index,
+                              @RequestParam("category") Integer category,
                                   @Valid RaterForm raterForm,
                                   BindingResult bindingResult,
                                   HttpSession session){
@@ -227,18 +243,19 @@ public class PeopleController {
             return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
         List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
-
-
-
-
-
-        raterList.get(index).setRId(raterForm.getRid());
-        raterList.get(index).setName(raterForm.getName());
-        raterList.get(index).setJob(raterForm.getJob());
-        raterList.get(index).setWorkplace(raterForm.getWorkplace());
-
-
-        session.setAttribute("raterList",raterList);
+        if(category==3){
+            raterList = (List<Rater>) session.getAttribute("extraRaterList");
+        }
+            raterList.get(index).setRId(raterForm.getRid());
+            raterList.get(index).setName(raterForm.getName());
+            raterList.get(index).setJob(raterForm.getJob());
+            raterList.get(index).setWorkplace(raterForm.getWorkplace());
+        if(category==1){
+            session.setAttribute("raterList",raterList);
+        }
+        if(category==3){
+            session.setAttribute("extraRaterList",raterList);
+        }
         return  ResultVOUtil.success(raterList);
     }
 
@@ -284,7 +301,15 @@ public class PeopleController {
         return ResultVOUtil.success(list);
     }
 
-
+    /**
+     * 评委抽签
+     * @return
+     */
+    @GetMapping("reDrawlots")
+    public ResultVO reDrawlots() {
+        List<Rater> list=peopleService.reDrawlots();
+        return ResultVOUtil.success(list);
+    }
 //    /**
 //     * 管理元端排名显示
 //     * @return

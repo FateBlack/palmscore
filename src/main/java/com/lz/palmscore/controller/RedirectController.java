@@ -82,4 +82,9 @@ public class RedirectController {
         return new ModelAndView("admin/rejudge");
     }
 
+    @GetMapping("/reDrawlots")
+    public ModelAndView reDrawlots() {
+        return new ModelAndView("admin/reDrawlots");
+    }
+
 }

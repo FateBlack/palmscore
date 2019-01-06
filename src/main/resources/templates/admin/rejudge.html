@@ -89,11 +89,19 @@
                 </li>
 
                 <li class="tpl-left-nav-item">
-                    <a href="drawlots" class="nav-link ">
+                    <a href="reDrawlots" class="nav-link ">
                         <i class="am-icon-hand-peace-o"></i>
-                        <span>抽签</span>
+                        <span>评委分组抽签</span>
                     </a>
                 </li>
+
+                <li class="tpl-left-nav-item">
+                    <a href="drawlots" class="nav-link ">
+                        <i class="am-icon-hand-peace-o"></i>
+                        <span>选手出场顺序抽签</span>
+                    </a>
+                </li>
+
                 <li class="tpl-left-nav-item">
                     <a href="countdown" class="nav-link ">
                         <i class="am-icon-clock-o"></i>
@@ -336,7 +344,7 @@
                     name:$("#rejudge-name").val(),
                     workplace:$("#rejudge-duty").val(),
                     job:$("#rejudge-home").val(),
-                    category:2
+                    category:3
                 },
                 success:function(res){
                     if(res.code=="0"){
@@ -409,7 +417,7 @@
             url:"../people/delete_item",
              data:{
                  index: index,
-                 type:"rater"
+                 type:"extraRater"
              },
 
             success:function(res){
@@ -449,40 +457,6 @@
 
     }
 
-  /*  /!**
-     * 添加单条数据
-     *!/
-    function add(){
-        $.ajax({
-            type:'POST',
-            dataType: "json",
-            url:"../people/add_rater",
-            data:{
-                rid:$("#judge-num").val(),
-                name:$("#judge-name").val(),
-                workplace:$("#judge-home").val(),
-                job:$("#judge-duty").val()
-
-            },
-            success:function(res){
-                if (res.code == 0) {
-                    alert("添加成功");
-                    //添加 新数据到数组末尾
-                    datalist.push(res.data);
-                    var data={
-                        datalist:datalist
-                    };
-                    var html = template('temp1', data);
-                    document.getElementById('change').innerHTML = html;
-                }else {
-                    alert(res.msg);
-                }
-            },
-            error:function(){
-                alert("添加失败");
-            }
-        });
-    }*/
     //添加评委打分密码
     function saveAll() {
         var str=$("#rate").val();
