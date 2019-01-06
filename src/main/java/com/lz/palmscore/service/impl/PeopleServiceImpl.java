@@ -52,7 +52,7 @@ public class PeopleServiceImpl implements PeopleService {
     private RaterScoreRepository raterScoreRepository;
 
     @Override
-    public List<Rater> batchInputRater(String fileName, MultipartFile file) throws Exception {
+    public List<Rater> batchInputRater(String fileName, MultipartFile file,Integer category) throws Exception {
         boolean notNull = false;
         List<Rater> raterList = new ArrayList<Rater>();
 
@@ -84,6 +84,8 @@ public class PeopleServiceImpl implements PeopleService {
             }
 
             rater = raterExcelGet(row, rater);
+
+            rater.setCategory(category);
 
             raterList.add(rater);
         }
@@ -147,46 +149,6 @@ public class PeopleServiceImpl implements PeopleService {
     public List<Player> drawlots() {
         return playerRepository.findAll();
     }
-
-//    @Override
-////    public List<RankVO> result() {
-////        List<Activity> activityList = activityRepository.findAll();
-////        if (activityList == null || activityList.isEmpty()) {
-////            return null;
-////        }
-////        Integer groupNum = activityList.get(0).getGroupNum();
-////
-//////        List<Player> playerList = playerRepository.findAll();
-////
-////        List<RankVO> allList = new ArrayList<>();
-////
-////        for (int i = 1; i <= groupNum; i++) {
-////            List<Player> playerList = playerRepository.findByGroupsAndTotalScoreNotNull(i);
-////            Collections.sort(playerList, new Comparator<Player>() {
-////                @Override
-////                public int compare(Player o1, Player o2) {
-////                    return o2.getTotalScore().compareTo(o1.getTotalScore());
-////                }
-////            });
-////
-////            List<RankVO> rankVOList = new ArrayList<>();
-////
-////            for (int j=0;j<playerList.size();j++) {
-////                Player p = playerList.get(j);
-////
-////                RankVO rankVO = new RankVO();
-////                rankVO.setGroups(i);
-////                rankVO.setRank(j+1);
-////                rankVO.setName(p.getName());
-////                rankVO.setTotalScore(p.getTotalScore());
-////                rankVOList.add(rankVO);
-////            }
-////
-////            allList.addAll(rankVOList);
-////        }
-////
-////        return allList;
-////    }
 
 
     /**
@@ -470,7 +432,11 @@ public class PeopleServiceImpl implements PeopleService {
 //        }
         player.setWorkplace(workplace);
 
-        String course = row.getCell(3).getStringCellValue();
+        String job = row.getCell(3).getStringCellValue();
+
+        player.setJob(job);
+
+        String course = row.getCell(4).getStringCellValue();
 //        if(course==null|| course.isEmpty()){
 //            course = "0";
 //        }

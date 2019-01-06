@@ -73,7 +73,7 @@ public class PeopleController {
         try {
 
             if (type.equals("raterFile")) {
-                raterList = peopleService.batchInputRater(fileName, file);
+                raterList = peopleService.batchInputRater(fileName, file,1);
 
                 if (raterList == null || raterList.isEmpty()) {
                     return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getCode(),
@@ -81,6 +81,19 @@ public class PeopleController {
                 }
 
                 session.setAttribute("raterList", raterList);
+                return ResultVOUtil.success(raterList);
+            }
+
+            // 额外评委
+            if (type.equals("extraRaterFile")) {
+                raterList = peopleService.batchInputRater(fileName, file,3);
+
+                if (raterList == null || raterList.isEmpty()) {
+                    return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getCode(),
+                            FileEnum.FILE_UPLOAD_ERROR.getMessage());
+                }
+
+                session.setAttribute("extraRaterList", raterList);
                 return ResultVOUtil.success(raterList);
             }
 
