@@ -3,6 +3,7 @@ package com.lz.palmscore.service.impl;
 import com.lz.palmscore.entity.*;
 import com.lz.palmscore.repository.*;
 import com.lz.palmscore.service.PeopleService;
+import com.lz.palmscore.vo.MarkPageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -50,6 +51,9 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Autowired
     private RaterScoreRepository raterScoreRepository;
+
+    @Autowired
+    private PlayerScoreitemRepository playerScoreitemRepository;
 
     @Override
     public List<Rater> batchInputRater(String fileName, MultipartFile file,Integer category) throws Exception {
@@ -288,8 +292,32 @@ public class PeopleServiceImpl implements PeopleService {
      * @return
      */
     @Override
-    public List<ScoreItem> getAll() {
-        return scoreItemRepository.findAll();
+    public List<MarkPageVO> markPage(Integer playerId,Integer raterId) {
+
+        List<ScoreItem> list = scoreItemRepository.findAll();
+
+        List<PlayerScoreitem> playerScoreitemList = playerScoreitemRepository.findByPlayerIdAndRaterId(playerId,raterId);
+
+
+        Double fileScore = null;
+        if (playerScoreitemList != null && !playerScoreitemList.isEmpty()) {
+            fileScore = playerScoreitemList.get(0).getScore();
+        }
+
+        List<MarkPageVO> markPageVOList = new ArrayList<>();
+        for (ScoreItem scoreItem : list) {
+
+            MarkPageVO markPageVO =
+                    new MarkPageVO(scoreItem.getId(), scoreItem.getName(), scoreItem.getRate(), scoreItem.getFileUpload());
+
+            // 填充 教案分数
+            if (scoreItem.getFileUpload() == 1) {
+                markPageVO.setScore(fileScore);
+            }
+
+            markPageVOList.add(markPageVO);
+        }
+        return markPageVOList;
     }
 
     /**

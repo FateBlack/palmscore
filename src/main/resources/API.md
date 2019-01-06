@@ -210,8 +210,8 @@ groups  组别
                 "name": "王海玲",
                 "activityName": "计算机与信息工程学院2018教师教学大赛",
                 "order": 1,
-                "ifFileScore": 2,
-                "score_state": 2    // 1 代表教案已打分，2:未打分
+                "ifFileScore": 2, // 1 代表教案已打分，2:未打分
+                "score_state": 2    
             },
             {
                 "id": 189,
@@ -232,6 +232,8 @@ groups  组别
  GET /wx/rater/mark_page
 ```
 参数
+playerid : 选手主键
+raterid :  评委主键
 ```
 无
 ```
@@ -245,11 +247,13 @@ groups  组别
             "name": "教案",
             "rate": 0.7
             "fileUpload": 1  // 1:需要上传文件 ，2:不需要
+            "score": 85      // 只显示教案分数
         },
         {
             "name": "技术",
             "rate": 0.3
             "fileUpload": 2
+            "score": null
         }
     ]
 }

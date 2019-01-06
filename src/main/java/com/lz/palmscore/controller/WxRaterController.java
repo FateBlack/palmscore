@@ -81,19 +81,17 @@ public class WxRaterController {
         return ResultVOUtil.success(map);
     }
 
-    /**
-     * 评委打分页面
+    /**评委打分页面
+     *
+     * @param playerId  选手主键
+     * @param raterId   评委主键
      * @return
      */
     @GetMapping("mark_page")
-    public ResultVO markPage() {
+    public ResultVO markPage(@RequestParam("playerid") Integer playerId, @RequestParam("raterid") Integer raterId) {
 
-        List<ScoreItem> list=peopleService.getAll();
-        List<MarkPageVO> markPageVOList = new ArrayList<>();
-        for(int i=0;i<list.size();i++){
-            ScoreItem scoreItem=list.get(i);
-            markPageVOList.add(new MarkPageVO(scoreItem.getId(), scoreItem.getName(), scoreItem.getRate(), scoreItem.getFileUpload()));
-        }
+        List<MarkPageVO> markPageVOList = peopleService.markPage(playerId, raterId);
+
         return ResultVOUtil.success(markPageVOList);
     }
 

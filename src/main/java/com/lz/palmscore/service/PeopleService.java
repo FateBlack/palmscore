@@ -1,6 +1,7 @@
 package com.lz.palmscore.service;
 
 import com.lz.palmscore.entity.*;
+import com.lz.palmscore.vo.MarkPageVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface PeopleService {
      */
     /*List<List<Player>> drawLots();*/
 
-    List<ScoreItem> getAll();
+    List<MarkPageVO> markPage(Integer playerId,Integer raterId);
 
     List<Rater> rlogin(String account, String password);
 

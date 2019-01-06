@@ -9,6 +9,7 @@ public class MarkPageVO {
     private String name;//评分项
     private double rate;//占比
     private Integer fileUpload;//是否需要文件上传 1:需要  2:不需要
+    private Double score; //分数
 
 
     public MarkPageVO(Integer id, String name, double rate, Integer fileUpload) {
@@ -48,5 +49,13 @@ public class MarkPageVO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
 }
