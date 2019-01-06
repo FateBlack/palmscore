@@ -37,6 +37,9 @@ public class RaterServiceImpl implements RaterService {
 
     @Autowired
     private GroupInfoRepository groupInfoRepository;
+
+    @Autowired
+    private PlayerScoreitemRepository playerScoreitemRepository;
     /**
      * 微信端 评委id 查询出该评委下已打分选手
      * @param id
@@ -194,6 +197,8 @@ public class RaterServiceImpl implements RaterService {
             ids.add(rs.getPlayerId());
         }
 
+        List<PlayerScoreitem> playerScoreitemList = playerScoreitemRepository.searchByRaterIdGroupByPlayerId(raterId);
+
 //        String sql = "select * from player p where p.id in (SELECT player_id FROM rater_score rs where rs.rater_id=:raterId); ";
 //
 //        Map<String, Object> paramMap = new HashMap<>();
@@ -220,8 +225,14 @@ public class RaterServiceImpl implements RaterService {
                     playerVO.setScoreState(1);
                 }
             }
-            playerVOList.add(playerVO);
 
+            for (PlayerScoreitem ps : playerScoreitemList) {
+                playerVO.setIfFileScore(2);
+                if (player_id == ps.getPlayerId()) {
+                    playerVO.setIfFileScore(1);
+                }
+            }
+            playerVOList.add(playerVO);
         }
 
         Map map = new HashMap();

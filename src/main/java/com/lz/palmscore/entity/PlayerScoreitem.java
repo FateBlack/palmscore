@@ -59,4 +59,15 @@ public class PlayerScoreitem {
     public void setRaterId(Integer raterId) {
         this.raterId = raterId;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerScoreitem{" +
+                "id=" + id +
+                ", playerId=" + playerId +
+                ", raterId=" + raterId +
+                ", score=" + score +
+                ", itemName='" + itemName + '\'' +
+                '}';
+    }
 }

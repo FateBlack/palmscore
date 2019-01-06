@@ -203,21 +203,23 @@ groups  组别
     "code": 0,
     "msg": "成功",
     "data": {
-        "activity_password": 123123,
+        "activity_password": "123",
         "list": [
             {
-                "id": 66,
-                "name": "老李",
-                "activityName": "教师大赛A",
+                "id": 188,
+                "name": "王海玲",
+                "activityName": "计算机与信息工程学院2018教师教学大赛",
                 "order": 1,
-                "score_state": 1   //评分状态: 1已评分，2未评分
+                "ifFileScore": 2,
+                "score_state": 2    // 1 代表教案已打分，2:未打分
             },
             {
-                "id": 77,
-                "name": "老王",
-                "activityName": "教师大赛B",
+                "id": 189,
+                "name": "张剑飞",
+                "activityName": "计算机与信息工程学院2018教师教学大赛",
                 "order": 2,
-                "score_state": 1
+                "ifFileScore": 2,
+                "score_state": 2
             }
         ]
     }
@@ -334,7 +336,7 @@ rePassword（修改密码）
 }
 ```
 
-### 评委打分情况 对应选手 情况
+### 评委打分情况 对应选手 情况  //复用
 ```
 GET /wx/people/score_info
 ```

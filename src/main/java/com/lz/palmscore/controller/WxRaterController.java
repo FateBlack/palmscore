@@ -1,10 +1,8 @@
 package com.lz.palmscore.controller;
 
 import com.lz.palmscore.dao.RaterScoreDao;
-import com.lz.palmscore.entity.Activity;
-import com.lz.palmscore.entity.Player;
-import com.lz.palmscore.entity.RaterScore;
-import com.lz.palmscore.entity.ScoreItem;
+import com.lz.palmscore.entity.*;
+import com.lz.palmscore.repository.PlayerScoreitemRepository;
 import com.lz.palmscore.repository.RaterRepository;
 import com.lz.palmscore.repository.RaterScoreRepository;
 import com.lz.palmscore.service.ActivityService;
@@ -115,17 +113,18 @@ public class WxRaterController {
     }
 
 
-//    @Autowired
-//    private RaterScoreDao raterScoreDao;
-//
-//    @GetMapping("test")
-//    public ResultVO mark() {
-//
-//        List<RaterScore> list = raterScoreDao.searchAllByPlayerIdAndCategory();
-//        System.out.println(list);
-//
-//        return ResultVOUtil.success();
-//    }
+
+    @Autowired
+    private PlayerScoreitemRepository playerScoreitemRepository;
+
+    @GetMapping("test")
+    public ResultVO mark() {
+
+        List<PlayerScoreitem> list = playerScoreitemRepository.searchByRaterIdGroupByPlayerId(288);
+        System.out.println(list);
+
+        return ResultVOUtil.success();
+    }
 
 
 }

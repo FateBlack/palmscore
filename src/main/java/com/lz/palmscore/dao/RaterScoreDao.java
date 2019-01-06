@@ -27,7 +27,7 @@ public class RaterScoreDao {
      * @return
      */
     public List<RaterScore> searchAllByPlayerIdAndCategory(Integer playerId,Integer category) {
-        String sql = "select rs.id,rs.score from rater r INNER JOIN rater_score rs WHERE r.id = rs.rater_id and rs.player_id = :playerid and r.category= :category;";
+        String sql = "select rs.id,rs.score from rater r INNER JOIN rater_score rs ON r.id = rs.rater_id WHERE rs.player_id = :playerid and r.category= :category;";
 
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("playerid", playerId);
@@ -38,5 +38,9 @@ public class RaterScoreDao {
 
         return haveList;
     }
+
+
+
+
 
 }

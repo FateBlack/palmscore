@@ -22,6 +22,8 @@ public class PlayerVO {
     @JsonProperty("score_state")
     private Integer scoreState;//评分状态 1 已经评分,2未评分
 
+    private Integer ifFileScore; // 教案是否已经打分
+
     public PlayerVO() {
     }
 
@@ -80,4 +82,11 @@ public class PlayerVO {
         this.activityName = activityName;
     }
 
+    public Integer getIfFileScore() {
+        return ifFileScore;
+    }
+
+    public void setIfFileScore(Integer ifFileScore) {
+        this.ifFileScore = ifFileScore;
+    }
 }
