@@ -300,7 +300,8 @@
                 rid:$("#judge-num").val(),
                 name:$("#judge-name").val(),
                 workplace:$("#judge-home").val(),
-                job:$("#judge-duty").val()
+                job:$("#judge-duty").val(),
+                category:3
             },
             success:function(res){
                 if (res.code == 0) {
@@ -335,6 +336,7 @@
                     name:$("#rejudge-name").val(),
                     workplace:$("#rejudge-duty").val(),
                     job:$("#rejudge-home").val(),
+                    category:2
                 },
                 success:function(res){
                     if(res.code=="0"){
@@ -447,9 +449,9 @@
 
     }
 
-    /**
+  /*  /!**
      * 添加单条数据
-     */
+     *!/
     function add(){
         $.ajax({
             type:'POST',
@@ -460,6 +462,7 @@
                 name:$("#judge-name").val(),
                 workplace:$("#judge-home").val(),
                 job:$("#judge-duty").val()
+
             },
             success:function(res){
                 if (res.code == 0) {
@@ -479,7 +482,7 @@
                 alert("添加失败");
             }
         });
-    }
+    }*/
     //添加评委打分密码
     function saveAll() {
         var str=$("#rate").val();

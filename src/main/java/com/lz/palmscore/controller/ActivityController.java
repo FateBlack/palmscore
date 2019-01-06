@@ -90,6 +90,7 @@ public class ActivityController  {
         activity.setEndTime("1");
         activity.setPassword("1");
         activity.setGroupNum(1);
+        activity.setExtraRate(0.00);
         Activity activityNew=activityService.add(activity);
         if (activityNew==null){
             return ResultVOUtil.error(233, "创建活动失败");
