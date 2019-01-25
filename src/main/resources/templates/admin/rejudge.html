@@ -457,7 +457,7 @@
 
     }
 
-    //添加评委打分密码
+    //将额外评委打分占比，及所有额外评委信息，插入数据库
     function saveAll() {
         var str=$("#rate").val();
         if(str == null || str == ""){
@@ -468,14 +468,14 @@
             $.ajax({
                 type:'POST',
                 dataType: "json",
-                url:"../people/saveAll",
+                url:"../people/saveExtraRater",
                 data:{
                     rate:str,
                 },
                 success:function(res){
                     if(res.code==0){
                         alert("添加成功");
-                        window.location.href="/admin/competitor";
+                        window.location.href="/admin/index";
                     }
                     else{
                         alert(res.msg);

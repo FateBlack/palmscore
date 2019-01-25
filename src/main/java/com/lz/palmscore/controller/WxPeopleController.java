@@ -109,26 +109,18 @@ public class WxPeopleController {
     public ResultVO password_edit(@RequestParam("types") int type, @RequestParam("id") int id,
                                   @RequestParam("password") String password, @RequestParam("rePassword") String rePassword) {
         if (type == 1) { //评委
-            Rater rater = peopleService.findById(id);
-                String realPas = rater.getPassword();
-                //if (realPas==password) {//这种不对啊啊啊啊啊啊啊！！！！！
-                if (!realPas.equals(password)) {//原始密码不相等
-                    return ResultVOUtil.error(510, "原密码输入不正确");
-                }
-                rater.setPassword(rePassword);
-                Rater rater1 = peopleService.updateById(rater);
 
+            Rater rater1 = peopleService.updateRaterPassword(id,password,rePassword);
+            if (rater1 == null || rater1.getId() == null) {
+                return ResultVOUtil.error(844, "原始密码错误");
+            }
         }
         if (type == 2) {//选手
-            Player player = peopleService.findById2(id);
-            String realPas = player.getPassword();
-            if (!realPas.equals(password)) {//原始密码相等
-                return ResultVOUtil.error(510,"原密码输入不正确");
-            }
-            player.setPassword(rePassword);
-            Player player1 = peopleService.updateById2(player);
+            Player player1 = peopleService.updatePlayerPassword(id,password,rePassword);
+            return ResultVOUtil.error(844, "原始密码错误");
         }
         return ResultVOUtil.success();
+
     }
 
 

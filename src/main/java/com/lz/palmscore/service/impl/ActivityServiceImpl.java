@@ -54,9 +54,10 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Transactional
     @Override
-    public boolean allInsert(Activity activity, List<ScoreItem> scoreItemList, List<Rater> raterList, List<Player> playerList) {
+    public boolean allInsert(Activity activity, List<ScoreItem> scoreItemList, List<Rater> raterList, List<Player> playerList,List<Rater> extraRaterList) {
 
-        Collections.shuffle(raterList);
+        Collections.shuffle(raterList);  //随机评委
+        Collections.shuffle(extraRaterList); //随机额外评委
 
         Integer groupNum = activity.getGroupNum();
         //TODO 等待删除
@@ -83,7 +84,10 @@ public class ActivityServiceImpl implements ActivityService {
         }
 
 
-        Map<String,Object> map =   groupRater(raterList, groupNum);
+
+        //对评委随机分组及获取，和获取和各组的信息，注意，额外评委也加入
+        Map<String,Object> map =   groupRater(raterList, groupNum,extraRaterList);
+
 
         List<Rater> finalRaters = (List<Rater>) map.get("finalList");
         List<GroupInfo> groupInfoList = (List<GroupInfo>) map.get("groupInfoList");
@@ -99,7 +103,7 @@ public class ActivityServiceImpl implements ActivityService {
                 " VALUES (:activityId,:name,:rate,:note,:fileUpload)";
 
         String sqlG = "INSERT INTO group_info(group_name,rater_count)" +
-                " VALUES (:groupName,:raterCount)";;
+                " VALUES (:groupName,:raterCount)";
 
         Boolean flag = false;
         try {
@@ -161,7 +165,7 @@ public class ActivityServiceImpl implements ActivityService {
      *
      * @return
      */
-    public Map<String, Object> groupRater(List<Rater> raterList, int groupNum) {
+    public Map<String, Object> groupRater(List<Rater> raterList, int groupNum,List<Rater> extraRaterList) {
 
         List<List<Rater>> list = new ArrayList<>();
 
@@ -213,9 +217,31 @@ public class ActivityServiceImpl implements ActivityService {
             groupInfoList.add(groupInfo);
         }
 
+
+        /** 对额外评委进行分组,注意，额外的会被抛弃
+         */
+//        int extraCount = extraRaterList.size() / groupNum;
+//
+//        for (int i = 1; i <= groupNum; i++) {
+//            List<Rater> raterListB = new ArrayList<>();
+//
+//            for (int j = 1; j <= extraCount; j++) {
+//                int s = extraCount * (i - 1) + j - 1;
+//                Rater rater = extraRaterList.get(s);
+//                rater.setGroups(i);
+//                raterListB.add(rater);
+//            }
+//            finalList.addAll(raterListB); //直接放入最终集合
+//        }
+//        // 将额外评委数量加入 各组信息中
+//        for (GroupInfo groupInfo : groupInfoList) {
+//            Integer raterCount = groupInfo.getRaterCount() + extraCount;
+//            groupInfo.setRaterCount(raterCount);
+//        }
+
         Map<String, Object> map = new HashMap();
         map.put("groupInfoList", groupInfoList); //各组信息
-        map.put("finalList", finalList);
+        map.put("finalList", finalList);//评委最终集合
 
 
         return map;

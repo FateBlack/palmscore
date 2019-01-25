@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -54,6 +55,9 @@ public class PeopleServiceImpl implements PeopleService {
 
     @Autowired
     private PlayerScoreitemRepository playerScoreitemRepository;
+
+    @Autowired
+    private GroupInfoRepository groupInfoRepository;
 
     @Override
     public List<Rater> batchInputRater(String fileName, MultipartFile file,Integer category) throws Exception {
@@ -163,6 +167,8 @@ public class PeopleServiceImpl implements PeopleService {
     public List<Rater> reDrawlots() {
         return raterRepository.findAll();
     }
+
+
 
     /**
      *   PC 端结果通知
@@ -358,49 +364,81 @@ public class PeopleServiceImpl implements PeopleService {
 
 
 
-    /**
-     * 通过id查询评委
-     * @param id
-     * @return
-     */
-    @Override
-    public Rater findById(int id) {
-        return raterRepository.getOne(id);
+
+    public Player updatePlayerPassword(Integer id,String password,String rePassword) {
+
+        Player p = playerRepository.getOne(id);
+        String realPas = p.getPassword();
+        if (!realPas.equals(password)) {//原始密码相等
+            return null;
+        }
+        p.setPassword(rePassword);
+        Player player1 = playerRepository.save(p);
+
+        return player1;
     }
 
+    //更换密码
+    public Rater updateRaterPassword(Integer id,String password,String rePassword) {
 
-    /**
-     * 通过id查询选手
-     * @param id
-     * @return
-     */
-    @Override
-    public Player findById2(int id) {
-        return playerRepository.getOne(id);
+        Rater r = raterRepository.getOne(id);
+        String realPas = r.getPassword();
+        //if (realPas==password) {//这种不对啊啊啊啊啊啊啊！！！！！
+        if (!realPas.equals(password)) {//原始密码不相等
+            return null;
+        }
+        r.setPassword(rePassword);
+        Rater rater1 = raterRepository.save(r);
+
+        return rater1;
     }
 
-    /**
-     * 修改评委密码
-     * @param rater
-     * @return
-     */
+    // 添加额外评委到数据库
+    @Transactional
     @Override
-    public Rater updateById(Rater rater) {
-        return raterRepository.save(rater);
+    public void saveExtraRater(Double extraRate, List<Rater> extraRaterList) {
+        List<Activity> activityList = activityRepository.findAll();
+        if (activityList.size() <= 0) {
+            return;
+        }
+
+        Activity activity = activityList.get(0);
+        //加入额外评委评分比
+        activity.setExtraRate(extraRate);
+        activityRepository.save(activity);
+
+        Integer groupNum = activity.getGroupNum();
+
+        int extraCount = extraRaterList.size() / groupNum;
+
+        List<Rater> finalList = new ArrayList<>();
+        for (int i = 1; i <= groupNum; i++) {
+            List<Rater> raterListB = new ArrayList<>();
+
+            for (int j = 1; j <= extraCount; j++) {
+                int s = extraCount * (i - 1) + j - 1;
+                Rater rater = extraRaterList.get(s);
+                rater.setGroups(i);
+                raterListB.add(rater);
+            }
+            finalList.addAll(raterListB); //直接放入最终集合
+        }
+
+        List<GroupInfo> groupInfoList = groupInfoRepository.findAll();
+
+        // 将额外评委数量加入 各组信息中
+        for (GroupInfo groupInfo : groupInfoList) {
+            Integer raterCount = groupInfo.getRaterCount() + extraCount;
+            groupInfo.setRaterCount(raterCount);
+            groupInfoRepository.save(groupInfo);
+        }
+
+        String sqlR = "INSERT INTO rater(r_id,name,job,workplace,activity_id,groups,category)" +
+                " VALUES (:rId,:name,:job,:workplace,:activityId,:groups,:category)";
+
+        SqlParameterSource[] beanSourcesR = SqlParameterSourceUtils.createBatch(finalList.toArray());
+        namedParameterJdbcTemplate.batchUpdate(sqlR, beanSourcesR);
     }
-
-    /**
-     * 修改评委密码
-     * @param player
-     * @return
-     */
-    @Override
-    public Player updateById2(Player player) {
-        return playerRepository.save(player);
-    }
-
-
-
 
 
     /**

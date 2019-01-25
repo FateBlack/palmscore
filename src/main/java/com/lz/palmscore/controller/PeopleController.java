@@ -310,14 +310,19 @@ public class PeopleController {
         List<Rater> list=peopleService.reDrawlots();
         return ResultVOUtil.success(list);
     }
-//    /**
-//     * 管理元端排名显示
-//     * @return
-//     */
-//    @GetMapping("result")
-//    public ModelAndView result(Map<String,Object> map) {
-//        List<RankVO> list=peopleService.result();
-//        map.put("alllist", list);
-//        return new ModelAndView("admin/result");
-//    }
+
+
+    //  额外评委 加入数据库
+    @PostMapping("saveExtraRater")
+    public ResultVO extraRate(@RequestParam("rate") String rate,
+                              HttpSession session) {
+        Double extraRate = Double.parseDouble(rate); //额外评委评分占比
+
+        List<Rater> extraRaterList = (List<Rater>) session.getAttribute("extraRaterList");
+
+        peopleService.saveExtraRater(extraRate, extraRaterList);
+
+        return ResultVOUtil.success();
+    }
+
 }
