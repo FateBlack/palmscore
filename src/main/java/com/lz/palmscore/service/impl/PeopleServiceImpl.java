@@ -327,6 +327,23 @@ public class PeopleServiceImpl implements PeopleService {
     }
 
     /**
+     * 评委提前打分页面
+      * @return
+     */
+    @Override
+    public List<MarkPageVO> markPageAhead() {
+        List<ScoreItem> list = scoreItemRepository.findByFileUpload(1);
+        ScoreItem scoreItem = list.get(0);
+
+        MarkPageVO markPageVO =
+                new MarkPageVO(scoreItem.getId(), scoreItem.getName(), scoreItem.getRate(), scoreItem.getFileUpload());
+
+        List<MarkPageVO> markPageVOList = new ArrayList<>();
+        markPageVOList.add(markPageVO);
+        return markPageVOList;
+    }
+
+    /**
      * 评委登陆
      * @param account
      * @param password
@@ -439,6 +456,8 @@ public class PeopleServiceImpl implements PeopleService {
         SqlParameterSource[] beanSourcesR = SqlParameterSourceUtils.createBatch(finalList.toArray());
         namedParameterJdbcTemplate.batchUpdate(sqlR, beanSourcesR);
     }
+
+
 
 
     /**

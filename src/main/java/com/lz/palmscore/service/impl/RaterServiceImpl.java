@@ -290,4 +290,20 @@ public class RaterServiceImpl implements RaterService {
         playerScoreitemRepository.save(playerScoreitem);
     }
 
+    /**
+     * 判断 提前打分 是否已经完成
+     * @param playerId
+     * @param raterId
+     * @return
+     */
+    @Override
+    public int ifMarkAhead(Integer playerId, Integer raterId) {
+
+        List<PlayerScoreitem> list = playerScoreitemRepository.findByPlayerIdAndRaterId(playerId, raterId);
+        if (list == null || list.isEmpty()) {
+            return 2;
+        }
+        return 1;
+    }
+
 }

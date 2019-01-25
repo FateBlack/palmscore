@@ -19,4 +19,6 @@ public interface RaterService {
     Map scoreList(Integer raterId, Integer groups);
 
     void markone(MarkOneForm markOneForm);
+
+    int ifMarkAhead(Integer playerId, Integer raterId);
 }

@@ -227,7 +227,7 @@ groups  组别
 ```
 
 
-### 评委打分页面
+### 评委打分页面 
 ```
  GET /wx/rater/mark_page
 ```
@@ -246,8 +246,8 @@ raterid :  评委主键
         {
             "name": "教案",
             "rate": 0.7
-            "fileUpload": 1  // 1:需要上传文件 ，2:不需要
-            "score": 85      // 只显示教案分数
+            "fileUpload": 2  // 1:需要上传文件 ，2:不需要 
+            "score": 85      // 只回显教案分数  即:已经提前打分的
         },
         {
             "name": "技术",
@@ -261,7 +261,7 @@ raterid :  评委主键
 
 ###评委打分按钮
 ```
-POST /wx/people/mark
+POST /wx/rater/mark
 ```
 参数
 ```
@@ -275,6 +275,31 @@ groups 组别
 
 ```
 
+### 评委提前打分页面
+```
+ GET /wx/rater/mark_page_ahead
+```
+参数
+playerid : 选手主键
+raterid :  评委主键
+```
+无
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": [
+        {
+            "name": "教案",
+            "rate": 0.7
+            "fileUpload": 1  // 1:需要上传文件 ，2:不需要
+            "score": null      
+        }
+    ]
+}
+```
 
 ###评委提前评分按钮
 ```
@@ -295,6 +320,25 @@ itemName 评分项名称
     "msg": "成功",
     "data": null
 
+}
+```
+
+### 判断 提前打分 是否完成
+```
+POST /wx/people/if_mark_ahead
+```
+参数
+```
+playerId 选手主键
+raterId  评委主键
+
+```
+返回  
+```
+{
+    "code": 0,
+    "msg": "成功",
+    "data": 1    //1:已经提前打分 ，2:未提前打分
 }
 ```
 

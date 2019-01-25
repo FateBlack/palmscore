@@ -40,4 +40,6 @@ public interface PeopleService {
     Rater updateRaterPassword(Integer id, String password, String rePassword);
 
     void saveExtraRater(Double extraRate, List<Rater> extraRaterList);
+
+    List<MarkPageVO> markPageAhead();
 }

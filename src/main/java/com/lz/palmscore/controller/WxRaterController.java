@@ -95,6 +95,17 @@ public class WxRaterController {
         return ResultVOUtil.success(markPageVOList);
     }
 
+    /**评委提前打分页面
+     * @return
+     */
+    @GetMapping("mark_page_ahead")
+    public ResultVO markPageAhead() {
+
+        List<MarkPageVO> markPageVOList = peopleService.markPageAhead();
+
+        return ResultVOUtil.success(markPageVOList);
+    }
+
     /**
      * 评分按钮
      * @param markForm
@@ -114,9 +125,9 @@ public class WxRaterController {
         return ResultVOUtil.success();
     }
     /**
-     * 单个评委仅打分教案
+     * 提前打分按钮 单个评委仅打分教案
      */
-      @PostMapping("mark_one")
+    @PostMapping("mark_one")
     public ResultVO markOne(@Valid MarkOneForm markOneForm,
                             BindingResult bindingResult) {
           if (bindingResult.hasErrors()) {
@@ -126,6 +137,16 @@ public class WxRaterController {
           return ResultVOUtil.success();
       }
 
+
+    /**
+     * 判断 是否提前打分完成
+     */
+    @PostMapping("if_mark_ahead")
+    public ResultVO ifMarkAhead(@RequestParam("playerid") Integer playerId, @RequestParam("raterid") Integer raterId) {
+        int flag = raterService.ifMarkAhead(playerId, raterId);
+
+        return ResultVOUtil.success(flag);
+    }
 
 
 }
