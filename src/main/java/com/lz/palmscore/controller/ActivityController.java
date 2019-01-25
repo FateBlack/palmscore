@@ -140,7 +140,6 @@ public class ActivityController  {
         List<ScoreItem> scoreItemList = (List<ScoreItem>) session.getAttribute("list");
         List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
         List<Player> playerList = (List<Player>) session.getAttribute("playerList");
-        List<Rater> extraRaterList = (List<Rater>) session.getAttribute("extraRaterList");
 
         Integer activityId = activity.getId();
 
@@ -151,10 +150,8 @@ public class ActivityController  {
         for (Rater rater : raterList) {
             rater.setActivityId(activityId);
         }
-        for (Rater rater : extraRaterList) {
-            rater.setActivityId(activityId);
-        }
-        activityService.allInsert(activity, scoreItemList, raterList, playerList,extraRaterList);
+
+        activityService.allInsert(activity, scoreItemList, raterList, playerList);
 
         return ResultVOUtil.success();
     }

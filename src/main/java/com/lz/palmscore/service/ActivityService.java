@@ -14,7 +14,7 @@ import java.util.List;
 public interface ActivityService{
     Activity add(Activity ac);
 
-    boolean allInsert(Activity activity, List<ScoreItem> scoreItemList, List<Rater> raterList, List<Player> playerList,List<Rater> extraRaterList);
+    boolean allInsert(Activity activity, List<ScoreItem> scoreItemList, List<Rater> raterList, List<Player> playerList);
 
     List<Activity> findAll();
 
