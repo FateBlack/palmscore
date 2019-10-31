@@ -49,7 +49,6 @@ public class WxPlayerController {
      */
     @GetMapping("index")
     public ResultVO playerIndex(@RequestParam("player_id") Integer playerId) {
-
         AcitvityVO acitvityVO = playerService.index(playerId);
         List<AcitvityVO> acitvityVOList = new ArrayList<>();
         acitvityVOList.add(acitvityVO);
@@ -64,13 +63,12 @@ public class WxPlayerController {
      */
     @GetMapping("file_page")
     public ResultVO filePage() {
-
         List<ScoreItem> list = scoreItemRepository.findByFileUpload(1);
         List<String> resultList = new ArrayList<>();
+
         for (int i = 0; i < list.size(); i++) {
             resultList.add(list.get(i).getName());
         }
-
         Map map = new HashMap();
         map.put("items", resultList);
         return ResultVOUtil.success(map);
@@ -83,11 +81,8 @@ public class WxPlayerController {
      */
     @PostMapping("file_upload")
     public ResultVO fileUpload(@Valid FileFathForm fileFathForm) {
-
-
         List<PlayerFile> playerFileList = new ArrayList<>();
         List<String> filePath = fileFathForm.getFilepath();
-
 
         for (int i = 0; i < filePath.size(); i++) {
             PlayerFile pf = new PlayerFile();
@@ -96,12 +91,11 @@ public class WxPlayerController {
 
             playerFileList.add(pf);
         }
-
-        Boolean b = playerService.savefile(playerFileList);
-        if (b) {
+        Boolean flag = playerService.savefile(playerFileList);
+        if (flag) {
             return ResultVOUtil.success();
         }
-        return ResultVOUtil.error(323, "失败");
+        return ResultVOUtil.error( "失败");
     }
 
 
@@ -112,25 +106,21 @@ public class WxPlayerController {
      */
     @PostMapping("file_update")
     public ResultVO fileUpdate(@Valid FileFathForm fileFathForm) {
-
-
         List<PlayerFile> playerFileList = new ArrayList<>();
         List<String> filePath = fileFathForm.getFilepath();
-
 
         for (int i = 0; i < filePath.size(); i++) {
             PlayerFile pf = new PlayerFile();
             pf.setFilePath(filePath.get(i));
             pf.setPlayerId(fileFathForm.getId());
-
             playerFileList.add(pf);
         }
 
-        Boolean b = playerService.updatefile(playerFileList);
-        if (b) {
+        Boolean flag = playerService.updatefile(playerFileList);
+        if (flag) {
             return ResultVOUtil.success();
         }
-        return ResultVOUtil.error(323, "失败");
+        return ResultVOUtil.error("失败");
     }
 
     /**
@@ -140,24 +130,15 @@ public class WxPlayerController {
      */
     @GetMapping("player_info")
     public ResultVO playerInfo(@RequestParam("id") Integer id) {
-
         Player player=playerService.findById(id);
-        List<Activity> activityList=activityService.findAll();
-        int a=activityList.size()-1;
-        String uploadTime=activityList.get(a).getUploadTime();
-
         PlayerInfoVO playerInfoVO = new PlayerInfoVO(player.getId(), player.getName(), player.getWorkplace(), player.getCourse(),1,player.getJob());
-
         List<PlayerFile> fileList =playerService.findFileById(id);
 
         List<String> list=new ArrayList<>();
         for(int i=0;i<fileList.size();i++){
-
-
 //            StringBuffer filePath = new StringBuffer("https://static.flowhandsome.cn/");
 //            filePath.append(fileList.get(i).getFilePath());
 //            list.add(filePath.toString());
-
             list.add(fileList.get(i).getFilePath());
         }
         playerInfoVO.setFileList(list);
@@ -171,9 +152,7 @@ public class WxPlayerController {
      */
     @GetMapping("score_info")
     public ResultVO scoreInfo(@RequestParam("player_id") Integer player_id) {
-
         List<PlayerScoreitem> playerScoreitems = playerService.scoreInfo(player_id);
-
         return ResultVOUtil.success(playerScoreitems);
     }
 }

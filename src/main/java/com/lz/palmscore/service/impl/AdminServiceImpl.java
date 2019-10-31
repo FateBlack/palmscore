@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-
     @Autowired
     private AdminRepository adminRepository;
 
@@ -24,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
         if (admins == null||admins.isEmpty()){
             return null;
         }
-        admins.get(0).setPassword("");
+        admins.get(0).setPassword(null);
         return admins.get(0);
     }
 
@@ -38,6 +37,4 @@ public class AdminServiceImpl implements AdminService {
     public Admin getPassById(int id) {
         return adminRepository.getOne(id);
     }
-
-
 }

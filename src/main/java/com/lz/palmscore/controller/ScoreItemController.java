@@ -3,6 +3,7 @@ package com.lz.palmscore.controller;
 import com.lz.palmscore.Conventer.ScoreItemForm2ScoreItemConventer;
 import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.enums.ScoreItemEnum;
+import com.lz.palmscore.enums.SessionEnum;
 import com.lz.palmscore.exception.ScoreItemException;
 import com.lz.palmscore.form.ScoreItemForm;
 import com.lz.palmscore.service.ScoreItemService;
@@ -40,25 +41,24 @@ public class ScoreItemController {
     public ResultVO ScoreItemAdd(@Valid ScoreItemForm scoreItemForm,
                                  BindingResult bindingResult,
                                  HttpSession  session) {
-        List<ScoreItem> list = (List<ScoreItem>) session.getAttribute("list");
-
+        List<ScoreItem> list = (List<ScoreItem>) session.getAttribute(SessionEnum.PERSON_LIST.getName());
         if(list == null){
             list = new ArrayList<>();
         }
 
         if (bindingResult.hasErrors()) {
            // log.error("[评分项]格式错误");
-            return ResultVOUtil.error(ScoreItemEnum.SCOREITEM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+            return ResultVOUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
         ScoreItem scoreItem=ScoreItemForm2ScoreItemConventer.conventer(scoreItemForm);
-        Integer id= (Integer) session.getAttribute("activityId");
+        Integer id = (Integer) session.getAttribute(SessionEnum.ACTIVITY_ID.getName());
         scoreItem.setActivityId(id);
         if (scoreItem==null){
             log.error("[评分项]添加错误");
             throw new ScoreItemException(ScoreItemEnum.SCOREITEM_ERROR);
         }
         list.add(scoreItem);
-        session.setAttribute("list",list);
+        session.setAttribute(SessionEnum.PERSON_LIST.getName(), list);
         return ResultVOUtil.success(list);
     }
     /**
@@ -70,16 +70,10 @@ public class ScoreItemController {
    @PostMapping("score_item_delete")
     public ResultVO ScoreItemDelete(@RequestParam int index,
                                     HttpSession  session){
-        List<ScoreItem> list = (List<ScoreItem>) session.getAttribute("list");
-        ScoreItem scoreItem=list.get(index);
-        /*    for(int h=0;h<list.size();h++){
-           if(scoreItem.equals(list.get(index))){
-               list.remove(h);
-           }
-       }*/
+       List<ScoreItem> list = (List<ScoreItem>) session.getAttribute(SessionEnum.PERSON_LIST.getName());
        list.remove(index);
-        session.setAttribute("list",list);
-        return  ResultVOUtil.success();
+       session.setAttribute(SessionEnum.PERSON_LIST.getName(), list);
+       return ResultVOUtil.success();
     }
 
     /**
@@ -97,16 +91,13 @@ public class ScoreItemController {
                                   HttpSession session){
         if (bindingResult.hasErrors()) {
           //  log.error("[修改]格式错误");
-            return ResultVOUtil.error(ScoreItemEnum.SCOREITEM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+            return ResultVOUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        List<ScoreItem> list= (List<ScoreItem>) session.getAttribute("list");
+        List<ScoreItem> list = (List<ScoreItem>) session.getAttribute(SessionEnum.PERSON_LIST.getName());
         list.get(index).setName(scoreItemForm.getName());
-/*
-        list.get(index).setNote(scoreItemForm.getNote());
-*/
         list.get(index).setRate(scoreItemForm.getRate());
         list.get(index).setFileUpload(scoreItemForm.getFileUpload());
-        session.setAttribute("list",list);
+        session.setAttribute(SessionEnum.PERSON_LIST.getName(), list);
         return  ResultVOUtil.success(list);
 
     }

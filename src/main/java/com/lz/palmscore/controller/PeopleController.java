@@ -10,6 +10,8 @@ import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
 import com.lz.palmscore.enums.FileEnum;
 import com.lz.palmscore.enums.PeopleEnum;
+import com.lz.palmscore.enums.PersonTypeEnum;
+import com.lz.palmscore.enums.SessionEnum;
 import com.lz.palmscore.exception.FileException;
 import com.lz.palmscore.form.PlayerForm;
 import com.lz.palmscore.form.RaterForm;
@@ -60,26 +62,18 @@ public class PeopleController {
 
         //判断文件格式
         if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
-            return ResultVOUtil.error(FileEnum.FILE_FORMATES_ERROR.getCode(), FileEnum.FILE_FORMATES_ERROR.getMessage());
+            return ResultVOUtil.error(FileEnum.FILE_FORMATES_ERROR.getMessage());
         }
-
-        /**
-         *  测试 数据 1，待删除
-         */
 
         List<Rater> raterList = null;
         List<Player> playerList = null;
 
         try {
-
             if (type.equals("raterFile")) {
                 raterList = peopleService.batchInputRater(fileName, file,1);
-
                 if (raterList == null || raterList.isEmpty()) {
-                    return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getCode(),
-                            FileEnum.FILE_UPLOAD_ERROR.getMessage());
+                    return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getMessage());
                 }
-
                 session.setAttribute("raterList", raterList);
                 return ResultVOUtil.success(raterList);
             }
@@ -89,10 +83,8 @@ public class PeopleController {
                 raterList = peopleService.batchInputRater(fileName, file,3);
 
                 if (raterList == null || raterList.isEmpty()) {
-                    return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getCode(),
-                            FileEnum.FILE_UPLOAD_ERROR.getMessage());
+                    return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getMessage());
                 }
-
                 session.setAttribute("extraRaterList", raterList);
                 return ResultVOUtil.success(raterList);
             }
@@ -101,15 +93,11 @@ public class PeopleController {
                 playerList = peopleService.batchInputPlayer(fileName, file);
 
                 if (playerList == null || playerList.isEmpty()) {
-                    return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getCode(),
-                            FileEnum.FILE_UPLOAD_ERROR.getMessage());
+                    return ResultVOUtil.error(FileEnum.FILE_UPLOAD_ERROR.getMessage());
                 }
-
                 session.setAttribute("playerList", playerList);
                 return ResultVOUtil.success(playerList);
             }
-
-
         } catch (Exception e) {
             log.error("[评委或选手excel文件上传]文件读取异常,fileName={}",fileName);
             e.printStackTrace();
@@ -129,27 +117,26 @@ public class PeopleController {
     @PostMapping("/delete_item")
     public ResultVO deleteItem(@RequestParam("index") int index, @RequestParam("type") String type,
                                HttpSession session) {
-
         try {
             if (type.equals("rater")) {
-                List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
+                List<Rater> raterList = (List<Rater>) session.getAttribute(SessionEnum.RATER_LIST.getName());
                 raterList.remove(index);
                 session.setAttribute("raterList",raterList);
             }
             if (type.equals("extraRater")) {
-                List<Rater> raterList = (List<Rater>) session.getAttribute("extraRaterList");
+                List<Rater> raterList = (List<Rater>) session.getAttribute(SessionEnum.EXTRA_RATER_List.getName());
                 System.out.println("删除额外选手");
                 raterList.remove(index);
                 session.setAttribute("extraRaterList",raterList);
             }
 
             if (type.equals("player")) {
-                List<Player> playerList = (List<Player>) session.getAttribute("playerList");
+                List<Player> playerList = (List<Player>) session.getAttribute(SessionEnum.PLAYER_List.getName());
                 playerList.remove(index);
                 session.setAttribute("playerList",playerList);
             }
         } catch (Exception e) {
-            log.error("[删除评委或选手]索引越界,index={}", index);
+            log.error("[删除评委或选手]失败,index={}", index);
             e.printStackTrace();
         }
         return ResultVOUtil.success();
@@ -164,34 +151,30 @@ public class PeopleController {
      */
     @PostMapping("add_rater")
     public ResultVO add(@RequestParam("category") Integer category,@Valid RaterForm raterForm, BindingResult bindingResult, HttpSession session) {
-
-
         if (bindingResult.hasErrors()) {
-            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+            return ResultVOUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
 
         Rater rater = RaterForm2RaterConverter.conventer(raterForm);
         List<Rater> raterList=null;
-        if(category==1){
-            raterList = (List<Rater>) session.getAttribute("raterList");
+        if(category== PersonTypeEnum.RATER.getType()){
+            raterList = (List<Rater>) session.getAttribute(SessionEnum.RATER_LIST.getName());
             if (raterList == null) {
                 raterList = new ArrayList<>();
             }
-            System.out.println("评委");
-            rater.setCategory(1);
+            rater.setCategory(PersonTypeEnum.RATER.getType());
             raterList.add(rater);
-            session.setAttribute("raterList",raterList);
+            session.setAttribute(SessionEnum.RATER_LIST.getName(),raterList);
         }
-        if (category==3){
-            raterList = (List<Rater>) session.getAttribute("extraRaterList");
+        if (category==PersonTypeEnum.EXTRA_RATER.getType()){
+            raterList = (List<Rater>) session.getAttribute(SessionEnum.EXTRA_RATER_List.getName());
             if (raterList == null) {
                 raterList = new ArrayList<>();
             }
-            System.out.println("额外评委");
-            rater.setCategory(3);
+            rater.setCategory(PersonTypeEnum.EXTRA_RATER.getType());
             log.info(rater.toString());
             raterList.add(rater);
-            session.setAttribute("extraRaterList",raterList);
+            session.setAttribute(SessionEnum.EXTRA_RATER_List.getName(),raterList);
         }
         return ResultVOUtil.success(raterList);
     }
@@ -208,20 +191,16 @@ public class PeopleController {
                         BindingResult bindingResult,
                         HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+            return ResultVOUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-
         Player player = PlayerForm2PlayerConverter.conventer(form);
-
-        List<Player> playerList = (List<Player>) session.getAttribute("playerList");
+        List<Player> playerList = (List<Player>) session.getAttribute(SessionEnum.PLAYER_List.getName());
 
         if (playerList == null) {
             playerList = new ArrayList<>();
         }
-
         playerList.add(player);
-
-        session.setAttribute("playerList",playerList);
+        session.setAttribute(SessionEnum.PLAYER_List.getName(),playerList);
         return ResultVOUtil.success(playerList);
     }
 
@@ -240,21 +219,21 @@ public class PeopleController {
                                   BindingResult bindingResult,
                                   HttpSession session){
         if (bindingResult.hasErrors()) {
-            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+            return ResultVOUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
-        if(category==3){
-            raterList = (List<Rater>) session.getAttribute("extraRaterList");
+        List<Rater> raterList = (List<Rater>) session.getAttribute(SessionEnum.RATER_LIST.getName());
+        if(category==PersonTypeEnum.EXTRA_RATER.getType()){
+            raterList = (List<Rater>) session.getAttribute(SessionEnum.EXTRA_RATER_List.getName());
         }
             raterList.get(index).setRId(raterForm.getRid());
             raterList.get(index).setName(raterForm.getName());
             raterList.get(index).setJob(raterForm.getJob());
             raterList.get(index).setWorkplace(raterForm.getWorkplace());
-        if(category==1){
-            session.setAttribute("raterList",raterList);
+        if(category==PersonTypeEnum.RATER.getType()){
+            session.setAttribute(SessionEnum.RATER_LIST.getName(),raterList);
         }
-        if(category==3){
-            session.setAttribute("extraRaterList",raterList);
+        if(category==PersonTypeEnum.EXTRA_RATER.getType()){
+            session.setAttribute(SessionEnum.EXTRA_RATER_List.getName(),raterList);
         }
         return  ResultVOUtil.success(raterList);
     }
@@ -273,9 +252,9 @@ public class PeopleController {
                               BindingResult bindingResult,
                               HttpSession session){
         if (bindingResult.hasErrors()) {
-            return ResultVOUtil.error(PeopleEnum.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+            return ResultVOUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        List<Player> playerList = (List<Player>) session.getAttribute("playerList");
+        List<Player> playerList = (List<Player>) session.getAttribute(SessionEnum.PLAYER_List.getName());
 
         playerList.get(index).setPId(playerForm.getPid());
         playerList.get(index).setName(playerForm.getName());
@@ -284,7 +263,7 @@ public class PeopleController {
         playerList.get(index).setOrders(playerForm.getOrders());
         playerList.get(index).setGroups(playerForm.getGroups());
 
-        session.setAttribute("playerList",playerList);
+        session.setAttribute(SessionEnum.PLAYER_List.getName(),playerList);
         return  ResultVOUtil.success(playerList);
 
     }
@@ -297,7 +276,6 @@ public class PeopleController {
     public ResultVO drawLots() {
       /*  peopleService.drawLots();*/
         List<Player> list=peopleService.drawlots();
-
         return ResultVOUtil.success(list);
     }
 
@@ -317,11 +295,8 @@ public class PeopleController {
     public ResultVO extraRate(@RequestParam("rate") String rate,
                               HttpSession session) {
         Double extraRate = Double.parseDouble(rate); //额外评委评分占比
-
-        List<Rater> extraRaterList = (List<Rater>) session.getAttribute("extraRaterList");
-
+        List<Rater> extraRaterList = (List<Rater>) session.getAttribute(SessionEnum.EXTRA_RATER_List.getName());
         peopleService.saveExtraRater(extraRate, extraRaterList);
-
         return ResultVOUtil.success();
     }
 

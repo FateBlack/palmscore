@@ -13,16 +13,13 @@ import com.lz.palmscore.form.ActivityForm;
 public class ActivityForm2ActivityConventer {
 
     public static Activity conventer(ActivityForm activityForm) {
-
         Activity activity = new Activity();
-
         activity.setName(activityForm.getName());
         activity.setStartTime(activityForm.getStartTime());
         activity.setEndTime(activityForm.getEndTime());
         activity.setScoreRule(activityForm.getScoreRule());
         activity.setUploadTime(activityForm.getUploadTime());
         activity.setGroupNum(activityForm.getGroupNum());
-
         return activity;
     }
 

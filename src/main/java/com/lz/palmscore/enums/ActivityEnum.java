@@ -14,6 +14,7 @@ public enum ActivityEnum {
 
     SCORE_ITEM_EMPTY(209, "活动细则为空"),
     ACTIVITY_INSERT_ERROR(210, "活动所有内容插入数据库失败"),
+    DELETE_ERROR(222,"删除失败")
     ;
     private Integer code;
     private String message;

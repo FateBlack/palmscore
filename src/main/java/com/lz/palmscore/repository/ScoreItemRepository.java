@@ -9,7 +9,4 @@ import java.util.List;
 public interface ScoreItemRepository extends JpaRepository<ScoreItem,Integer> {
 
     List<ScoreItem> findByFileUpload(Integer fileUpload);
-
-
-
 }

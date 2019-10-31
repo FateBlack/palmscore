@@ -13,7 +13,7 @@ spring:
     show-sql: false
 
   thymeleaf:
-    cache: false # 开发时关闭缓存,不然没法看到实时页面
+    cache: false # 开发时关闭缓存
 #    mode: LEGACYHTML5 # 用非严格的 HTML
     mode: HTML
     encoding: UTF-8

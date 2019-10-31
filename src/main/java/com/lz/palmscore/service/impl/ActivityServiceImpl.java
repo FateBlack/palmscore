@@ -55,13 +55,8 @@ public class ActivityServiceImpl implements ActivityService {
     @Transactional
     @Override
     public boolean allInsert(Activity activity, List<ScoreItem> scoreItemList, List<Rater> raterList, List<Player> playerList) {
-
         Collections.shuffle(raterList);  //随机评委
-
         Integer groupNum = activity.getGroupNum();
-        //TODO 等待删除
-//        int groupNum = 5;
-
 
         Collections.shuffle(playerList);// 提前进行选手随机抽签
         List<List<Player>> groupList = new ArrayList<>(); //存储 各组 选手集合
@@ -70,7 +65,6 @@ public class ActivityServiceImpl implements ActivityService {
         for (int i = 0; i < groupNum; i++) {
             groupList.add(new ArrayList<>());
         }
-
 
         for (Player player : playerList) {
             int orders = groupList.get(player.getGroups()-1).size() + 1;//根据组中size+1 作为该选手顺序
@@ -82,16 +76,12 @@ public class ActivityServiceImpl implements ActivityService {
             finalPlayerList.addAll(groupList.get(i));
         }
 
-
-
         //对评委随机分组及获取，和获取和各组的信息，注意，额外评委也加入
         Map<String,Object> map =   groupRater(raterList, groupNum);
-
-
         List<Rater> finalRaters = (List<Rater>) map.get("finalList");
         List<GroupInfo> groupInfoList = (List<GroupInfo>) map.get("groupInfoList");
 
-
+        // 由于自带 JPA 的批量插入为单条循环 ，故采用
         String sqlP = "INSERT INTO player(p_id,name,workplace,course,orders,groups,activity_id)" +
                 " VALUES (:pId,:name,:workplace,:course,:orders,:groups,:activityId)";
 
@@ -165,7 +155,6 @@ public class ActivityServiceImpl implements ActivityService {
      * @return
      */
     public Map<String, Object> groupRater(List<Rater> raterList, int groupNum) {
-
         List<List<Rater>> list = new ArrayList<>();
 
         int length = raterList.size();
@@ -175,7 +164,6 @@ public class ActivityServiceImpl implements ActivityService {
 
         int extra = length % groupNum;
         int count = length / groupNum;
-
 
         for (int i = 1; i <= groupNum; i++) {
             List<Rater> sonList = new ArrayList<>();
@@ -188,7 +176,6 @@ public class ActivityServiceImpl implements ActivityService {
             }
             list.add(sonList);
         }
-
 
         List<Rater> extraList = new ArrayList<>();
         if (extra != 0) {
@@ -209,20 +196,15 @@ public class ActivityServiceImpl implements ActivityService {
 
         for (int i = 0; i < list.size(); i++) {
             finalList.addAll(list.get(i));
-
             GroupInfo groupInfo = new GroupInfo();
             groupInfo.setGroupName(i + 1);
             groupInfo.setRaterCount(list.get(i).size());
             groupInfoList.add(groupInfo);
         }
-
         Map<String, Object> map = new HashMap();
         map.put("groupInfoList", groupInfoList); //各组信息
         map.put("finalList", finalList);//评委最终集合
 
-
         return map;
     }
-
-
 }

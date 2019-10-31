@@ -6,6 +6,8 @@ import com.lz.palmscore.entity.Player;
 import com.lz.palmscore.entity.Rater;
 import com.lz.palmscore.entity.ScoreItem;
 import com.lz.palmscore.enums.ActivityEnum;
+import com.lz.palmscore.enums.PersonTypeEnum;
+import com.lz.palmscore.enums.SessionEnum;
 import com.lz.palmscore.exception.AcitvityException;
 import com.lz.palmscore.form.ActivityForm;
 import com.lz.palmscore.repository.ActivityRepository;
@@ -60,17 +62,17 @@ public class ActivityController  {
                                 HttpSession session){
         if (bindingResult.hasErrors()) {
             log.error("[添加活动]格式错误");
-            return ResultVOUtil.error(ActivityEnum.ACTIVITY_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+            return ResultVOUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
         Activity activity = ActivityForm2ActivityConventer.conventer(activityForm);
 
         if (activity == null) {
             log.error("[活动]创建失败");
-            throw new AcitvityException(ActivityEnum.ACTIVITY_ERROR);
+            return ResultVOUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        Integer id= (Integer) session.getAttribute("activityId");
+        Integer id = (Integer) session.getAttribute(SessionEnum.ACTIVITY_ID.getName());
         activity.setId(id);
-        session.setAttribute("activity",activity);
+        session.setAttribute(SessionEnum.ACTIVITY.getName(), activity);
         return ResultVOUtil.success();
     }
     /**
@@ -80,22 +82,13 @@ public class ActivityController  {
      */
     @PostMapping("create_id")
     public ResultVO createId(HttpSession session) {
-
-        log.info("进入活动");
         Activity activity=new Activity();
-        activity.setName("1");
-        activity.setUploadTime("1");
-        activity.setStartTime("1");
-        activity.setScoreRule("1");
-        activity.setEndTime("1");
-        activity.setPassword("1");
-        activity.setGroupNum(1);
-        activity.setExtraRate(0.00);
+        activity.setName(String.valueOf(PersonTypeEnum.RATER.getType()));
         Activity activityNew=activityService.add(activity);
         if (activityNew==null){
-            return ResultVOUtil.error(233, "创建活动失败");
+            return ResultVOUtil.error( "创建活动失败");
         }
-        session.setAttribute("activityId",activityNew.getId());
+        session.setAttribute(SessionEnum.ACTIVITY_ID.getName(), activityNew.getId());
         return ResultVOUtil.success();
     }
 
@@ -106,7 +99,6 @@ public class ActivityController  {
     @GetMapping("activity_show")
     public ResultVO show() {
         List<Activity> activityList = activityService.findAll();
-
         return ResultVOUtil.success(activityList);
     }
     /**
@@ -118,14 +110,13 @@ public class ActivityController  {
     @PostMapping("password_add")
     public ResultVO addPassword(@RequestParam String password,
                                 HttpSession session){
-        Activity activity= (Activity) session.getAttribute("activity");
+        Activity activity = (Activity) session.getAttribute(SessionEnum.ACTIVITY.getName());
 
         if (password == null || password.length() <= 0) {
-            return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getCode(), ActivityEnum.PASSWORD_NULL.getMessage());
+            return ResultVOUtil.error(ActivityEnum.PASSWORD_NULL.getMessage());
         }
         activity.setPassword(password);
-
-        session.setAttribute("activity",activity);
+        session.setAttribute(SessionEnum.ACTIVITY.getName(), activity);
         return ResultVOUtil.success();
     }
     /**
@@ -136,8 +127,8 @@ public class ActivityController  {
     @PostMapping("all_insert")
     public ResultVO addInsert(HttpSession session) {
 
-        Activity activity = (Activity) session.getAttribute("activity");
-        List<ScoreItem> scoreItemList = (List<ScoreItem>) session.getAttribute("list");
+        Activity activity = (Activity) session.getAttribute(SessionEnum.ACTIVITY.getName());
+        List<ScoreItem> scoreItemList = (List<ScoreItem>) session.getAttribute(SessionEnum.PERSON_LIST.getName());
         List<Rater> raterList = (List<Rater>) session.getAttribute("raterList");
         List<Player> playerList = (List<Player>) session.getAttribute("playerList");
 
@@ -152,7 +143,6 @@ public class ActivityController  {
         }
 
         activityService.allInsert(activity, scoreItemList, raterList, playerList);
-
         return ResultVOUtil.success();
     }
 
@@ -167,7 +157,7 @@ public class ActivityController  {
         if (flag) {
             return ResultVOUtil.success();
         }
-        return ResultVOUtil.error(222,"删除失败");
+        return ResultVOUtil.error("删除活动失败");
     }
 
     /**

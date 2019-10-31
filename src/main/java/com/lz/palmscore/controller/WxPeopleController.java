@@ -3,6 +3,7 @@ package com.lz.palmscore.controller;
         import com.lz.palmscore.entity.Player;
         import com.lz.palmscore.entity.PlayerScoreitem;
         import com.lz.palmscore.entity.Rater;
+        import com.lz.palmscore.enums.PersonTypeEnum;
         import com.lz.palmscore.repository.PlayerScoreitemRepository;
         import com.lz.palmscore.service.PeopleService;
         import com.lz.palmscore.service.PlayerService;
@@ -48,29 +49,31 @@ public class WxPeopleController {
 
         Map map = new HashMap();
         //
-        if(type==1){//评委
-            List<Rater> list=peopleService.rlogin(account,password);
+        if (type == PersonTypeEnum.RATER.getType()) {//评委
+            List<Rater> list = peopleService.rlogin(account, password);
             if (list == null || list.isEmpty()) {
-                return ResultVOUtil.error(111, "登陆失败");
+                return ResultVOUtil.error("登陆失败");
             }
-            map.put("types", 1);
-            map.put("id", list.get(0).getId());
-            map.put("groups",list.get(0).getGroups());
-            map.put("activity_id", list.get(0).getActivityId());
+            Rater rater = list.get(0);
+            map.put("types", PersonTypeEnum.RATER.getType());
+            map.put("id", rater.getId());
+            map.put("groups", rater.getGroups());
+            map.put("activity_id", rater.getActivityId());
             return ResultVOUtil.success(map);
         }
-        if(type==2){
-            List<Player> list=peopleService.plogin(account,password);
-            if(list==null||list.isEmpty()){
-                return ResultVOUtil.error(111, "登陆失败");
+        if (type == PersonTypeEnum.PLAYER.getType()) {
+            List<Player> list = peopleService.plogin(account, password);
+            if (list == null || list.isEmpty()) {
+                return ResultVOUtil.error("登陆失败");
             }
-            map.put("types", 2);
-            map.put("id", list.get(0).getId());
-            map.put("groups",list.get(0).getGroups());
-            map.put("activity_id", list.get(0).getActivityId());
+            Player player = list.get(0);
+            map.put("types", PersonTypeEnum.PLAYER.getType());
+            map.put("id", player.getId());
+            map.put("groups", player.getGroups());
+            map.put("activity_id", player.getActivityId());
             return ResultVOUtil.success(map);
         }
-        return ResultVOUtil.error(444,"登陆失败");
+        return ResultVOUtil.error("登陆失败");
     }
 
     /**
@@ -85,14 +88,12 @@ public class WxPeopleController {
 
         try {
             int i=playerList.size();
-            for(int a=0;a<i;a++){
-                rankList.add(new RankVO(playerList.get(a).getOrders(), playerList.get(a).getName(), playerList.get(a).getTotalScore(), a+1));
+            for(int j=0;j<i;j++){
+                rankList.add(new RankVO(playerList.get(j).getOrders(), playerList.get(j).getName(), playerList.get(j).getTotalScore(), j+1));
             }
         } catch (Exception e) {
-            return ResultVOUtil.error(233, "评分报错");
+            return ResultVOUtil.error("评分报错");
         }
-
-
         return ResultVOUtil.success(rankList);
     }
 
@@ -108,19 +109,17 @@ public class WxPeopleController {
     @PostMapping("password_edit")
     public ResultVO password_edit(@RequestParam("types") int type, @RequestParam("id") int id,
                                   @RequestParam("password") String password, @RequestParam("rePassword") String rePassword) {
-        if (type == 1) { //评委
-
-            Rater rater1 = peopleService.updateRaterPassword(id,password,rePassword);
-            if (rater1 == null || rater1.getId() == null) {
-                return ResultVOUtil.error(844, "原始密码错误");
+        if (type == PersonTypeEnum.RATER.getType()) { //评委
+            Rater rater = peopleService.updateRaterPassword(id,password,rePassword);
+            if (rater == null || rater.getId() == null) {
+                return ResultVOUtil.error( "原始密码错误");
             }
         }
-        if (type == 2) {//选手
-            Player player1 = peopleService.updatePlayerPassword(id,password,rePassword);
-            return ResultVOUtil.error(844, "原始密码错误");
+        if (type == PersonTypeEnum.PLAYER.getType()) {//选手
+            Player player = peopleService.updatePlayerPassword(id,password,rePassword);
+            return ResultVOUtil.error("原始密码错误");
         }
         return ResultVOUtil.success();
-
     }
 
 
@@ -133,7 +132,6 @@ public class WxPeopleController {
     @GetMapping("score_info")
     public ResultVO scoreInfo(@RequestParam("player_id") Integer playerId,
                               @RequestParam("rater_id") Integer raterId) {
-
         List<PlayerScoreitem> playerScoreitems =
                 playerScoreitemRepository.findByPlayerIdAndRaterId(playerId, raterId);
         return ResultVOUtil.success(playerScoreitems);

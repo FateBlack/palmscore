@@ -1,9 +1,8 @@
 package com.lz.palmscore.service.impl;
 
-import com.lz.palmscore.dao.RaterScoreDao;
 import com.lz.palmscore.entity.*;
+import com.lz.palmscore.enums.MarkTypeEnum;
 import com.lz.palmscore.form.MarkForm;
-import com.lz.palmscore.form.MarkItem;
 import com.lz.palmscore.form.MarkOneForm;
 import com.lz.palmscore.repository.*;
 import com.lz.palmscore.service.RaterService;
@@ -53,17 +52,12 @@ public class RaterServiceImpl implements RaterService {
      */
     @Override
     public Map listPlayer(Integer id) {
-
         Map map = new HashMap();
-
-
         List<Activity> activityList = activityRepository.findAll();
         Activity activity = activityList.get(activityList.size() - 1);
-
         map.put("activity_password", activity.getPassword());
 
         List<RaterScore> raterScoreList = raterScoreRepository.findByRaterId(id);
-
         if (raterScoreList.size() == 0) {
             return map;
         }
@@ -72,19 +66,14 @@ public class RaterServiceImpl implements RaterService {
         for (RaterScore raterScore : raterScoreList) {
             itemIds.add(raterScore.getPlayerId());
         }
-
-
         List<Player> playerList = null;
         List<PlayerVO> playerVOList = null;
-
         String sql = "SELECT  *  FROM player WHERE id IN(:itemIds)";
-
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("itemIds", itemIds);
 
         playerList =
                 namedParameterJdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Player>(Player.class));
-
 
         playerVOList = new ArrayList<>();
         for (Player player : playerList) {
@@ -93,12 +82,9 @@ public class RaterServiceImpl implements RaterService {
             playerVO.setActivityName(activity.getName());
             playerVO.setName(player.getName());
             playerVO.setOrder(player.getOrders());
-
             playerVOList.add(playerVO);
         }
-
         map.put("list", playerVOList);
-
         return map;
     }
 
@@ -110,7 +96,6 @@ public class RaterServiceImpl implements RaterService {
     @Override
     @Transactional
     public void mark(MarkForm markForm,Integer groups) {
-
         Integer playerId = markForm.getPlayerId();
         Integer raterId = markForm.getRaterId();
 
@@ -118,12 +103,9 @@ public class RaterServiceImpl implements RaterService {
         raterScore.setPlayerId(playerId);
         raterScore.setRaterId(raterId);
         raterScore.setScore(markForm.getScore());
-
         raterScoreRepository.save(raterScore);
 
-
         Integer length = markForm.getScoreItem().size();
-
         List<PlayerScoreitem> playerScoreitemList = new ArrayList<>();
 
         for (int i = 0; i < length; i++) {
@@ -132,14 +114,12 @@ public class RaterServiceImpl implements RaterService {
             ps.setPlayerId(playerId);
             ps.setItemName(markForm.getItemName().get(i));
             ps.setScore(markForm.getScoreItem().get(i));
-
             playerScoreitemList.add(ps);
         }
 
         try {
             String sql = "INSERT INTO player_scoreitem(player_id,rater_id,score,item_name)" +
                     " VALUES (:playerId,:raterId,:score,:itemName)";
-
             SqlParameterSource[] beanSources = SqlParameterSourceUtils.createBatch(playerScoreitemList.toArray());
             namedParameterJdbcTemplate.batchUpdate(sql, beanSources);
         } catch (Exception e) {
@@ -156,7 +136,6 @@ public class RaterServiceImpl implements RaterService {
         }
 
         if (raterScoreList.size() == raterCount) {
-
             //取出评委的分
             raterScoreList=raterScoreDao.searchAllByPlayerIdAndCategory(playerId,1);
             //排序
@@ -165,7 +144,6 @@ public class RaterServiceImpl implements RaterService {
                 public int compare(RaterScore o1, RaterScore o2) {
                     return o1.getScore().compareTo(o2.getScore());
                 }
-
             });
 
             Double sum = 0D;
@@ -202,7 +180,6 @@ public class RaterServiceImpl implements RaterService {
             Player player = new Player();
             player.setId(playerId);
             player.setTotalScore(totalScore);
-
             playerRepository.addTotalScore(totalScore,playerId);
         }
 
@@ -221,26 +198,15 @@ public class RaterServiceImpl implements RaterService {
         Activity activity = activityList.get(activityList.size() - 1);
 
         List<Player> playerList = playerRepository.findByGroups(groups);
-
         List<RaterScore> raterScoreList = raterScoreRepository.findByRaterId(raterId);
 
-        List<Integer> ids = new ArrayList<>();
+        HashSet<Integer> ids = new HashSet<>();
         for (RaterScore rs : raterScoreList) {
             ids.add(rs.getPlayerId());
         }
-
         List<PlayerScoreitem> playerScoreitemList = playerScoreitemRepository.searchByRaterIdGroupByPlayerId(raterId);
 
-//        String sql = "select * from player p where p.id in (SELECT player_id FROM rater_score rs where rs.rater_id=:raterId); ";
-//
-//        Map<String, Object> paramMap = new HashMap<>();
-//        paramMap.put("raterId", raterId);
-//        List<Player> haveList =
-//                namedParameterJdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Player>(Player.class));
-
-
         List<PlayerVO> playerVOList = new ArrayList<>();
-
         String activityName = activity.getName();
 
         for (Player player : playerList) {
@@ -251,13 +217,10 @@ public class RaterServiceImpl implements RaterService {
             playerVO.setOrder(player.getOrders());
             playerVO.setScoreState(2);
 
-            Integer player_id = player.getId();
-            for (Integer id : ids) {
-                if (player_id == id) {
-                    playerVO.setScoreState(1);
-                }
+            int player_id = player.getId();
+            if (ids.contains(player_id)) {
+                playerVO.setScoreState(1);
             }
-
             for (PlayerScoreitem ps : playerScoreitemList) {
                 playerVO.setIfFileScore(2);
                 if (player_id == ps.getPlayerId()) {
@@ -270,7 +233,6 @@ public class RaterServiceImpl implements RaterService {
         Map map = new HashMap();
         map.put("list", playerVOList);
         map.put("activity_password", activity.getPassword());
-
         return map;
     }
 
@@ -281,7 +243,6 @@ public class RaterServiceImpl implements RaterService {
     @Override
     public void markone(MarkOneForm markOneForm) {
         PlayerScoreitem playerScoreitem=new PlayerScoreitem();
-
         playerScoreitem.setScore(markOneForm.getScore());
         playerScoreitem.setPlayerId(markOneForm.getPlayerId());
         playerScoreitem.setRaterId(markOneForm.getRaterId());
@@ -298,12 +259,11 @@ public class RaterServiceImpl implements RaterService {
      */
     @Override
     public int ifMarkAhead(Integer playerId, Integer raterId) {
-
         List<PlayerScoreitem> list = playerScoreitemRepository.findByPlayerIdAndRaterId(playerId, raterId);
         if (list == null || list.isEmpty()) {
-            return 2;
+            return MarkTypeEnum.NOT_MARK.getType();
         }
-        return 1;
+        return MarkTypeEnum.MARK.getType();
     }
 
 }

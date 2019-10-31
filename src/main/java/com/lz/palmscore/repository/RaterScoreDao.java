@@ -1,4 +1,4 @@
-package com.lz.palmscore.dao;
+package com.lz.palmscore.repository;
 
 import com.lz.palmscore.entity.RaterScore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +28,8 @@ public class RaterScoreDao {
      */
     public List<RaterScore> searchAllByPlayerIdAndCategory(Integer playerId,Integer category) {
         String sql = "select rs.id,rs.score from rater r INNER JOIN rater_score rs ON r.id = rs.rater_id WHERE rs.player_id = :playerid and r.category= :category;";
-
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("playerid", playerId);
-
         paramMap.put("category", category);
         List<RaterScore> haveList =
                 namedParameterJdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<RaterScore>(RaterScore.class));

@@ -1,6 +1,7 @@
 package com.lz.palmscore.service.impl;
 
 import com.lz.palmscore.entity.*;
+import com.lz.palmscore.enums.UploadTypeEnum;
 import com.lz.palmscore.repository.ActivityRepository;
 import com.lz.palmscore.repository.PlayerFileRepository;
 import com.lz.palmscore.repository.PlayerRepository;
@@ -93,8 +94,6 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<Player> findByGroups(Integer groups) {
         List<Player> playerList = playerRepository.findByGroupsAndTotalScoreNotNull(groups);
-       // List<Player> playerList = playerRepository.findoByGroupsAndTotalScoreNotNull(groups);
-
         Collections.sort(playerList, new Comparator<Player>() {
             @Override
             public int compare(Player o1, Player o2) {
@@ -143,10 +142,10 @@ public class PlayerServiceImpl implements PlayerService {
         Player player = playerRepository.findById(playerId).get();
         Integer file_upload = player.getFileUpload();
 
-        if (file_upload == 2) {
-            acitvityVO.setState(2); //文件未上传
+        if (file_upload == UploadTypeEnum.UPLOAD.getType()) {
+            acitvityVO.setState(file_upload); //文件未上传
         } else {
-            acitvityVO.setState(1); //文件已上传
+            acitvityVO.setState(UploadTypeEnum.NOT_UPLOAD.getType()); //文件已上传
         }
 
         return acitvityVO;
@@ -160,9 +159,7 @@ public class PlayerServiceImpl implements PlayerService {
                 " VALUES (:playerId,:filePath)";
         Boolean flag = false;
         try{
-
             playerFileRepository.deleteBatch(playerFileList.get(0).getPlayerId());
-
             SqlParameterSource[] beanSources = SqlParameterSourceUtils.createBatch(playerFileList.toArray());
             namedParameterJdbcTemplate.batchUpdate(sql,beanSources);
             flag = true;
@@ -174,28 +171,19 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<PlayerScoreitem> scoreInfo(Integer player_id) {
-
         Player player = playerRepository.findById(player_id).get();
         List<ScoreItem> scoreItemList = scoreItemRepository.findAll();
-
-
         List<PlayerScoreitem> playerScoreitems = new ArrayList<>();
 
         Double totalScore = player.getTotalScore();
         for (ScoreItem scoreItem : scoreItemList) {
             PlayerScoreitem ps = new PlayerScoreitem();
-
             Double score =   totalScore*scoreItem.getRate();
-
             BigDecimal b = new BigDecimal(score);
             score = b.setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
-
             ps.setScore(score);
-
             playerScoreitems.add(ps);
         }
-
-
         return playerScoreitems;
     }
 
